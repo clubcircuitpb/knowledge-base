@@ -1,0 +1,103 @@
+---
+title: "Managing Player and Team Registration"
+sidebarTitle: "Registration"
+description: "Configure registration windows, approve player sign-ups, manage waitlists, and set team size limits for your Club Circuit league season."
+---
+
+Registration is the gateway to your league — it's how players and teams officially join a season. Club Circuit gives you precise control over when registration opens and closes, how many participants you accept, and how you review and approve sign-ups. Whether you're running a casual recreational league or a competitive divisional season, these tools help you start each season with the right roster in place.
+
+## Opening Registration
+
+Before players can sign up, you need to configure and open registration for a specific season.
+
+<Steps>
+  <Step title="Go to Your Season">
+    From the **Leagues** dashboard, open your league and navigate to the **Seasons** tab. Click into the season you want to configure.
+  </Step>
+  <Step title="Open Registration Settings">
+    Select **Registration** from the season menu, then click **Configure Registration**.
+  </Step>
+  <Step title="Set Registration Dates">
+    Define an **Open Date** (when players can start signing up) and a **Close Date** (when sign-ups end). Registration is inactive outside these dates. You can reopen registration after the close date by updating these fields manually.
+  </Step>
+  <Step title="Set Capacity Limits">
+    Enter the maximum number of participants or teams you'll accept for this season. Once the cap is reached, new registrations automatically move to the waitlist. Leave blank to allow unlimited registrations.
+  </Step>
+  <Step title="Set Team Size Requirements">
+    For team-based formats, define the minimum and maximum number of players per team. Registrations that don't meet the minimum will be flagged for your review before approval.
+  </Step>
+  <Step title="Enable and Publish">
+    Toggle registration to **Open** and click **Save**. Registered players will see a sign-up button on your league page as soon as the open date is reached.
+  </Step>
+</Steps>
+
+## Reviewing and Approving Registrations
+
+By default, registrations require your manual approval before a player or team is confirmed. You can switch to auto-approval in Registration Settings if you prefer.
+
+<Steps>
+  <Step title="Go to Pending Registrations">
+    From the season view, select **Registration → Pending**. You'll see a list of all registrations awaiting review, sorted by submission date.
+  </Step>
+  <Step title="Review Each Registration">
+    Click on a registration to view the player or team profile, including skill rating, contact information, and any answers to custom registration questions you've set up.
+  </Step>
+  <Step title="Approve or Decline">
+    Click **Approve** to confirm the registration and notify the participant. Click **Decline** to reject it — you'll be prompted to add an optional note explaining the decision, which is sent to the player.
+  </Step>
+  <Step title="Batch Actions">
+    To process multiple registrations at once, select the checkboxes next to each entry and use the **Approve Selected** or **Decline Selected** buttons at the top of the list.
+  </Step>
+</Steps>
+
+<Info>
+  Club Circuit automatically sends a confirmation email to each player when their registration is approved. The email includes the season name, division, and a link to their player dashboard. You can customize the confirmation message in **League Settings → Email Templates**.
+</Info>
+
+## Waitlist Management
+
+When your season reaches capacity, Club Circuit automatically places new registrations on a waitlist. You stay in control of who gets promoted.
+
+- **Viewing the waitlist** — Navigate to **Registration → Waitlist** to see all waitlisted participants in the order they registered.
+- **Promoting from the waitlist** — When a spot opens up (due to a cancellation or capacity increase), click **Promote** next to a waitlisted registration to move it to Pending for your approval.
+- **Auto-promotion** — Enable **Auto-Promote from Waitlist** in Registration Settings to automatically move the next waitlisted participant to Pending whenever a confirmed registration is cancelled.
+- **Notifying waitlisted players** — Use the **Notify Waitlist** button to send a bulk email update to everyone on the waitlist. This is useful if spots open up or if the season timeline changes.
+
+## Registration Flows
+
+The sign-up experience differs depending on whether your league uses individual player registration or team-based registration.
+
+<Tabs>
+  <Tab title="Individual Player Registration">
+    In individual registration mode, each player signs up for themselves. This is the standard flow for singles formats or leagues where you assign players to teams after registration closes.
+
+    **Player experience:**
+    1. The player visits your public league page or follows your invite link.
+    2. They select the division they want to join and click **Register**.
+    3. They complete any custom questions you've added (e.g., skill rating, availability, emergency contact).
+    4. They submit the form and receive a pending confirmation email.
+    5. Once you approve their registration, they receive a confirmation email with their season details.
+
+    **Organizer tip:** After individual registrations close, use the **Team Builder** tool in the season dashboard to group players into teams before scheduling begins.
+  </Tab>
+  <Tab title="Team Registration">
+    In team registration mode, a Team Captain registers on behalf of their entire team. Use this flow for doubles or mixed leagues where teams arrive pre-formed.
+
+    **Captain experience:**
+    1. The captain visits your league page and clicks **Register a Team**.
+    2. They enter a team name and invite teammates by email directly from the registration form.
+    3. Each invited player receives an email to confirm their spot on the roster.
+    4. Once the minimum team size is met, the captain submits the team registration for your approval.
+    5. You review the full roster and approve or decline the team as a unit.
+
+    **Organizer tip:** You can set a roster lock date in Registration Settings. After this date, captains can no longer add or remove players from their roster without your approval.
+  </Tab>
+</Tabs>
+
+## Registration Fees
+
+<Note>
+  If your league charges a registration fee, you can configure payment collection directly in Club Circuit by connecting a Stripe account under **Organization Settings → Payments**. Once connected, players are prompted to pay at the time of registration. Registrations are not confirmed until payment is received unless you enable the **Pay Later** option, which allows approval before payment is collected.
+
+  For free leagues, leave the fee field blank — the payment step is skipped entirely in the registration flow.
+</Note>

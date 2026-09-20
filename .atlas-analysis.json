@@ -1,13 +1,11 @@
 {
-  "$schema": "https://mintlify.com/docs.json",
+  "projectType": "saas",
+  "projectName": "Club Circuit Pickleball",
+  "projectDescription": "A comprehensive platform for managing pickleball leagues, including scheduling, team management, scorekeeping, rulebooks, and player standings.",
   "theme": "almond",
-  "name": "Club Circuit Pickleball",
-  "colors": {
-    "primary": "#ef7025",
-    "light": "#eec9bc",
-    "dark": "#4fa1ab"
-  },
-  "favicon": "/favicon.svg",
+  "primaryColor": "#ef7025",
+  "lightColor": "#eec9bc",
+  "darkColor": "#4fa1ab",
   "navigation": {
     "tabs": [
       {
@@ -87,22 +85,24 @@
       }
     ]
   },
-  "navbar": {
-    "links": [
-      {
-        "label": "Support",
-        "href": "mailto:support@clubcircuit.com"
-      }
-    ],
-    "primary": {
-      "type": "button",
-      "label": "Join a League",
-      "href": "https://app.clubcircuit.com"
-    }
-  },
-  "footer": {
-    "socials": {
-      "x": "https://x.com/clubcircuit"
-    }
-  }
+  "keyFeatures": [
+    "League creation and season management",
+    "Player registration and team formation",
+    "Automated match scheduling",
+    "Score reporting and live standings",
+    "Skill-based player ratings",
+    "Announcements and push notifications",
+    "Integrated rulebook and code of conduct",
+    "Dispute resolution workflow"
+  ],
+  "publicApiSurface": [
+    "League management (create, update, archive leagues)",
+    "Season scheduling (generate schedules, manage rounds)",
+    "Player profiles (registration, skill ratings)",
+    "Team management (roster, invitations)",
+    "Match score reporting",
+    "Standings and leaderboards",
+    "Announcements and notifications",
+    "Rulebook content"
+  ]
 }
