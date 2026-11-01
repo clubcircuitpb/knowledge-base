@@ -1,0 +1,129 @@
+---
+title: "Register for a season"
+sidebarTitle: "Register for a season"
+description: "To register for a ClubCircuit season, go to app.clubcircuitpb.com/register, pick your division, fill in your details and pay. Your club then puts you on a team."
+keywords: ["register", "sign up", "join a league", "join a season", "registration", "division", "free agent", "waitlist", "pay", "discount code"]
+---
+
+To register for a season, go to [app.clubcircuitpb.com/register](https://app.clubcircuitpb.com/register), pick your division, fill in your details and pay. You don't need an account first. You play for one club all season, and your club puts you on a team once registration closes.
+
+{/* src: leagues-app src/app/register/page.tsx:18,68 ("Register to play"); src/app/join/page.tsx:15-18 (/join redirects to /register); docs/adr/0042-one-public-register-link.md; registration-form.tsx:118 */}
+
+**Before you begin**
+
+- ClubCircuit is for adults. You'll need your date of birth, and the form shows the minimum age for your league.
+- If your league uses DUPR ratings, have your DUPR ID ready. It's on your profile in the DUPR app.
+- Don't have a club? You can still register. Choose **I don’t have a club — find me one**, and the league office finds you a club with room in your division.
+- If your club gave you a link, use it. It picks your club for you.
+
+{/* src: registration-form.tsx:163 ("Players must be ${minAge} or older", minAge from Ruleset); :213-214 (DUPR ID required when the ruleset's rating source is DUPR); :117,131 (free agent); src/app/join/page.tsx (?club= preselects); docs/adr/0003-adults-only-at-launch.md */}
+
+## Register and pay
+
+<Steps>
+  <Step title="Open the registration page">
+    Go to [app.clubcircuitpb.com/register](https://app.clubcircuitpb.com/register). Under **Where do you play?**, choose your location. If only one location is open, you skip this step.
+    {/* src: src/app/register/page.tsx:127-129; skipped when one location is open (agent research, page.tsx:95) */}
+  </Step>
+  <Step title="Pick your division">
+    Under **Pick your division**, choose the division you want to play in. Each one shows its rating range and price. If you're signed in, divisions you can enter are listed first, and the reason is shown under any you can't.
+    {/* src: src/app/register/page.tsx:160,163-164,236 */}
+  </Step>
+  <Step title="Choose your club">
+    In **Which club are you playing for?**, choose your club, or **I don’t have a club — find me one**.
+    {/* src: registration-form.tsx:114,124,131 */}
+  </Step>
+  <Step title="Fill in your details">
+    Enter your name, **Date of birth**, gender and **Jersey size**, plus your **DUPR ID** and rating if asked. Your phone number is optional, and only the league office sees it.
+    {/* src: registration-form.tsx:149-199,213-222,238 */}
+  </Step>
+  <Step title="Accept the agreements">
+    Tick the three boxes for the **Participation Waiver**, **Privacy Policy** and **Terms of Use & Participation**.
+    {/* src: registration-form.tsx:262-289 */}
+  </Step>
+  <Step title="Confirm your email">
+    Select **Continue to payment**. If you're not signed in, the button says **Email me a code to finish**: type the 6-digit code from the email to continue.
+    {/* src: registration-form.tsx:300; actions.ts:159-160 (signed out → /login/code → /apply/finalize) */}
+  </Step>
+  <Step title="Pay for your place">
+    Select **Pay** and the amount. Payment is on Stripe's secure page, so your card details never reach ClubCircuit. If you have a discount code, choose **Add promotion code** on that page.
+    {/* src: done/page.tsx:141-157 ("Pay {amount}", "Add promotion code"); docs/adr/0043-discount-codes-are-stripe-promotion-codes.md */}
+  </Step>
+</Steps>
+
+**Result:** You see **Payment received and your place is confirmed**, and we email you a receipt. Your club then tells you which team you'll play on. {/* src: done/page.tsx:130; src/lib/registration/notify.ts (receipt after payment) */}
+
+<Note>
+  Nothing is charged until the last step. If you close the payment page, your place is held and you can come back to pay. {/* src: registration-form.tsx:304; done/page.tsx:144-145 */}
+</Note>
+
+## If you don't need to pay
+
+If the league office waived your fee, or a code covers the whole price, you won't be asked for a card. The page says **You’re in** and **Your place is confirmed and there’s nothing to pay**. {/* src: done/page.tsx:77,131,156-157; src/lib/registration/finalize.ts:223-226 (fee waivers matched by email) */}
+
+## If your division is full
+
+You join the waitlist instead. The page says **You’re on the waitlist**. We email you as soon as a place opens, and you're charged nothing unless one does. {/* src: done/page.tsx:75,123-125 */}
+
+## If you're a team captain
+
+Many leagues give each team's captain a free registration. There are three ways it reaches you:
+
+- **Your club named you captain before you registered.** You get an email inviting you to register. Register in that division, for that club, **with the same email address the invitation went to**, and your registration is free.
+- **You're made captain after you register.** Your fee is waived if you haven't paid yet, or refunded in full if you have. You stay on your team either way.
+- **The league office sent you a discount code.** Enter it with **Add promotion code** on the payment page.
+
+The form doesn't show the free price until you submit. You'll see it on the confirmation page. {/* src: docs/adr/0056-captains-register-free.md (Ruleset.freeCaptainsPerTeam; nominated before → $0 when registering in that division with that club and email; named after → waived or refunded, stays on team; form doesn't show the waiver before submitting); src/app/club/[slug]/admin/import/page.tsx:88-93; docs/adr/0043-discount-codes-are-stripe-promotion-codes.md */}
+
+## Why isn't this working?
+
+### I was named captain but I was asked to pay
+**Cause:** You registered with a different email address from the one your club invited, or in a different division or club.
+**Fix:** Pay to keep your place, then ask your club's admins to make you captain of your team. Your fee is refunded in full. {/* src: docs/adr/0056-captains-register-free.md (residual risk: different email doesn't match; making them captain refunds it) */}
+
+### "Nothing is open for registration yet"
+**Cause:** No season is taking registrations in your location right now.
+**Fix:** Check back later. Seasons usually open about two months before play starts. {/* src: src/app/register/page.tsx:71-72 */}
+
+### "Registration for that season has closed."
+**Cause:** The season's registration window has ended.
+**Fix:** You can still sign up to sub for teams that need players. Look for **Sign up to sub** on the registration page. {/* src: src/lib/registration/finalize.ts:118-119; src/app/register/page.tsx:214 */}
+
+### A division says "Not eligible"
+**Cause:** Something about your rating, age, gender or past results doesn't fit that division's rules for this season. The reason is shown under the division.
+**Fix:** Read the reason and pick a division that fits. If the reason is wrong, for example your rating is out of date, fix it and try again, or email support. {/* src: src/app/register/page.tsx:163,236; src/lib/rules/rules/registration.ts (eligibility refusals) */}
+
+### "ClubCircuit is for players … and over, so you can’t register yet."
+**Cause:** The date of birth you entered is under the minimum age for this league.
+**Fix:** If you typed it wrong, correct it and try again. Players under the minimum age can't register. {/* src: registration-form.tsx:324; actions.ts:130; docs/adr/0003-adults-only-at-launch.md */}
+
+### My rating is "above this division’s" ceiling or "below" its floor
+**Cause:** The DUPR rating you entered is outside the division's range.
+**Fix:** Pick a division that fits your rating, or check the number you typed. If you don't have a rating yet, leave it blank. {/* src: registration-form.tsx:336,346,349 */}
+
+### "A DUPR rating is between 2.00 and 8.00. Leave it blank if you don’t have one."
+**Cause:** The rating you typed isn't a real DUPR rating.
+**Fix:** Copy your doubles rating from the DUPR app, or leave the field blank. {/* src: src/lib/registration/finalize.ts:142 */}
+
+### "Tick the box to accept the Participation Waiver — you need to accept it to play."
+**Cause:** One of the agreement boxes isn't ticked.
+**Fix:** Tick all three boxes and select the button again. {/* src: actions.ts:49-51 */}
+
+### "That division isn’t open any more. Go back and pick another."
+**Cause:** The division closed or filled while you were filling in the form.
+**Fix:** Go back to the [registration page](https://app.clubcircuitpb.com/register) and pick another division. {/* src: actions.ts:128 */}
+
+### "We couldn’t start checkout. Try again in a moment."
+**Cause:** The payment page didn't open.
+**Fix:** Wait a moment and select **Pay** again. Your place is still held. {/* src: done/actions.ts:56 */}
+
+### I registered twice by mistake
+**Cause:** You submitted the form again for the same season.
+**Fix:** Nothing to do. We keep your first registration and don't create a second one. {/* src: done/page.tsx:84-85; actions.ts:100 */}
+
+## Related articles
+
+- [Sign in to ClubCircuit](/players/sign-in)
+- [See your next match and which rounds you’re playing](/players/see-your-matches-and-rounds)
+
+{/* Last verified: 2026-11-01 against leagues-app 5b16e55 */}

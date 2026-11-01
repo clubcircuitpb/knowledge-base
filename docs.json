@@ -9,8 +9,53 @@
   },
   "favicon": "/favicon.svg",
   "navigation": {
-    "pages": [
-      "index"
+    "tabs": [
+      {
+        "tab": "Players",
+        "icon": "user",
+        "groups": [
+          {
+            "group": "Getting started",
+            "pages": [
+              "index",
+              "players/index",
+              "players/sign-in",
+              "players/register-for-a-season"
+            ]
+          },
+          {
+            "group": "Your matches",
+            "pages": [
+              "players/set-your-availability",
+              "players/see-your-matches-and-rounds"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Captains",
+        "icon": "clipboard-list",
+        "groups": [
+          {
+            "group": "Captains",
+            "pages": [
+              "captains/index"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Running a club",
+        "icon": "building",
+        "groups": [
+          {
+            "group": "Running a club",
+            "pages": [
+              "clubs/index"
+            ]
+          }
+        ]
+      }
     ]
   },
   "navbar": {

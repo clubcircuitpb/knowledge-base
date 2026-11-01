@@ -1,33 +1,69 @@
-> **First-time setup**: Customize this file for your project. Prompt the user to customize this file for their project.
-> For Mintlify product knowledge (components, configuration, writing standards),
-> install the Mintlify skill: `npx skills add https://mintlify.com/docs`
+# ClubCircuit help center — instructions for agents and editors
 
-# Documentation project instructions
+This repo is the public help center for **ClubCircuit**, an interclub pickleball league platform.
+Mintlify publishes it from `main`. It is **public**: anyone on GitHub can read it.
 
-## About this project
+## Who it's for
 
-- This is a documentation site built on [Mintlify](https://mintlify.com)
-- Pages are MDX files with YAML frontmatter
-- Configuration lives in `docs.json`
-- Use the Mintlify MCP server, `https://mcp.mintlify.com`, to edit content and settings via MCP
-- Use the Mintlify docs MCP server, `https://www.mintlify.com/docs/mcp`, to query information about using Mintlify via MCP
+| Tab | Folder | Reader |
+|---|---|---|
+| Players | `players/` | Anyone who plays in a ClubCircuit season |
+| Captains | `captains/` | Team captains |
+| Running a club | `clubs/` | Club admins and club owners. Pages only owners can act on carry `tag: "Owners only"` |
+| League rules | `rules/` | Everyone |
 
-## Terminology
+League (market) admin and platform admin documentation does **not** belong here. It lives outside
+Mintlify.
 
-{/* Add product-specific terms and preferred usage */}
-{/* Example: Use "workspace" not "project", "member" not "user" */}
+## Where the truth is
 
-## Style preferences
+The app is the only source. It lives in the private repo `clubcircuitpb/leagues-app`.
 
-{/* Add any project-specific style rules below */}
+- **Which article covers which screen:** `src/lib/help-center/kb-map.ts` in leagues-app. Every
+  article here has an entry there. When you publish an article, set its `status` to `published`
+  in that map, in a leagues-app branch.
+- **UI labels:** copy them verbatim from the app's code (`src/app/**`, `src/components/**`).
+- **Behaviour:** the screen specs in `docs/04-screens.md`, the rules in
+  `docs/02-rules-and-eligibility.md` and `docs/03-match-format-and-lineups.md`, and the decisions
+  in `docs/adr/`. When code and docs disagree, the code wins for labels and the newest ADR wins for
+  behaviour. Flag every conflict to Larry.
+- Pages that were in this repo before 1 November 2026 were not written from the app. Never reuse
+  them as a source.
 
-- Use active voice and second person ("you")
-- Keep sentences concise — one idea per sentence
-- Use sentence case for headings
-- Bold for UI elements: Click **Settings**
-- Code formatting for file names, commands, paths, and code references
+## Writing rules
 
-## Content boundaries
+Use the **kb-article-writer** skill for every article: answer first, task-based title, 5–7 steps,
+a **Why isn't this working?** section, and a source for every step. On top of that:
 
-{/* Define what should and shouldn't be documented */}
-{/* Example: Don't document internal admin features */}
+1. **Put a hidden source note on every step**: `{/* src: src/app/match/[matchId]/lineup/page.tsx */}`.
+   End each article with `{/* Last verified: <date> against leagues-app <short sha> */}`.
+2. **Never quote a rule's value.** Deadlines, rating caps, roster limits and fees come from each
+   season's `Ruleset` and differ by season. Explain how the rule works and point readers to their
+   season's rules in the app. No "24 hours", no "4.0 cap".
+3. **Rounds and courts, never game numbers.** "Round 3, Court 2", "You're playing rounds 1, 3 and 6".
+4. **Write for one-handed phone use.** Players read this at a court. Short steps, no tables wider
+   than a phone.
+5. **No member data and nothing private.** No real names, emails or screenshots of real accounts,
+   and nothing from leagues-app's `docs/14-owner-checklist.md`. Use the sandbox's fictional people
+   if you need an example.
+6. **Brand:** "ClubCircuit", one word. Support: `support@clubcircuitpb.com`. App:
+   `https://app.clubcircuitpb.com`.
+7. Mintlify conventions: sentence-case headings, root-relative links without `.mdx`, alt text on
+   every image, and add every new page to `docs.json` (never list a page that doesn't exist yet).
+
+## Branches and publishing
+
+- Work on a branch named after the leagues-app branch that caused the change, or `kb-sync/<date>`
+  for the weekly sync. Run `mint validate` and `mint broken-links` before you push.
+- **Never merge to `main` yourself.** Production for the app changes only when Larry promotes a
+  release; he merges help-center pull requests at the same time, so the help center never
+  describes a feature members can't use yet.
+- When you move or delete a published page, add a redirect in `docs.json`. The paths of the
+  pre-November starter pages already redirect to `/`; don't reuse those exact paths.
+
+## The weekly sync
+
+`.kb-sync/last-checked` holds the leagues-app `main` commit the help center was last checked
+against. The weekly sync runs `pnpm kb:impact <last-checked>..origin/main` in leagues-app,
+re-verifies or writes what it flags, bumps this file, and opens one pull request here. It opens
+one even when nothing needs changing, so Larry can see the check happened.
