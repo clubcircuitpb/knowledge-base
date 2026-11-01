@@ -57,8 +57,14 @@ Your league decides when each team sees the other's lineup. Until then, their co
 Make your changes, then tap **Resubmit**. Only the players whose rounds changed are told. You can keep changing it until it locks. {/* src: lineup-builder.tsx:1124,416-418; src/lib/lineup/save.ts (LINEUP_CHANGED to players whose rounds changed) */}
 
 <Warning>
-  Changes save as soon as you make them, and the other team can see them once lineups are revealed, even before you tap **Resubmit**. Resubmitting after your lineup's deadline marks it **Submitted late**. For how late lineups are penalized, see your league's rulebook. {/* src: lineup-builder.tsx:285-297,547; src/lib/lineup/save.ts:148 (status LATE when submitted after dueAt) */}
+  Changes save as soon as you make them, and the other team can see them once lineups are revealed, even before you tap **Resubmit**. {/* src: lineup-builder.tsx:285-297 */}
 </Warning>
+
+## Change a lineup after the deadline
+
+After the deadline, a **clean swap** keeps your lineup on time: one new player takes exactly the games of a player who can't make it, and nothing else changes. Any other change after the deadline marks the lineup **Submitted late**. Either way, the other captain and the league office are told what changed. {/* src: src/lib/lineup/save.ts (cleanSwap → SUBMITTED, otherwise LATE; notifyChangeAfterDeadline) */}
+
+A late lineup can cost your team games. The penalty is applied automatically once your league's warning weeks are over, unless the other captain agreed to the late lineup. See [Find and contact other captains](/captains/contact-other-captains) to ask for that consent. Your league's rulebook has the details. {/* src: src/lib/lineup/save.ts (applyLateLineupPenalty); src/lib/scores/penalties.ts:65-80 (Ruleset.lateLineupPenaltyGames, lateLineupWarningWeeks); src/lib/captains/messages.ts (consent removes the penalty) */}
 
 ## Why isn't this working?
 
@@ -99,4 +105,4 @@ Make your changes, then tap **Resubmit**. Only the players whose rounds changed 
 - [See your next match and which rounds you’re playing](/players/see-your-matches-and-rounds), what your players see
 - [Find a sub when you're short](/captains/find-a-substitute)
 
-{/* Last verified: 2026-11-01 against leagues-app ad28a0e */}
+{/* Last verified: 2026-11-01 against leagues-app bb4f3b5 */}

@@ -48,6 +48,18 @@ To enter scores, open the match on match day and tap the **Scores** tab. Enter e
   Once you've submitted, don't change any scores. If something's wrong, ask the other captain to raise it instead. See [Dispute a match result](/captains/dispute-a-result). {/* src: scores-entry.tsx:401 (list-view inputs stay enabled while awaiting confirmation); src/lib/scores/mutations.ts (confirm doesn't recompute games won) */}
 </Warning>
 
+## Record a forfeited game
+
+If a game couldn't be played or finished, for example nobody could fill it, a player was hurt, or a player was too late with no sub, record it as a forfeit instead of a score.
+
+1. On that court, tap **Forfeit this game**.
+2. Under **Which team forfeited?**, choose the team.
+3. Pick the reason.
+4. If the game had started, enter the **Score when play stopped**. Leave it blank if it never started.
+5. Tap **Record the forfeit**.
+
+If the team that forfeited was behind, the game stands at that score. Otherwise it's recorded as 1–0 to the other team. A whole-match forfeit, or games played by an ineligible sub, are recorded by the league office. {/* src: src/app/match/[matchId]/scores/forfeit-panel.tsx:58-101; src/lib/scores/forfeit-rules.ts:13-21 (reason labels); src/lib/scores/forfeits.ts:111,156 (whole match and ineligible sub: requireMarketAdminForDivision) */}
+
 ## Confirm the other captain's scores
 
 When the other captain submits, your **Home** shows **Review and confirm**. Check every court on the **Scores** tab, then tap **Confirm result**. If a score is wrong, tap **Something’s wrong** instead. {/* src: src/lib/play/home.ts:403-405; scores-entry.tsx:449,456 */}
@@ -55,6 +67,8 @@ When the other captain submits, your **Home** shows **Review and confirm**. Chec
 **Result:** You see **Result confirmed. Standings updated.** Both teams get the result. {/* src: scores-entry.tsx:135; src/lib/scores/mutations.ts:275 (chat line), registry SCORES_CONFIRMED */}
 
 If nobody confirms in time, the result may be confirmed automatically. Your league sets whether and when. {/* src: src/lib/scores/auto-confirm.ts:105-119 (Ruleset.autoConfirmAfterWindow, confirmationWindowHours) */}
+
+If both teams win the same number of games, your league's rules decide the match, for example on point differential. The league office can also apply a game penalty, such as for a late lineup, even after the result is confirmed. If it does, the result and standings update and both teams are told. {/* src: src/lib/scores/decide.ts (Ruleset.matchTieResolution); src/lib/scores/penalties.ts; src/lib/scores/penalty-text.ts:27-37 */}
 
 ## Print a scoresheet
 
@@ -95,4 +109,4 @@ On the match's **Rounds** tab, open **More for this match** and tap **Print scor
 - [Dispute a match result](/captains/dispute-a-result)
 - [Follow the standings, player standings and playoffs](/players/follow-standings-and-stats)
 
-{/* Last verified: 2026-11-01 against leagues-app ad28a0e */}
+{/* Last verified: 2026-11-01 against leagues-app bb4f3b5 */}

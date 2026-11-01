@@ -50,7 +50,7 @@ To move a match, see [Ask to reschedule a match](/captains/request-a-reschedule)
 Requests other captains send you appear at the top of the directory under **Waiting on you**. For a late-lineup request, tap **Grant consent** or **Decline**. For a lineup change or a score discrepancy, tap **Acknowledge**. {/* src: captains-directory.tsx:452,554 */}
 
 <Tip>
-  If your lineup went in late and the other captain granted consent, open the match page and tap **Appeal the penalty**. How late lineups are penalized is in your league's rulebook. {/* src: src/app/match/[matchId]/late-lineup-appeal.tsx:27-41; src/lib/captains/messages.ts (appeal upheld only with GRANTED consent) */}
+  If your lineup went in late and the other captain taps **Grant consent**, the late-lineup penalty is removed automatically. If it's still showing, open the match page and tap **Appeal the penalty**. How late lineups are penalized is in your league's rulebook. {/* src: src/lib/captains/messages.ts (granting LATE_LINEUP_CONSENT removes the AUTO late-lineup penalty); src/app/match/[matchId]/late-lineup-appeal.tsx:43 */}
 </Tip>
 
 ## Share your phone number with other captains
@@ -84,4 +84,4 @@ Other captains can't see your email address. They see your phone number only if 
 - [Ask to reschedule a match](/captains/request-a-reschedule)
 - [See who can play and manage your team](/captains/manage-your-team)
 
-{/* Last verified: 2026-11-01 against leagues-app ad28a0e */}
+{/* Last verified: 2026-11-01 against leagues-app bb4f3b5 */}
