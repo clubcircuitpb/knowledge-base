@@ -1,0 +1,93 @@
+---
+title: "See your next match and which rounds you’re playing"
+sidebarTitle: "Your next match and rounds"
+description: "Open Home to see your next match: when, where and who against. Once your captain posts the lineup, the card shows Your rounds, and the match page lists each round, court and partner."
+keywords: ["next match", "my rounds", "lineup", "which court", "partner", "schedule", "when is my match", "venue", "directions"]
+---
+
+To see your next match, open **Home**. The **Next match** card shows when and where you're playing and who against. Once your captain posts the lineup, it also shows **Your rounds**. Select **Match details** to see your court and partner for each round.
+
+{/* src: leagues-app src/components/match/next-match-card.tsx:40,79,106; src/lib/play/home.ts:312 */}
+
+**Before you begin**
+
+- You need to be on a team's roster. Your club puts you on a team after registration closes.
+- Your rounds appear only after your captain posts the lineup, usually a little before the match. Your league sets that deadline for each season.
+
+{/* src: src/app/home/page.tsx:152; src/lib/play/home.ts:263-268,315 (lineup due from Ruleset home/awayLineupDueHoursBefore) */}
+
+## See your next match
+
+<Steps>
+  <Step title="Open Home">
+    Sign in. On a phone, tap **Home** in the bar at the bottom of the screen.
+    {/* src: src/lib/nav/play.ts:105 (tab bar: Home · Schedule · Standings or Captain · Messages) */}
+  </Step>
+  <Step title="Read the Next match card">
+    The card shows the date and time, your opponent, and whether you're **Home** or **Away**, plus the venue.
+    {/* src: src/components/match/next-match-card.tsx:40,59-68; src/lib/play/home.ts:296 */}
+  </Step>
+  <Step title="Get directions or add it to your calendar">
+    Tap **Directions** to open the venue in Google Maps, or **Add to calendar**.
+    {/* src: src/components/match/next-match-card.tsx:73,77; src/components/match/venue-details.tsx:22-27 */}
+  </Step>
+  <Step title="Check your rounds">
+    When the card says **Lineup posted**, look for **Your rounds**, for example "Your rounds: 1, 3, 6 and 8".
+    {/* src: src/components/match/next-match-card.tsx:106; src/lib/play/home.ts:312 */}
+  </Step>
+  <Step title="Open the match">
+    Tap **Match details**, then the **Rounds** tab.
+    {/* src: src/components/match/next-match-card.tsx:79; src/app/match/[matchId]/page.tsx:516 */}
+  </Step>
+</Steps>
+
+**Result:** Under **Your rounds**, each round you're playing shows its court and your partner, like **Round 3 · Court 2** with your partner's name below. After the match, your scores appear there too, with your score first. {/* src: src/app/match/[matchId]/page.tsx:539,548,554,559 */}
+
+<Warning>
+  Your rounds are final only once the card shows **Lineup posted**. Before that, your captain may still be moving players around, so the match page can show a draft. {/* src: src/lib/lineup/save.ts:28-60 (autosaved drafts visible to own side); next-match-card.tsx:106 */}
+</Warning>
+
+## See the whole lineup
+
+On the match page, open the **Lineups** tab. Choose **By round** to see every court in each round, or **By player** to see each teammate's rounds and partners. You see the other team's lineup once the league's rules for your season allow it, and everyone sees both lineups once the match starts. {/* src: src/app/match/[matchId]/page.tsx:608-609,668; src/lib/lineup/reveal.ts:34-47 (Ruleset.revealPolicy) */}
+
+## See all your matches
+
+Tap **Schedule**. With **Your team** selected, you see each of your team's matches with its date, opponent, venue and, after it's played, the result. Times are in your league's local time. Open a match to see its lineups, scores and your rounds. {/* src: src/lib/nav/play.ts:106; src/app/[market]/[season]/schedule/page.tsx:94,106,194-210 */}
+
+## Why isn't this working?
+
+### "You’re registered. Your club puts you on a team once registration closes"
+**Cause:** You've registered, but your club hasn't placed you on a team yet.
+**Fix:** Nothing to do. We'll let you know when you're on a team, and your next match then appears on **Home**. {/* src: src/app/home/page.tsx:152 */}
+
+### "No match scheduled yet"
+**Cause:** You're on a team, but the league hasn't published your team's schedule yet.
+**Fix:** Check back later. Your matches appear on **Home** and **Schedule** as soon as the schedule is published. {/* src: src/app/home/page.tsx:242-243 */}
+
+### "Your rounds post …, when the lineup is in."
+**Cause:** Your captain hasn't posted the lineup yet. The date shown is when it's due.
+**Fix:** Make sure you've said whether you can play. Captains build the lineup from those answers. See [Tell your captain whether you can play](/players/set-your-availability). {/* src: src/lib/play/home.ts:315 */}
+
+### "You’re not in this lineup — you’re resting this match."
+**Cause:** Your captain posted the lineup without you in any round this time.
+**Fix:** Nothing to do. If you expected to play, ask your captain. You can message your team from **Team chat** on the match page. {/* src: src/lib/play/home.ts:314; src/app/match/[matchId]/page.tsx:407 */}
+
+### "Not revealed yet — shows here once the league’s reveal rule allows."
+**Cause:** The other team's lineup is hidden until the time your league's rules allow.
+**Fix:** Check again closer to the match. Both lineups show for everyone once the match starts. {/* src: src/app/match/[matchId]/page.tsx:668; src/lib/lineup/reveal.ts */}
+
+### The venue says "Venue to be confirmed" and there's no Directions button
+**Cause:** The host club hasn't added the venue address yet.
+**Fix:** Check back closer to the match, or ask your captain where you're playing. {/* src: src/lib/venue/address.ts:30 */}
+
+### My match moved and the date looks wrong
+**Cause:** A rescheduled match shows its new date. An older page or email may still show the old one.
+**Fix:** Refresh **Home** or **Schedule**. The app always shows the current date and time. {/* src: prisma/schema.prisma MatchStatus (no postponed state; a moved match carries its new time) */}
+
+## Related articles
+
+- [Tell your captain whether you can play](/players/set-your-availability)
+- [Sign in to ClubCircuit](/players/sign-in)
+
+{/* Last verified: 2026-11-01 against leagues-app 5b16e55 */}

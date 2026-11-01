@@ -18,7 +18,16 @@
             "group": "Getting started",
             "pages": [
               "index",
-              "players/index"
+              "players/index",
+              "players/sign-in",
+              "players/register-for-a-season"
+            ]
+          },
+          {
+            "group": "Your matches",
+            "pages": [
+              "players/set-your-availability",
+              "players/see-your-matches-and-rounds"
             ]
           }
         ]

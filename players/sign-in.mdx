@@ -1,0 +1,87 @@
+---
+title: "Sign in to ClubCircuit"
+sidebarTitle: "Sign in"
+description: "To sign in, enter your email on the sign-in page, select Email me a sign-in code, then type the 6-digit code from the email. There's no password."
+keywords: ["sign in", "log in", "login", "sign-in code", "verification code", "password", "create account", "sign up"]
+---
+
+To sign in, go to [app.clubcircuitpb.com/login](https://app.clubcircuitpb.com/login), enter your email and select **Email me a sign-in code**, then type the 6-digit code we email you and select **Sign in**. There's no password to remember.
+
+{/* src: leagues-app src/app/login/page.tsx:58,101,105; src/app/login/code/code-form.tsx:40,56 */}
+
+**Before you begin**
+
+- Have your email inbox open on the same phone or computer, or nearby. The code comes by email.
+- New to ClubCircuit? You don't need a separate sign-up (also called creating an account or registering an account). Signing in with your email for the first time creates your account. {/* src: src/lib/auth/config.ts:18-19 (sign-up is open); docs/adr/0001-public-consumer-auth.md */}
+
+## Sign in with an emailed code
+
+<Steps>
+  <Step title="Open the sign-in page">
+    Go to [app.clubcircuitpb.com/login](https://app.clubcircuitpb.com/login), or select **Sign in** at the top of any ClubCircuit page.
+    {/* src: src/app/login/page.tsx:57 (h1 "Sign in"); src/components/shell/public-frame.tsx (header Sign in link) */}
+  </Step>
+  <Step title="Enter your email">
+    Type your address in **Email address**, then select **Email me a sign-in code**.
+    {/* src: src/app/login/page.tsx:101,105 */}
+  </Step>
+  <Step title="Find the email">
+    Open the email with the subject **Your ClubCircuit sign-in code**. The code is in large type in the email. The email has no link to tap.
+    {/* src: src/lib/auth/sign-in-code.tsx:31 (subject "Your ClubCircuit sign-in code: {code}"), :45-47; docs/adr/0027-email-code-sign-in.md */}
+  </Step>
+  <Step title="Type the code">
+    Back on the **Enter your code** page, type the 6 digits into **6-digit code**. On most phones, the keyboard offers to fill in the code from the email for you.
+    {/* src: src/app/login/code/page.tsx:47; code-form.tsx:40,45-46 (inputMode numeric, autoComplete one-time-code) */}
+  </Step>
+  <Step title="Select Sign in">
+    Select **Sign in**.
+    {/* src: src/app/login/code/code-form.tsx:56 */}
+  </Step>
+</Steps>
+
+**Result:** You're signed in and taken to your ClubCircuit home. If you're new and haven't registered for a season yet, you're taken to registration instead. You stay signed in on that device until you sign out. {/* src: src/lib/nav/landing.ts:27-34 (landing; no roles or roster → /join → /register); src/lib/auth/config.ts:113 (database session) */}
+
+<Note>
+  Each code works once and expires 10 minutes after we send it. The **Enter your code** page shows how long you have. {/* src: src/lib/auth/sign-in-code.tsx:13 (SIGN_IN_CODE_TTL_MINUTES = 10), :49-50; src/app/login/code/page.tsx:49 */}
+</Note>
+
+## Why isn't this working?
+
+### I didn't get the email
+**Cause:** It went to your spam or junk folder, or the address has a typo.
+**Fix:** Check spam and junk first, and search your inbox for "ClubCircuit sign-in code". If it's not there, select **request a new code** on the **Enter your code** page and check that you typed your address correctly. {/* src: src/app/login/code/page.tsx:55-57 ("Didn’t get it? Check spam, or request a new code.") */}
+
+### "That code was wrong or has expired. Enter your email to get a new one."
+**Cause:** The code was mistyped, it's more than 10 minutes old, or you already used it.
+**Fix:** Enter your email again and select **Email me a sign-in code**. Use the newest email. Codes from older emails stop working. {/* src: src/app/login/page.tsx:38; src/lib/auth/sign-in-code.tsx:49 (single use) */}
+
+### "Enter the 6-digit code from the email."
+**Cause:** What you typed isn't 6 digits.
+**Fix:** Copy the code exactly as it appears in the email. Spaces are fine. {/* src: src/app/login/code/actions.ts:27 */}
+
+### "That’s a lot of codes at once. Wait a minute and try again."
+**Cause:** You've asked for several codes in a short time.
+**Fix:** Stop requesting codes and check your inbox, including spam, for one that already arrived. If the message keeps appearing, wait up to an hour before trying again. {/* src: src/app/login/page.tsx:91; src/lib/rate-limit/limiter.ts:99 (magicLinkPerEmail: 5 per hour) */}
+
+### "Too many attempts. Wait a few minutes, then request a new code."
+**Cause:** A code was entered incorrectly several times in a row.
+**Fix:** Wait a few minutes, then go back to the sign-in page and request a new code. {/* src: src/app/login/code/actions.ts:33; src/lib/rate-limit/limiter.ts:104 */}
+
+### "Enter a valid email address."
+**Cause:** The address is missing part of it, like the `@` or the ending.
+**Fix:** Check the address and try again. {/* src: src/app/login/page.tsx:75 */}
+
+### "Something went wrong. Start again from the sign-in page."
+**Cause:** The code page lost track of your email address, often because the page was opened from an old tab.
+**Fix:** Go back to [the sign-in page](https://app.clubcircuitpb.com/login) and start again. {/* src: src/app/login/code/actions.ts:23 */}
+
+### I'm looking for a "Sign in with Google" button
+**Cause:** ClubCircuit signs you in with an emailed code. There's no Google option on the sign-in page.
+**Fix:** Use the email address on your Google account, or any email you check. {/* src: src/app/login/page.tsx (no Google provider button); docs/adr/0027-email-code-sign-in.md */}
+
+## Related articles
+
+- [Register for a season](/players/register-for-a-season)
+- [Help for players](/players)
+
+{/* Last verified: 2026-11-01 against leagues-app 5b16e55 */}
