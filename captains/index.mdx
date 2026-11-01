@@ -1,16 +1,47 @@
 ---
 title: "Help for team captains"
 sidebarTitle: "Captains"
-description: "Help for team captains: your roster, your lineups, scores and subs."
-keywords: ["captain", "team captain", "lineup", "roster", "help"]
+description: "Help for team captains: who can play, your lineups, subs, reschedules and scores."
+keywords: ["captain", "team captain", "lineup", "subs", "scores", "help"]
 ---
 
 {/* src: leagues-app src/app/club/[slug]/admin/captains (club admins assign captains); prisma/schema.prisma Role.TEAM_CAPTAIN */}
 
 This section is for team captains. Your club's admins make you captain of a team, and you'll see your captain tools in the app once they do.
 
+## Before each match
+
+<Columns cols={2}>
+  <Card title="Manage your team" icon="users" href="/captains/manage-your-team">
+    See who can play each match and nudge anyone who hasn't answered.
+  </Card>
+  <Card title="Build your lineup" icon="clipboard-list" href="/captains/build-and-post-a-lineup">
+    Put a player on every court, every round, and submit.
+  </Card>
+  <Card title="Find a sub" icon="user-plus" href="/captains/find-a-substitute">
+    Offer the spot to eligible subs when you're short.
+  </Card>
+  <Card title="Reschedule a match" icon="calendar-clock" href="/captains/request-a-reschedule">
+    Offer the other captain new dates.
+  </Card>
+</Columns>
+
+## On match day and after
+
+<Columns cols={2}>
+  <Card title="Enter and confirm scores" icon="square-pen" href="/captains/enter-and-confirm-scores">
+    Enter each court as it finishes; the other captain confirms.
+  </Card>
+  <Card title="Dispute a result" icon="flag" href="/captains/dispute-a-result">
+    Raise a wrong score with the league office.
+  </Card>
+  <Card title="Contact other captains" icon="message-square" href="/captains/contact-other-captains">
+    Lineup changes, late-lineup consent and score discrepancies.
+  </Card>
+</Columns>
+
 You're still a player too, so everything in the [Players](/players) section applies to you.
 
 Can't find what you need? Ask your club's admins, or email [support@clubcircuitpb.com](mailto:support@clubcircuitpb.com).
 
-{/* Last verified: 2026-11-01 against leagues-app 5b16e55 */}
+{/* Last verified: 2026-11-01 against leagues-app ad28a0e */}

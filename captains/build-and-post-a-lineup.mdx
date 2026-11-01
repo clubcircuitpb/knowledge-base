@@ -1,0 +1,102 @@
+---
+title: "Build and post your lineup"
+sidebarTitle: "Build your lineup"
+description: "Open your match's lineup, place a player in every court for every round (or tap Auto-fill), fix anything the checks flag, then tap Submit. Your players are told which rounds they're playing."
+keywords: ["lineup", "set lineup", "submit lineup", "lineup builder", "auto-fill", "partners", "rounds", "courts", "resubmit", "late lineup"]
+---
+
+To post your lineup, open the match's lineup from **Home** or **Manage team**, put a player on every court in every round, or tap **Auto-fill**, then tap **Submit**. Your changes save as you go. When you submit, each player in the lineup is told which rounds and courts they're playing.
+
+{/* src: leagues-app src/lib/lineup/cta.ts:46; src/app/match/[matchId]/lineup/lineup-builder.tsx:285-297 (autosave), :695,1124 (Submit); src/lib/lineup/save.ts:154-221 (LINEUP_SUBMITTED to each placed player) */}
+
+**Before you begin**
+
+- You need to be the team's captain.
+- Ask your players whether they can play first. The builder shows each player's answer. See [See who can play and manage your team](/captains/manage-your-team).
+- Your lineup has a deadline, and it locks at a set time. Both are set by your league for the season. The builder shows when yours is due.
+
+{/* src: src/lib/lineup/workspace.ts:126-128 (deadline from Ruleset home/awayLineupDueHoursBefore); Ruleset.lineupLocksAt; src/lib/play/facts.ts:81-88 (due fact) */}
+
+## Build and submit your lineup
+
+<Steps>
+  <Step title="Open the lineup">
+    On **Home**, tap **Set lineup** on the match. You can also open it from **Manage team**, or from **Lineup** in the **Captain** menu on a computer.
+    {/* src: src/lib/lineup/cta.ts:46 (Set lineup / Finish lineup / Edit lineup); src/lib/play/home.ts:436-438; src/lib/nav/play.ts:98; manage/page.tsx:30-34 */}
+  </Step>
+  <Step title="Go to a round">
+    Use **Previous round** and **Next round** to move between rounds. Each round shows its courts and whether it's mixed doubles or men's and women's doubles.
+    {/* src: lineup-builder.tsx:584,623,84-86,828-837 */}
+  </Step>
+  <Step title="Place players">
+    Tap an empty court, then tap a player to put them there. Players who said they can't play are greyed out. Next to each name you can see how often they've already partnered that player in this match.
+    {/* src: lineup-builder.tsx:1226,1272,1304-1306,1357-1364 */}
+  </Step>
+  <Step title="Or let Auto-fill do it">
+    Tap **Squad**, then **Auto-fill the rest**. Auto-fill replaces the whole lineup, not just the empty courts. Tap **Undo** to go back.
+    {/* src: lineup-builder.tsx:1116,1157,663; src/lib/lineup/autofill.ts (replaces the whole lineup; prefers In, then Maybe, then No answer) */}
+  </Step>
+  <Step title="Fix anything flagged">
+    If something breaks your league's rules, like a pair playing together too often or a court with the wrong mix, a message tells you what to change. On a phone it's in the bar at the bottom. On a computer it's under **Checks**.
+    {/* src: lineup-builder.tsx:1046,1098,1702-1733; src/lib/rules/rules/lineup.ts:83-227 */}
+  </Step>
+  <Step title="Submit">
+    When the bar says **Ready to submit**, tap **Submit**. On a computer, it's **Submit lineup**.
+    {/* src: lineup-builder.tsx:1107,1124,695 */}
+  </Step>
+</Steps>
+
+**Result:** You see "Lineup submitted at …", and each player in it is told which rounds they're playing. A message thread for this week's lineup opens in **Messages**. {/* src: lineup-builder.tsx:418; src/lib/lineup/save.ts:154-221; src/lib/messaging/lineup-thread.ts:48 */}
+
+## When the other team sees your lineup
+
+Your league decides when each team sees the other's lineup. Until then, their courts show **Hidden until reveal**. The builder tells you whether you submit first, are waiting on the other team, or can see theirs. {/* src: src/lib/lineup/reveal.ts:34-47,311-324 (Ruleset.revealPolicy); lineup-builder.tsx:816,957 */}
+
+## Change a lineup you've already submitted
+
+Make your changes, then tap **Resubmit**. Only the players whose rounds changed are told. You can keep changing it until it locks. {/* src: lineup-builder.tsx:1124,416-418; src/lib/lineup/save.ts (LINEUP_CHANGED to players whose rounds changed) */}
+
+<Warning>
+  Changes save as soon as you make them, and the other team can see them once lineups are revealed, even before you tap **Resubmit**. Resubmitting after your lineup's deadline marks it **Submitted late**. For how late lineups are penalized, see your league's rulebook. {/* src: lineup-builder.tsx:285-297,547; src/lib/lineup/save.ts:148 (status LATE when submitted after dueAt) */}
+</Warning>
+
+## Why isn't this working?
+
+### "Add 1 more men to the squad — each round needs … of each on court."
+**Cause:** Every round needs a set number of men and women on court, and you haven't placed enough.
+**Fix:** Place more players of that gender. If you don't have enough, tap **Ask for a sub**. See [Find a sub when you're short](/captains/find-a-substitute). {/* src: src/lib/rules/rules/lineup.ts:83; lineup-builder.tsx:1733 */}
+
+### "… are paired in rounds … This league allows a pair to play together … a night"
+**Cause:** Two players are partnered more often than your league allows.
+**Fix:** Pick a different partner for the round the message names. {/* src: src/lib/rules/rules/lineup.ts:227 */}
+
+### "… is a mixed court — it needs one man and one woman."
+**Cause:** A court has the wrong mix of players for its type.
+**Fix:** Swap one player for someone of the other gender. {/* src: src/lib/rules/rules/lineup.ts:153 */}
+
+### "Fill … more places to complete …"
+**Cause:** Some courts are still empty.
+**Fix:** Place a player on each empty court in the rounds named, or tap **Auto-fill the rest**. {/* src: src/lib/rules/rules/lineup.ts:196 */}
+
+### A player is greyed out with "Owes a court fee"
+**Cause:** Your league blocks players with an unpaid court fee from an earlier match.
+**Fix:** Ask them to pay from the link in their email or on **My payments**, or pick someone else. {/* src: src/lib/rules/rules/lineup.ts:261 (Ruleset.courtFeeUnpaidBlocksLineup); lineup-builder.tsx:1357-1364 */}
+
+### "Couldn’t fill … without repeating a pairing too often"
+**Cause:** Auto-fill ran out of combinations with the players who said they can play.
+**Fix:** Fill those rounds by hand, or find a sub. {/* src: src/lib/lineup/autofill.ts:307 */}
+
+### "This lineup locked when the match started, so it can’t be changed here."
+**Cause:** The lineup has locked.
+**Fix:** If something needs correcting, email [support@clubcircuitpb.com](mailto:support@clubcircuitpb.com). {/* src: src/lib/rules/rules/lineup.ts:37 */}
+
+### "That change didn’t save — check your signal and try again."
+**Cause:** Your phone lost its connection.
+**Fix:** Move somewhere with better signal and make the change again. {/* src: lineup-builder.tsx:293 */}
+
+## Related articles
+
+- [See your next match and which rounds you’re playing](/players/see-your-matches-and-rounds), what your players see
+- [Find a sub when you're short](/captains/find-a-substitute)
+
+{/* Last verified: 2026-11-01 against leagues-app ad28a0e */}

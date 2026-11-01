@@ -1,0 +1,73 @@
+---
+title: "Dispute a match result"
+sidebarTitle: "Dispute a result"
+description: "If the other captain's scores are wrong, open the match's Scores tab, tap Something's wrong, say which court and what the score should be, and tap Raise it with the league. The league office rules."
+keywords: ["dispute", "wrong score", "score dispute", "something's wrong", "challenge result", "league ruling", "scorecard photo"]
+---
+
+To dispute a result, open the match's **Scores** tab, tap **Something’s wrong**, say which court is wrong and what the score should be, then tap **Raise it with the league**. The league office reviews it and rules, and both captains are told.
+
+{/* src: leagues-app src/app/match/[matchId]/scores/scores-entry.tsx:456,463-476; src/lib/disputes/ruling.ts:325-453 */}
+
+**Before you begin**
+
+- Only the captain who didn't submit the scores can raise a dispute, and only while the match shows **Awaiting confirmation**.
+- Have the signed paper scoresheet ready. A photo of it usually settles a dispute.
+
+{/* src: src/lib/scores/mutations.ts:388 ("You submitted this scorecard — the other captain raises a dispute if they disagree."); scores-entry.tsx (Something's wrong shown only while AWAITING_CONFIRMATION); src/components/print/scoresheet.tsx:186-187 */}
+
+## Raise a dispute
+
+<Steps>
+  <Step title="Open the match's Scores tab">
+    From **Home**, tap **Review and confirm**, or open the match and tap **Scores**.
+    {/* src: src/lib/play/home.ts:403-405; src/app/match/[matchId]/page.tsx:516 */}
+  </Step>
+  <Step title="Tap Something's wrong">
+    Tap **Something’s wrong** instead of **Confirm result**.
+    {/* src: scores-entry.tsx:449,456 */}
+  </Step>
+  <Step title="Say what's wrong">
+    In **What’s wrong with the result?**, say which court and what the score should be. The other captain sees this too.
+    {/* src: scores-entry.tsx:463-465 */}
+  </Step>
+  <Step title="Send it to the league">
+    Tap **Raise it with the league**.
+    {/* src: scores-entry.tsx:476 */}
+  </Step>
+</Steps>
+
+**Result:** The match shows **Disputed — with the league manager**, and the other captain is told. {/* src: src/app/match/[matchId]/page.tsx:860; scores-entry.tsx:149; registry SCORES_DISPUTED */}
+
+## Add your side and a photo
+
+While a dispute is open, either captain can add more on the match page. Write your side under **Add your side** and tap **Add to the dispute**. To add the scoresheet, use **Add a photo**, say what it shows, and tap **Add photo**. Only the two teams and the league office can see photos. {/* src: src/app/match/[matchId]/dispute-panel.tsx:135-165; src/lib/disputes/evidence.ts:79-91 */}
+
+## What happens next
+
+The league office may ask both captains for more information, and you'll get an email if it does. When it rules, the match page shows either **The league ruled: the score was changed** or **The league ruled: the scorecard stood**, with the reasons. Both captains get the ruling by email, and the result and standings update. {/* src: dispute-panel.tsx:90-94,128; registry DISPUTE_MORE_INFO, DISPUTE_RESOLVED; src/lib/disputes/ruling.ts:325-453 */}
+
+## Why isn't this working?
+
+### I don't see Something's wrong
+**Cause:** You submitted these scores yourself, the result is already confirmed, or the match isn't waiting on confirmation.
+**Fix:** If you submitted them, ask the other captain to raise it. If the result is already confirmed, email [support@clubcircuitpb.com](mailto:support@clubcircuitpb.com) with the match and what's wrong. {/* src: src/lib/scores/mutations.ts:388; registry SCORES_AUTO_CONFIRMED ("If that looks wrong, contact the league manager.") */}
+
+### "That photo is still too large after shrinking. Try a different one."
+**Cause:** The photo file is too big.
+**Fix:** Take a new photo, or crop the one you have, and try again. {/* src: src/app/match/[matchId]/actions.ts:239 */}
+
+### "Say what the photo shows …"
+**Cause:** You left the photo's description blank.
+**Fix:** Add a short note, like "Our scorecard, round 3". {/* src: src/lib/disputes/evidence.ts:26 */}
+
+### "Your team has added … photos already — that’s the most for one dispute."
+**Cause:** Each team can add only a limited number of photos to one dispute.
+**Fix:** Describe anything else under **Add your side**. {/* src: src/lib/disputes/evidence.ts:35 */}
+
+## Related articles
+
+- [Enter and confirm match scores](/captains/enter-and-confirm-scores)
+- [Find and contact other captains](/captains/contact-other-captains)
+
+{/* Last verified: 2026-11-01 against leagues-app ad28a0e */}

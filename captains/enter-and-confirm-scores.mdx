@@ -1,0 +1,98 @@
+---
+title: "Enter and confirm match scores"
+sidebarTitle: "Enter and confirm scores"
+description: "On match day, open the match and tap Scores. Enter each court as it finishes, then tap Submit scores. The other captain taps Confirm result, and the standings update."
+keywords: ["scores", "enter scores", "submit scores", "confirm result", "score entry", "scoresheet", "results", "match result"]
+---
+
+To enter scores, open the match on match day and tap the **Scores** tab. Enter each court's score as it finishes; each one saves as you go. When every court is in, tap **Submit scores**. The other captain then taps **Confirm result**, and the standings update.
+
+{/* src: leagues-app src/app/match/[matchId]/page.tsx:516 (Scores tab from match day); src/app/match/[matchId]/scores/scores-entry.tsx:224,343,449; src/lib/scores/mutations.ts:243 (recompute on confirm) */}
+
+**Before you begin**
+
+- Either team's captain can enter the scores. The other team's captain confirms them.
+- Both lineups need players on every court before a score can go in.
+- The **Scores** tab appears from midnight on match day.
+
+{/* src: requireMatchCaptain (src/app/match/[matchId]/scores/actions.ts); src/lib/scores/seats.ts:23,43-45; src/lib/scores/match-day.ts:9 */}
+
+## Enter the scores
+
+<Steps>
+  <Step title="Open the match">
+    On **Home**, tap **Enter scores**. Or scan the QR code on the printed scoresheet.
+    {/* src: src/lib/play/home.ts:416,424; src/app/m/[code]/route.ts:14; src/components/print/scoresheet.tsx ("Scan to enter scores.") */}
+  </Step>
+  <Step title="Tap Scores">
+    Open the **Scores** tab. You see one court at a time, starting with Round 1, Court 1.
+    {/* src: src/app/match/[matchId]/page.tsx:516; scores-entry.tsx:244 */}
+  </Step>
+  <Step title="Enter the court's score">
+    Tap **You** or the other team's side, then type the points.
+    {/* src: scores-entry.tsx:287,306-309 */}
+  </Step>
+  <Step title="Move to the next court">
+    Tap **Save and next court**. Repeat for every court in every round.
+    {/* src: scores-entry.tsx:334 */}
+  </Step>
+  <Step title="Submit">
+    On the last court, tap **Submit scores**.
+    {/* src: scores-entry.tsx:343 */}
+  </Step>
+</Steps>
+
+**Result:** You see **Sent to the other captain to confirm.** The match shows **Awaiting confirmation** until they do. {/* src: scores-entry.tsx:125; src/app/match/[matchId]/page.tsx:858 */}
+
+<Warning>
+  Once you've submitted, don't change any scores. If something's wrong, ask the other captain to raise it instead. See [Dispute a match result](/captains/dispute-a-result). {/* src: scores-entry.tsx:401 (list-view inputs stay enabled while awaiting confirmation); src/lib/scores/mutations.ts (confirm doesn't recompute games won) */}
+</Warning>
+
+## Confirm the other captain's scores
+
+When the other captain submits, your **Home** shows **Review and confirm**. Check every court on the **Scores** tab, then tap **Confirm result**. If a score is wrong, tap **Something’s wrong** instead. {/* src: src/lib/play/home.ts:403-405; scores-entry.tsx:449,456 */}
+
+**Result:** You see **Result confirmed. Standings updated.** Both teams get the result. {/* src: scores-entry.tsx:135; src/lib/scores/mutations.ts:275 (chat line), registry SCORES_CONFIRMED */}
+
+If nobody confirms in time, the result may be confirmed automatically. Your league sets whether and when. {/* src: src/lib/scores/auto-confirm.ts:105-119 (Ruleset.autoConfirmAfterWindow, confirmationWindowHours) */}
+
+## Print a scoresheet
+
+On the match's **Rounds** tab, open **More for this match** and tap **Print scoresheet**. Each team keeps score on paper during the match. Photograph the signed sheet when you're done: if scores are disputed, the signed sheet decides. {/* src: src/app/match/[matchId]/page.tsx:576,581; src/components/print/scoresheet.tsx:186-187 */}
+
+## Why isn't this working?
+
+### I don't see the Scores tab
+**Cause:** It isn't match day yet, or you're not a captain of either team in this match.
+**Fix:** Check back from midnight on match day. If you should be captain, ask your club's admins. {/* src: src/app/match/[matchId]/page.tsx:276-277; src/lib/scores/match-day.ts:9 */}
+
+### "A game can’t end level — someone has to win it."
+**Cause:** You entered the same score for both sides.
+**Fix:** Check the scoresheet and enter the winning score. {/* src: src/lib/scores/validate.ts:34 */}
+
+### "The winner has to win by … isn’t enough of a margin."
+**Cause:** The winning side didn't win by enough points under your league's rules.
+**Fix:** Check the score. If the game went past the target score, the winner needs a clear margin. {/* src: src/lib/scores/validate.ts:64 */}
+
+### "A game goes to … The winning score can’t be lower than that."
+**Cause:** The winning score is below the points a game is played to.
+**Fix:** Check that you typed the winning side's score correctly. {/* src: src/lib/scores/validate.ts:52 */}
+
+### "Enter a score for every game first — … still to go."
+**Cause:** Some courts don't have a score yet.
+**Fix:** Go back through the rounds and fill in the courts that are missing. {/* src: src/lib/scores/resolve.ts:35 */}
+
+### "… hasn’t put players on Round …, Court … yet."
+**Cause:** A lineup is missing players for that court, so there's nothing to score.
+**Fix:** Ask the captain whose lineup is short to fill it, or fill your own with **Set your lineup**. {/* src: scores-entry.tsx:255-267 */}
+
+### "That didn’t save — check your signal and try again."
+**Cause:** Your phone lost its connection.
+**Fix:** Move somewhere with better signal and enter that court again. Courts you already saved are kept. {/* src: scores-entry.tsx:102 */}
+
+## Related articles
+
+- [Dispute a match result](/captains/dispute-a-result)
+- [Follow the standings, player standings and playoffs](/players/follow-standings-and-stats)
+
+{/* Last verified: 2026-11-01 against leagues-app ad28a0e */}

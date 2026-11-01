@@ -1,0 +1,80 @@
+---
+title: "See who can play and manage your team"
+sidebarTitle: "Manage your team"
+description: "Open Manage team to see every upcoming match, who's in, whose lineup is due and who hasn't answered. Nudge the players who haven't answered with one tap."
+keywords: ["manage team", "captain", "roster", "who can play", "availability", "nudge", "reminder", "lineup status", "team"]
+---
+
+To see who can play, open **Manage team**. On a phone, tap **Captain** in the bar at the bottom of the screen. For each upcoming match it shows who's in, who's out and who hasn't answered, plus where your lineup stands. Tap **Nudge** to remind everyone who hasn't answered.
+
+{/* src: leagues-app src/lib/nav/play.ts:101 ("Manage team"), :126 ("Captain" tab); src/app/team/[teamId]/manage/page.tsx:85-86,147,285; nudge-button.tsx:22 */}
+
+**Before you begin**
+
+- You need to be your team's captain. Your club's admins make you captain.
+- Your club's admins, not captains, add players to your team and move them between teams. To change who's on your roster, ask them.
+
+{/* src: src/lib/auth/guards.ts:105-117 (requireTeamCaptain); src/lib/club/teams.ts:163, src/lib/club/admin.ts:278,375 (roster changes are requireClubAdmin); src/app/team/[teamId]/page.tsx:422 ("Once the club adds players to this team, they appear here.") */}
+
+## Check who can play
+
+<Steps>
+  <Step title="Open Manage team">
+    On a phone, tap **Captain** at the bottom of the screen. On a computer, select **Manage team** in the **Captain** menu. You can also tap **Manage team** on your team's page.
+    {/* src: src/lib/nav/play.ts:82,101,126; src/app/team/[teamId]/page.tsx:154 */}
+  </Step>
+  <Step title="Look at your next match">
+    The **Next match** card lists your players under **In**, **Maybe**, **Out** and **Haven’t answered**.
+    {/* src: src/app/team/[teamId]/manage/page.tsx:282-285,303 */}
+  </Step>
+  <Step title="Remind anyone who hasn't answered">
+    Tap **Nudge the 1 who hasn’t answered**, or **Nudge the 3 who haven’t answered**. The number on the button is how many haven't answered. They get a reminder email with buttons to answer.
+    {/* src: src/app/team/[teamId]/manage/nudge-button.tsx:22; src/lib/availability/nudge.ts (sends AVAILABILITY_REMINDER_MANUAL with answer buttons) */}
+  </Step>
+  <Step title="Check your lineup status">
+    Next to each match, the lineup shows as **Not submitted**, **Draft**, **Submitted** or **Late**. Tap **Set lineup**, **Finish lineup** or **Edit lineup** to open the lineup builder.
+    {/* src: src/components/ui/badge.tsx:77-80; src/app/team/[teamId]/manage/page.tsx:30-34 */}
+  </Step>
+</Steps>
+
+**Result:** You can see at a glance who's playing each match and which lineups still need you. Below the next match, **Still to play** lists the rest of your matches. {/* src: src/app/team/[teamId]/manage/page.tsx:190 */}
+
+## Other things you can do from Manage team
+
+- **Message your team.** Tap **Team chat**. As captain, you can tick **Announce (emails the roster)** to send a message by email as well as in the chat. {/* src: manage/page.tsx:152; src/app/team/[teamId]/chat/team-chat.tsx:123 */}
+- **Find a sub.** Open the **Subs** tab, or tap **Need a sub?** on a match. See [Find a sub when you're short](/captains/find-a-substitute). {/* src: manage/page.tsx:164-165; sub-request-control.tsx:111 */}
+- **Contact another captain.** Tap **Captains directory**. See [Find and contact other captains](/captains/contact-other-captains). {/* src: manage/page.tsx:155 */}
+- **See your full roster.** Open your team's page and tap **Roster**. {/* src: src/app/team/[teamId]/page.tsx:24-26 */}
+
+## Why isn't this working?
+
+### I can't find Manage team or the Captain tab
+**Cause:** You're not set as this team's captain yet. Only the team's captain sees these.
+**Fix:** Ask your club's admins to make you captain. {/* src: src/lib/auth/guards.ts:105-117; manage/page.tsx:51-55 (404 when not captain) */}
+
+### I want to add or remove a player
+**Cause:** Captains can't change who's on the roster. Your club's admins place players on teams.
+**Fix:** Ask your club's admins. For one match, you can bring in a sub instead. See [Find a sub when you're short](/captains/find-a-substitute). {/* src: src/lib/club/admin.ts:278,375 */}
+
+### "You nudged this match recently."
+**Cause:** You can nudge each match only so often, so players aren't flooded with reminders.
+**Fix:** Wait for the time shown, then try again. {/* src: src/app/team/[teamId]/manage/actions.ts:14; src/lib/rate-limit/limiter.ts:108 */}
+
+### "Everyone on your team has answered — nobody to nudge."
+**Cause:** Every player has already answered for that match.
+**Fix:** Nothing to do. You're ready to set your lineup. {/* src: src/lib/availability/nudge.ts:46 */}
+
+### "This match has already started or isn’t scheduled, so there’s no one to nudge."
+**Cause:** You can only nudge players for an upcoming match.
+**Fix:** Nothing to do for this match. {/* src: src/lib/availability/nudge.ts:38 */}
+
+### "No upcoming matches"
+**Cause:** The league hasn't published your team's schedule yet, or your season's matches are all played.
+**Fix:** Check back once the schedule is published. {/* src: manage/page.tsx:182 */}
+
+## Related articles
+
+- [Tell your captain whether you can play](/players/set-your-availability), what your players see
+- [Find a sub when you're short](/captains/find-a-substitute)
+
+{/* Last verified: 2026-11-01 against leagues-app ad28a0e */}
