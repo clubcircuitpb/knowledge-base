@@ -48,7 +48,8 @@
           {
             "group": "Captains",
             "pages": [
-              "captains/index"
+              "captains/index",
+              "captains/report-matches-to-dupr"
             ]
           }
         ]

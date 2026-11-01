@@ -1,0 +1,103 @@
+---
+title: "Report your team’s matches to DUPR"
+sidebarTitle: "Report matches to DUPR"
+description: "To have your team’s games count on DUPR, open your team’s Settings and tap Report our matches to DUPR. A match is reported only when the other team has opted in too, and you can’t undo it this season."
+keywords: ["DUPR", "report to DUPR", "DUPR rating", "opt in", "games count", "rated matches", "DUPR ID", "team settings"]
+---
+
+To have your team’s games count on DUPR, open your team’s **Settings** and tap **Report our matches to DUPR**, then **Yes, report our matches**. A match is reported only when the other team has opted in too, and you can’t undo it for the rest of the season.
+
+{/* src: leagues-app src/app/team/[teamId]/settings/page.tsx; src/app/team/[teamId]/settings/dupr-opt-in.tsx; docs/adr/0075-dupr-team-opt-in.md */}
+
+**Before you begin**
+
+- You need to be the team’s captain, or an admin of the team’s club. Either can opt the team in.
+- Your league sets the last day to opt in for each season. The setting shows the date.
+- Every player needs their DUPR ID on their ClubCircuit profile, or their games can’t reach their DUPR account.
+
+{/* src: src/lib/auth/guards.ts requireTeamCaptainOrClubAdmin; src/lib/dupr/opt-in.ts seasonOptInCutoff (cutoff from the season); src/app/team/[teamId]/settings/dupr-opt-in.tsx (third confirmation point) */}
+
+## Opt your team in
+
+<Steps>
+  <Step title="Open your team’s settings">
+    As captain, open your team’s page, tap **Manage team**, then the **Settings** tab. As a club admin, open **Overview** in Club HQ and tap **DUPR reporting** on the team’s card.
+    {/* src: src/app/team/[teamId]/page.tsx (Manage team, captains only); src/app/team/[teamId]/manage/page.tsx (tabs Matches · Subs · Settings); src/app/club/[slug]/admin/page.tsx (DUPR reporting on each team card); src/lib/nav/club-hq.ts (Overview) */}
+  </Step>
+  <Step title="Tap Report our matches to DUPR">
+    Under **Report our matches to DUPR**, tap the **Report our matches to DUPR** button.
+    {/* src: src/app/team/[teamId]/settings/page.tsx (section heading); dupr-opt-in.tsx (button) */}
+  </Step>
+  <Step title="Read what it means">
+    Your team’s games are reported whenever the other team has opted in too, starting with your next match and including the playoffs. You can’t undo it this season.
+    {/* src: dupr-opt-in.tsx (confirmation list); docs/adr/0075 decisions 2 and 4 */}
+  </Step>
+  <Step title="Confirm">
+    Tap **Yes, report our matches**, or **Cancel** to leave it off.
+    {/* src: dupr-opt-in.tsx */}
+  </Step>
+</Steps>
+
+**Result:** the setting shows **On**, with who opted in and when. Your players get a message and an email saying their games now go to DUPR when the other team has opted in too.
+
+{/* src: settings/page.tsx (Badge "On"; "Opted in by … on …"); src/lib/dupr/opt-in.ts optInTeam (emits TEAM_DUPR_OPTED_IN to the team's players and captain) */}
+
+## See which matches count
+
+- Teams that have opted in show a **DUPR** badge in the standings, on team pages and in schedules.
+- Each match shows **Reported to DUPR**, or **Not reported to DUPR** with the team that hasn’t opted in.
+- The standings list which teams in the division have opted in, under **Reporting to DUPR**.
+
+{/* src: src/components/dupr/dupr-badge.tsx; src/lib/dupr/opt-in-rules.ts duprStatusLine; src/app/[market]/[season]/standings/page.tsx ("Reporting to DUPR") */}
+
+Only played games go to DUPR. Forfeited games are never sent.
+
+{/* src: src/lib/dupr/opt-in-rules.ts gameExclusion; docs/adr/0075 decision 5 */}
+
+## Why isn’t this working?
+
+### I can’t find the Settings tab or the DUPR reporting button
+
+**Cause:** only the team’s captain and its club’s admins can change this setting.
+
+**Fix:** ask your captain or your club’s admins. If you should be one of them, ask your club to give you the role.
+
+{/* src: src/lib/auth/guards.ts requireTeamCaptainOrClubAdmin; settings/actions.ts ("Only this team’s captain or its club’s admins can change this.") */}
+
+### It says “Opting in closed on…”
+
+**Cause:** the last day to opt in for this season has passed. The setting shows **Locked**.
+
+**Fix:** your team’s matches aren’t reported this season. Contact the league office if something has gone wrong.
+
+{/* src: src/lib/dupr/opt-in-rules.ts canOptIn; settings/page.tsx (Badge "Locked"; "Opting in closed on …") */}
+
+### We opted in by mistake and want to turn it off
+
+**Cause:** opting in can’t be undone by a captain or club admin.
+
+**Fix:** email [support@clubcircuitpb.com](mailto:support@clubcircuitpb.com). Only the league office can reverse it, and your players are told why. Matches already played keep their status.
+
+{/* src: src/lib/dupr/opt-in.ts reverseTeamOptIn (market admin only, reason required, emits TEAM_DUPR_OPT_IN_REVERSED); settings/page.tsx ("This can’t be undone this season; contact the league office…") */}
+
+### Our match says Not reported to DUPR
+
+**Cause:** the other team hasn’t opted in, or one of you opted in after the match started. A match keeps the status it had when it started.
+
+**Fix:** nothing to do for that match. It’s reported only when both teams had opted in by its start.
+
+{/* src: src/lib/dupr/opt-in-rules.ts matchDuprStatus; src/lib/dupr/opt-in.ts lockStartedMatches */}
+
+### A player’s games aren’t showing on their DUPR account
+
+**Cause:** the player has no DUPR ID on their ClubCircuit profile. The setting lists anyone missing one, and your team dashboard warns you before a reported match.
+
+**Fix:** ask the player to add their DUPR ID to their profile.
+
+{/* src: settings/page.tsx ("… no DUPR ID on their profile"); src/app/team/[teamId]/manage/page.tsx (next-match warning); src/lib/dupr/export.ts (games with a missing DUPR ID are held back) */}
+
+## Related articles
+
+- [Help for team captains](/captains)
+
+{/* Last verified: 2026-11-02 against leagues-app 228173f */}
