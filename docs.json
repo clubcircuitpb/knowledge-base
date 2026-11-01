@@ -51,7 +51,8 @@
           {
             "group": "Running a club",
             "pages": [
-              "clubs/index"
+              "clubs/index",
+              "clubs/invite-players-to-register"
             ]
           }
         ]
