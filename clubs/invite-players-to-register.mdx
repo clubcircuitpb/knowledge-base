@@ -1,0 +1,131 @@
+---
+title: "Invite your players and captains to register"
+sidebarTitle: "Invite players and captains"
+description: "To invite players to register with your club, open Club HQ, go to Teams > Import players, and upload your roster as a CSV or use Invite one person. Each person gets their own link that registers them with your club."
+keywords: ["invite players", "invitation", "invite link", "roster import", "CSV", "spreadsheet", "name a captain", "captain free registration", "recruit", "sign up players"]
+---
+
+To invite players to register with your club, open **Club HQ**, go to **Teams** > **Import players**, and either upload your roster as a CSV or fill in **Invite one person**. Each person gets an email with their own link, which registers them with your club for the season.
+
+{/* src: leagues-app src/lib/nav/club-hq.ts:34-36 (Teams > "Import players"); src/app/club/[slug]/admin/import/page.tsx:81,93; src/lib/club/roster-import.ts (inviteToClub, invitationUrl with &invite=<token>); docs/adr/0068-invitations-tie-player-to-club.md */}
+
+**Before you begin**
+
+- You need to be an admin or owner of the club.
+- Your club must be entered in a season that's open for registration. If it isn't, the page tells you to enter one first from **Overview**.
+- Inviting someone doesn't register them, put them on a team or charge them. They register and pay themselves.
+
+{/* src: src/lib/club/roster-import.ts (requireClubAdmin; openSeasonFor; "nobody is registered, charged or put on a team by an import"); src/app/club/[slug]/admin/import/page.tsx:85 ("Overview → “Tell the league we’re in”") */}
+
+## Invite your whole roster from a spreadsheet
+
+<Steps>
+  <Step title="Open Import players">
+    In **Club HQ**, open **Teams** > **Import players**.
+    {/* src: src/lib/nav/club-hq.ts:34-36 */}
+  </Step>
+  <Step title="Upload your roster">
+    Under **Your roster (CSV)**, choose your file. It needs a name column (**Name**, or **First name** and **Last name**) and an **Email** column. **DUPR ID** and **Rating** are optional.
+    {/* src: src/app/club/[slug]/admin/import/import-roster.tsx:57-60; src/lib/club/roster-parse.ts:67-74 */}
+  </Step>
+  <Step title="Mark your captains (optional)">
+    To name someone captain, add a **Captain** column and put the division they'll captain, like **3.5**, on their row. Leave it blank for everyone else.
+    {/* src: src/lib/club/roster-parse.ts (captain column: "captain", "captain of", "captain division"); import-roster.tsx:60 */}
+  </Step>
+  <Step title="Check the preview">
+    Each row shows **Ready**, **Needs a look** or **Duplicate**, with the reason. A captain's row says **Ready to invite as captain of** and the division.
+    {/* src: import-roster.tsx:10-14,78-80; src/lib/club/roster-import.ts (withCaptains notes) */}
+  </Step>
+  <Step title="Send the invitations">
+    Select **Invite** and the number of players ready. To fix the rows that need a look, select **Download the flagged rows**, correct them, and upload the file again.
+    {/* src: import-roster.tsx:118,122 */}
+  </Step>
+</Steps>
+
+**Result:** Everyone ready gets an email inviting them to register with your club. They're listed under **Invited, not registered yet** until they register. {/* src: src/app/club/[slug]/admin/import/page.tsx:182; src/lib/club/roster-import.ts (sendInvitations) */}
+
+## Invite one person
+
+<Steps>
+  <Step title="Fill in Invite one person">
+    On the same page, under **Invite one person**, enter their **First name**, **Last name** and **Email**.
+    {/* src: src/app/club/[slug]/admin/import/page.tsx:93,107-118 */}
+  </Step>
+  <Step title="Choose whether they're a captain">
+    In **Captain of (optional)**, leave **Not a captain — invite as a player**, or pick **Captain of** and their division.
+    {/* src: page.tsx:124-131 */}
+  </Step>
+  <Step title="Send it">
+    Select **Send invitation**.
+    {/* src: page.tsx:139 */}
+  </Step>
+</Steps>
+
+**Result:** A message confirms the invitation went out. A captain's says their registration will be free. {/* src: src/lib/club/roster-import.ts (invitePerson messages); src/lib/registration/captain-waiver.ts (nominateCaptain: "their registration will be free") */}
+
+## What your players see
+
+The link in each email is for that person only. When they open it:
+
+- the registration form shows **Invited by** and your club's name, instead of a list of clubs;
+- their name and email are filled in from what you entered;
+- if they're not playing for your club after all, they can select **Not playing for** and your club's name to choose another.
+
+{/* src: leagues-app src/app/join/[season]/[division]/registration-form.tsx:148-152; src/app/join/[season]/[division]/page.tsx (invite prefills name and email only); docs/adr/0068-invitations-tie-player-to-club.md */}
+
+## Captains register free
+
+If your season's rules give captains free registration, each team's captain registers free. Your season's rules set how many free captain places each team gets. **Free captain places** on the page shows how many you have left in each division.
+
+A captain you name gets their free place whether they use your link or register some other way, as long as it's with the email you entered. If they register in another division or for another club, they're asked before they pay anything.
+
+Already registered? Make them captain in the **Team builder** instead. If they've paid, their fee is refunded in full, and they stay on the team.
+
+If your season's rules have free captain places switched off, the page says **Captains pay like everyone else** for that season, and there's no **Captain of** choice.
+
+{/* src: src/app/club/[slug]/admin/import/page.tsx:131-133,144,149; src/lib/registration/captain-waiver.ts (captainAllowance: Ruleset.freeCaptainsPerTeam × teams; applyCaptainFee refunds); docs/adr/0056-captains-register-free.md; docs/adr/0068-invitations-tie-player-to-club.md (email match with or without the link; warned before paying elsewhere) */}
+
+<Note>
+  **Your invite link** on your **Registrations** page is a link to your club's page for sharing anywhere. It isn't tied to one person, so it doesn't fill in anyone's details. A captain you named still registers free through it with the email you entered. {/* src: src/app/club/[slug]/admin/formation/page.tsx:516 ("Your invite link"); src/lib/nav/club-hq.ts:26 ("Registrations"); src/lib/formation/recruitment.ts (inviteUrl = /r/<slug>); src/app/r/[slug]/route.ts; docs/adr/0068-invitations-tie-player-to-club.md */}
+</Note>
+
+## Why isn't this working?
+
+### "Your club isn’t entered in a season that’s open for registration"
+**Cause:** There's no season to invite people to yet.
+**Fix:** Go to **Overview** and select **Tell the league we’re in**, then come back. {/* src: src/lib/club/roster-import.ts (invitePerson, previewRosterImport); src/app/club/[slug]/admin/import/page.tsx:85 */}
+
+### "We couldn’t find an email column"
+**Cause:** No column in your file is headed **Email**.
+**Fix:** Head the email column **Email** and upload the file again. {/* src: src/lib/club/roster-parse.ts (parseRoster) */}
+
+### A row says "No division called …"
+**Cause:** The **Captain** column doesn't match a division in this season.
+**Fix:** Use the division's name exactly as it appears in your season, like **3.5**, or leave **Captain** blank. {/* src: src/lib/club/roster-import.ts (withCaptains) */}
+
+### A row says your free captain places "are already given"
+**Cause:** Every free captain place in that division has been given, counting earlier rows in the same file.
+**Fix:** Leave **Captain** blank to invite them as a player, or add another team in the **Team builder** first. {/* src: src/lib/registration/captain-waiver.ts (captainPlaceProblem) */}
+
+### "… already has your invitation"
+**Cause:** You've already invited this email for this season.
+**Fix:** Nothing to do. They're listed under **Invited, not registered yet** until they register. {/* src: src/lib/club/roster-import.ts (invitePerson) */}
+
+### "… has already registered"
+**Cause:** This person registered before you named them captain.
+**Fix:** Make them captain in the **Team builder** once they're on a team. Their fee is refunded then. {/* src: src/lib/registration/captain-waiver.ts (captainPlaceProblem) */}
+
+### A player says their link has expired
+**Cause:** Invitations last until registration closes for the season.
+**Fix:** If registration is still open, invite them again with **Invite one person**. They can also register without the link and pick your club. {/* src: src/lib/club/roster-import.ts (expiresAt = registrationClosesAt); src/lib/registration/invitation.ts (INVITE_PROBLEM.EXPIRED) */}
+
+### "Only this club’s admins can invite people to register with it."
+**Cause:** You're signed in with an account that isn't an admin of this club.
+**Fix:** Sign in with your club admin account, or ask your club's owner to add you under **Owners & admins**. {/* src: src/app/club/[slug]/admin/import/actions.ts (invitePersonAction); src/lib/nav/club-hq.ts:69 */}
+
+## Related articles
+
+- [Register for a season](/players/register-for-a-season) (what your players see)
+- [Help for club admins and owners](/clubs)
+
+{/* Last verified: 2026-11-01 against leagues-app 1ad2ec6 (branch claude/nifty-keller-5d7kep, main merged) */}
