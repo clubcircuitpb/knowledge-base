@@ -5,14 +5,14 @@ description: "To answer a request to sub, tap Accept the spot or Can’t this ti
 keywords: ["sub", "substitute", "sub request", "fill in", "accept the spot", "decline", "can't this time", "subbing"]
 ---
 
-To answer a request to sub, tap **Accept the spot** or **Can’t this time** in the email, sign in if asked, then tap the same button on the page that opens. You can also answer in the app: open **Subbing** and tap **I can play** or **Not this one**. The first eligible player to accept gets the spot.
+To answer a request to sub, tap **Accept the spot** or **Can’t this time** in the email, then tap the same button on the page that opens. You only need to sign in to accept. You can also answer in the app: open **Subbing** and tap **I can play** or **Not this one**. The first eligible player to accept gets the spot.
 
 {/* src: leagues-app src/emails/registry.tsx:547,550; src/app/s/[token]/offer-responder.tsx:61,69,75,78; src/app/s/[token]/page.tsx:83 */}
 
 **Before you begin**
 
 - You need to be signed up to sub. See [Sign up to sub for other teams](/players/sign-up-to-sub).
-- Sign in with the **same email address the request was sent to**. A request is for one player only.
+- To accept, sign in with the **same email address the request was sent to**. A request is for one player only.
 - Answer quickly. Requests close when the match starts, or as soon as someone else accepts.
 
 {/* src: src/app/s/[token]/page.tsx:85-91 (must be signed in as the offered player); src/lib/subs/offer.ts:124,183-218; src/app/s/[token]/page.tsx:47-48 */}
@@ -29,8 +29,8 @@ To answer a request to sub, tap **Accept the spot** or **Can’t this time** in 
     {/* src: src/emails/registry.tsx:547; src/app/s/[token]/page.tsx:78 */}
   </Step>
   <Step title="Sign in if asked">
-    If you see **Sign in to respond**, sign in, then go back to the email and tap **Accept the spot** again.
-    {/* src: src/app/s/[token]/page.tsx:89-91 (links to /login with no return path) */}
+    If you're not signed in, tap **Sign in to accept**. After you sign in, you come back to the offer.
+    {/* src: src/app/s/[token]/page.tsx ("To accept, sign in as the player this offer was sent to." · "Sign in to accept" → /login?next=/s/<token>) */}
   </Step>
   <Step title="Confirm on the page">
     Tap **Accept the spot** on the page.
@@ -46,7 +46,7 @@ Open the account menu and select **Subbing**, or tap **See the offer** on your *
 
 ## Decline from the email
 
-Tap **Can’t this time** in the email, sign in if asked, then tap **Can’t this time** on the page. The page says **Thanks for letting us know. No problem.** Declining doesn't affect future requests. {/* src: src/emails/registry.tsx:550; src/app/s/[token]/offer-responder.tsx:45,78; page.tsx:85 (buttons show only when signed in as the offered player) */}
+Tap **Can’t this time** in the email, then tap **Can’t this time** on the page. You don't need to sign in. The page says **Thanks for letting us know. No problem.** Declining doesn't affect future requests. {/* src: src/emails/registry.tsx:550; src/app/s/[token]/offer-responder.tsx (declineOnly for anyone with the link), :45 */}
 
 ## If the division charges a sub activation
 
@@ -71,9 +71,9 @@ The spot isn't held while you pay. If someone else accepts first, your activatio
 **Cause:** You're signed in with a different account from the one the request was sent to.
 **Fix:** Sign out, then sign in with the email address the request came to. {/* src: src/lib/subs/offer.ts:124; src/app/s/[token]/page.tsx:89 */}
 
-### I don't see the Accept the spot button on the page
-**Cause:** You're not signed in, or you're signed in as someone else.
-**Fix:** Select **Sign in to respond**, sign in with the email the request was sent to, then tap the button in the email again. {/* src: src/app/s/[token]/page.tsx:85-91 */}
+### I only see Can’t this time on the page
+**Cause:** You're not signed in as the player the request was sent to. Anyone with the link can decline, but only that player can accept.
+**Fix:** Tap **Sign in to accept** and sign in with the email the request was sent to. You come back to the offer. {/* src: src/app/s/[token]/page.tsx (declineOnly + Sign in to accept with next) */}
 
 ### "You’ve already got … sub appearances in …"
 **Cause:** You've reached the most times a sub can play in that division this season. Your league sets this limit.
@@ -92,4 +92,4 @@ The spot isn't held while you pay. If someone else accepts first, your activatio
 - [Sign up to sub for other teams](/players/sign-up-to-sub)
 - [See your next match and which rounds you’re playing](/players/see-your-matches-and-rounds)
 
-{/* Last verified: 2026-11-01 against leagues-app 1acc66d */}
+{/* Last verified: 2026-11-01 against leagues-app 5873526 */}

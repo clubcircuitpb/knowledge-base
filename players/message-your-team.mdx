@@ -57,7 +57,7 @@ To message your team, tap **Messages** and open your team chat. Type in the box 
   </Step>
 </Steps>
 
-**Result:** The conversation shows under **Direct** in **Messages**, and they get an email and an in-app notice. {/* src: src/app/me/messages/page.tsx:138; src/lib/notifications/events.ts:37 (DIRECT_MESSAGE: email + in-app) */}
+**Result:** The conversation shows under **Direct** in **Messages**. They see it in the app, and get an email unless they've turned off message emails. {/* src: src/app/me/messages/page.tsx:138; src/lib/notifications/categories.ts (MESSAGES: in-app always on, email switchable) */}
 
 You can always message your teammates and captain. You can message other players in your league only if they've turned on direct messages. If there's no **Message** button on someone's profile, they haven't. {/* src: src/app/me/messages/page.tsx:167; src/lib/messaging/dm.ts:49-53,144; src/app/player/[playerId]/page.tsx:84-86 */}
 
@@ -68,6 +68,8 @@ When your captain posts a lineup, a thread opens for the players in it and the c
 ## Choose who can message you
 
 Direct messages from players outside your team are off until you turn them on. Open your notification settings at [app.clubcircuitpb.com/me/notifications](https://app.clubcircuitpb.com/me/notifications) and, under **Direct messages**, tap **Turn on DMs** or **Turn off DMs**. Your teammates and captain can always message you. {/* src: src/app/me/notifications/page.tsx:38,78-87 */}
+
+To stop getting an email for each new message, turn off **Message emails** in the same settings. You'll still see every message in the app. {/* src: src/lib/notifications/categories.ts (MESSAGES: "Message emails" — "Email me when someone sends me a message. You’ll still see messages in the app.") */}
 
 ## Why isn't this working?
 
@@ -104,4 +106,4 @@ Direct messages from players outside your team are off until you turn them on. O
 - [See your next match and which rounds you’re playing](/players/see-your-matches-and-rounds)
 - [Tell your captain whether you can play](/players/set-your-availability)
 
-{/* Last verified: 2026-11-01 against leagues-app 1acc66d */}
+{/* Last verified: 2026-11-01 against leagues-app 5873526 */}

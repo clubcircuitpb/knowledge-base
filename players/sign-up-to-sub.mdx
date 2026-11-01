@@ -24,12 +24,12 @@ To sub for other teams, open **Subbing** from your account menu, tick the divisi
     {/* src: src/components/shell/account-control.tsx:59 (Profile · Subbing · Notifications) */}
   </Step>
   <Step title="Choose your divisions">
-    Under **Your sub availability**, tick the divisions in **Divisions I’ll sub for**.
+    Under **Your sub availability**, tick the divisions in **Divisions I’ll sub for**. They're grouped by league and season.
     {/* src: src/app/subs/sub-profile-editor.tsx:45,50 */}
   </Step>
   <Step title="Set how far you'll travel">
-    Enter your **Travel radius (miles)**. You can also add a note in **Anything captains should know (optional)**, like "weekends only".
-    {/* src: src/app/subs/sub-profile-editor.tsx:62,75 */}
+    Enter your **Travel radius (miles)** and your **Home ZIP code**, so we only send requests within that distance of home. If you play for a club, the ZIP is optional and we measure from your club instead. You can also add a note in **Anything captains should know (optional)**, like "weekends only".
+    {/* src: src/app/subs/sub-profile-editor.tsx (Home ZIP code / Home ZIP code (optional) with hasHomeClub; Travel radius; note); src/lib/subs/candidates.ts (origin = home ZIP, else club venue; ADR 0070) */}
   </Step>
   <Step title="Save">
     Select **Save**.
@@ -55,11 +55,9 @@ Turn the switch at the top of **Subbing** to **Not subbing**. Your divisions sta
 
 ## Sign up to sub without a club or registration
 
-If you don't play for a club, go to [app.clubcircuitpb.com/register](https://app.clubcircuitpb.com/register) and select **Sign up to sub**. Pick the divisions under **Where would you sub?**, fill in your details, accept the agreements and select **Sign me up to sub**. If you're not signed in, select **Continue with my email** first. {/* src: src/app/register/page.tsx:214; src/app/subs/join/page.tsx:51,60; sub-signup-form.tsx:62,115 */}
+If you don't play for a club, go to [app.clubcircuitpb.com/register](https://app.clubcircuitpb.com/register) and select **Sign up to sub**. Pick the divisions under **Where would you sub?**, fill in your details and your **Home ZIP code**, accept the agreements and select **Sign me up to sub**. If you're not signed in, select **Continue with my email** first. {/* src: src/app/register/page.tsx:214; src/app/subs/join/page.tsx:51,60; sub-signup-form.tsx:62,115 */}
 
-<Warning>
-  Some leagues only let players registered for the season sub. If you signed up to sub without registering, you only get requests if your league also accepts subs from outside it. {/* src: src/lib/subs/candidates.ts:229-235 (no registration → external); src/lib/rules/rules/substitute.ts:134-138 (Ruleset.externalSubsAllowed) */}
-</Warning>
+You don't need to register for a team to get requests. Being signed up to sub for a season's divisions counts as being part of that league. {/* src: src/lib/subs/candidates.ts isExternalToSeason (in the season's sub pool → inside the league; Larry, 1 Nov) */}
 
 ## Why isn't this working?
 
@@ -77,9 +75,8 @@ If you don't play for a club, go to [app.clubcircuitpb.com/register](https://app
 - Your travel radius is too small.
 - You've blocked out the dates.
 - You turned off sub request emails in your notification settings.
-- You signed up to sub without registering, and your league only takes subs who are registered for the season.
 
-**Fix:** Check that the switch says **Available to sub**, widen your radius, and check **Dates you can’t play**. Open your notification settings to check that sub requests are on. If you're not registered for the season, ask the league office whether it accepts outside subs. {/* src: src/lib/subs/candidates.ts:80-176; src/lib/notifications/categories.ts:40 (Substitute opportunities); src/lib/rules/rules/substitute.ts:134 */}
+**Fix:** Check that the switch says **Available to sub**, check your **Home ZIP code**, widen your radius, and check **Dates you can’t play**. Open your notification settings to check that sub requests are on. {/* src: src/lib/subs/candidates.ts; src/lib/notifications/categories.ts (Substitute opportunities) */}
 
 ### I can't sub against a certain team
 **Cause:** You can't be offered a sub spot on your own team. Depending on your league's rules, you may also be blocked from teams playing yours, from playing above or below your level, or from playoff matches.
@@ -98,4 +95,4 @@ If you don't play for a club, go to [app.clubcircuitpb.com/register](https://app
 - [Accept or decline a request to sub](/players/answer-a-sub-request)
 - [Register for a season](/players/register-for-a-season)
 
-{/* Last verified: 2026-11-01 against leagues-app 1acc66d */}
+{/* Last verified: 2026-11-01 against leagues-app 5873526 */}
