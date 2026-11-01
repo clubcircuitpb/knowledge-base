@@ -1,0 +1,101 @@
+---
+title: "Sign up to sub for other teams"
+sidebarTitle: "Sign up to sub"
+description: "To sub for other teams, open Subbing from your account menu, tick the divisions you'll sub for and save, then turn on Available to sub. Captains who are short a player can then ask you to fill in."
+keywords: ["sub", "substitute", "subbing", "fill in", "sub list", "sub pool", "spare", "available to sub", "blackout dates"]
+---
+
+To sub for other teams, open **Subbing** from your account menu, tick the divisions you'll sub for and select **Save**, then turn on **Available to sub**. Captains in those divisions who are short a player can then ask you to fill in, and you choose which matches to say yes to.
+
+{/* src: leagues-app src/components/shell/account-control.tsx (Subbing row); src/app/subs/sub-profile-editor.tsx:45-89; src/app/subs/sub-toggle.tsx:47 */}
+
+**Before you begin**
+
+- Signing up to sub is free. Some divisions charge a one-time activation before your first match there. You'll see it when you accept a request, never before.
+- Subbing (also called substituting, filling in or being a spare) is off until you turn it on.
+
+{/* src: src/app/subs/page.tsx:57; src/lib/subs/profile.ts:4-7 (off by default); src/lib/subs/activation.ts (Ruleset.subActivationFeeCents) */}
+
+## Turn on subbing
+
+<Steps>
+  <Step title="Open Subbing">
+    Open your account menu and select **Subbing**.
+    {/* src: src/components/shell/account-control.tsx:59 (Profile · Subbing · Notifications) */}
+  </Step>
+  <Step title="Choose your divisions">
+    Under **Your sub availability**, tick the divisions in **Divisions I’ll sub for**.
+    {/* src: src/app/subs/sub-profile-editor.tsx:45,50 */}
+  </Step>
+  <Step title="Set how far you'll travel">
+    Enter your **Travel radius (miles)**. You can also add a note in **Anything captains should know (optional)**, like "weekends only".
+    {/* src: src/app/subs/sub-profile-editor.tsx:62,75 */}
+  </Step>
+  <Step title="Save">
+    Select **Save**.
+    {/* src: src/app/subs/sub-profile-editor.tsx:89 */}
+  </Step>
+  <Step title="Turn it on">
+    At the top of the page, turn the switch to **Available to sub**.
+    {/* src: src/app/subs/sub-toggle.tsx:47; src/lib/subs/profile.ts:163-164 (refused until a division is saved) */}
+  </Step>
+</Steps>
+
+**Result:** The switch reads **Available to sub**, with your divisions listed under it. When a captain is short in one of them, we email you and the request shows on this page under **Open requests you fit**. {/* src: src/app/subs/page.tsx:51,101,105 */}
+
+To answer a request, see [Accept or decline a request to sub](/players/answer-a-sub-request).
+
+## Block out dates you can't play
+
+You're available for every match in your divisions unless you say otherwise. Under **Dates you can’t play**, enter a date in **From** (and **To** for a range), then select **Add blackout dates**. We won't send you requests for those days. {/* src: src/app/subs/sub-availability-editor.tsx:58-60,84-101 */}
+
+## Stop subbing
+
+Turn the switch at the top of **Subbing** to **Not subbing**. Your divisions stay saved for next time. {/* src: src/app/subs/sub-toggle.tsx:47; src/lib/subs/profile.ts:144 (saving settings never changes on/off) */}
+
+## Sign up to sub without a club or registration
+
+If you don't play for a club, go to [app.clubcircuitpb.com/register](https://app.clubcircuitpb.com/register) and select **Sign up to sub**. Pick the divisions under **Where would you sub?**, fill in your details, accept the agreements and select **Sign me up to sub**. If you're not signed in, select **Continue with my email** first. {/* src: src/app/register/page.tsx:214; src/app/subs/join/page.tsx:51,60; sub-signup-form.tsx:62,115 */}
+
+<Warning>
+  Some leagues only let players registered for the season sub. If you signed up to sub without registering, you only get requests if your league also accepts subs from outside it. {/* src: src/lib/subs/candidates.ts:229-235 (no registration → external); src/lib/rules/rules/substitute.ts:134-138 (Ruleset.externalSubsAllowed) */}
+</Warning>
+
+## Why isn't this working?
+
+### "Pick the divisions you’ll sub for below and save them, then turn subbing on."
+**Cause:** You turned on subbing before saving any divisions.
+**Fix:** Tick at least one division, select **Save**, then turn on **Available to sub**. {/* src: src/lib/subs/profile.ts:164 */}
+
+### "Pick at least one division to sub for, or turn off subbing."
+**Cause:** You saved with no divisions ticked while subbing is on.
+**Fix:** Tick a division and save, or switch to **Not subbing**. {/* src: src/lib/subs/profile.ts:131 */}
+
+### I'm signed up but never get any requests
+**Cause:** One of these:
+- No captain in your divisions has been short yet.
+- Your travel radius is too small.
+- You've blocked out the dates.
+- You turned off sub request emails in your notification settings.
+- You signed up to sub without registering, and your league only takes subs who are registered for the season.
+
+**Fix:** Check that the switch says **Available to sub**, widen your radius, and check **Dates you can’t play**. Open your notification settings to check that sub requests are on. If you're not registered for the season, ask the league office whether it accepts outside subs. {/* src: src/lib/subs/candidates.ts:80-176; src/lib/notifications/categories.ts:40 (Substitute opportunities); src/lib/rules/rules/substitute.ts:134 */}
+
+### I can't sub against a certain team
+**Cause:** You can't be offered a sub spot on your own team. Depending on your league's rules, you may also be blocked from teams playing yours, from playing above or below your level, or from playoff matches.
+**Fix:** Nothing to do. You're only offered requests you're eligible for. {/* src: src/lib/subs/candidates.ts; src/lib/rules/rules/substitute.ts (maxSkillLevelsUp/Down, subMayNotBeOnOpposingRoster, subsAllowedInPlayoffs) */}
+
+### "You already have a player profile — turn subbing on from your Subbing page."
+**Cause:** You used the sign-up form, but you already play in ClubCircuit.
+**Fix:** Open **Subbing** from your account menu and follow the steps above. {/* src: src/lib/subs/signup.ts:52 */}
+
+### "No divisions are taking subs yet"
+**Cause:** No season in your location is open for subs right now.
+**Fix:** Check back once a season opens. {/* src: src/app/subs/join/page.tsx:64 */}
+
+## Related articles
+
+- [Accept or decline a request to sub](/players/answer-a-sub-request)
+- [Register for a season](/players/register-for-a-season)
+
+{/* Last verified: 2026-11-01 against leagues-app 1acc66d */}

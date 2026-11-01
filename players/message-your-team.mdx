@@ -1,0 +1,107 @@
+---
+title: "Message your team and other players"
+sidebarTitle: "Message your team"
+description: "To message your team, tap Messages and open your team chat. To message one player, open their profile and tap Message. Each week's lineup also gets its own thread."
+keywords: ["message", "chat", "team chat", "DM", "direct message", "text teammates", "lineup thread", "contact a player"]
+---
+
+To message your team, tap **Messages** and open your team chat. Type in the box and tap **Send**. To message one player, open their profile and tap **Message**. When your captain posts a lineup, the players in it also get a thread for that week.
+
+{/* src: leagues-app src/lib/nav/play.ts:51,112; src/app/me/messages/page.tsx:69,79,107; src/app/team/[teamId]/chat/team-chat.tsx:115,129; src/app/player/[playerId]/page.tsx:204 */}
+
+**Before you begin**
+
+- Team chat is for players on the team's roster and its captain. If you leave a team, you lose access to its chat.
+- Messages are text only. You can't attach photos or files, or edit or delete a message after you send it.
+- Nobody sees your email address or phone number in messages, only your name.
+
+{/* src: src/lib/auth/guards.ts:155-168; team-chat.tsx:246 (plain text); docs/04-screens.md (no attachments); src/lib/messaging/dm.ts:120-123 (names and text only) */}
+
+## Message your team
+
+<Steps>
+  <Step title="Open Messages">
+    Tap **Messages**. On a phone, it's the last tab at the bottom of the screen.
+    {/* src: src/lib/nav/play.ts:112 */}
+  </Step>
+  <Step title="Open your team chat">
+    Under **Your team**, tap your team's chat. You can also tap **Team chat** on any match page.
+    {/* src: src/app/me/messages/page.tsx:69,79; src/app/match/[matchId]/page.tsx:407 */}
+  </Step>
+  <Step title="Write your message">
+    Type in **Message your team…** To get a teammate's attention, type @ and their first name, like @Sam.
+    {/* src: team-chat.tsx:115; src/lib/chat/mentions.ts */}
+  </Step>
+  <Step title="Send it">
+    Tap **Send**.
+    {/* src: team-chat.tsx:129 */}
+  </Step>
+</Steps>
+
+**Result:** Your message appears in the chat. Under it, you'll see how many teammates have read it, for example **Read by 3 teammates**. New messages from others appear without refreshing. {/* src: team-chat.tsx:250; team chat polls for new messages */}
+
+## Message one player
+
+<Steps>
+  <Step title="Open their profile">
+    Tap their name anywhere in ClubCircuit, such as a roster or a lineup, or find them with search.
+    {/* src: src/app/player/[playerId]/page.tsx; src/app/search */}
+  </Step>
+  <Step title="Tap Message">
+    Tap **Message** on their profile.
+    {/* src: src/app/player/[playerId]/page.tsx:204 */}
+  </Step>
+  <Step title="Send your message">
+    Type your message and tap **Send**.
+    {/* src: src/app/me/messages/[conversationId]/thread-view.tsx:117,125 */}
+  </Step>
+</Steps>
+
+**Result:** The conversation shows under **Direct** in **Messages**, and they get an email and an in-app notice. {/* src: src/app/me/messages/page.tsx:138; src/lib/notifications/events.ts:37 (DIRECT_MESSAGE: email + in-app) */}
+
+You can always message your teammates and captain. You can message other players in your league only if they've turned on direct messages. If there's no **Message** button on someone's profile, they haven't. {/* src: src/app/me/messages/page.tsx:167; src/lib/messaging/dm.ts:49-53,144; src/app/player/[playerId]/page.tsx:84-86 */}
+
+## Talk to this week's lineup
+
+When your captain posts a lineup, a thread opens for the players in it and the captains. Find it in **Messages** under **This week’s players**, or tap **Message this lineup** on the match page's **Lineups** tab. It closes the day after the match and stays readable. {/* src: src/app/me/messages/page.tsx:107; src/app/match/[matchId]/page.tsx:624; src/app/me/messages/[conversationId]/page.tsx:43,49 */}
+
+## Choose who can message you
+
+Direct messages from players outside your team are off until you turn them on. Open your notification settings at [app.clubcircuitpb.com/me/notifications](https://app.clubcircuitpb.com/me/notifications) and, under **Direct messages**, tap **Turn on DMs** or **Turn off DMs**. Your teammates and captain can always message you. {/* src: src/app/me/notifications/page.tsx:38,78-87 */}
+
+## Why isn't this working?
+
+### "This person isn’t accepting messages right now."
+**Cause:** They aren't on your team, and they haven't turned on direct messages.
+**Fix:** Ask your captain to pass the message on, or message them in your team chat if you're teammates. {/* src: src/lib/messaging/dm.ts:144 */}
+
+### "That message is too long — keep it under 2000 characters."
+**Cause:** Team chat messages have a length limit.
+**Fix:** Split it into two messages. {/* src: src/lib/chat/messages.ts:205 */}
+
+### "This lineup thread closed after the match. Your team chat is still open."
+**Cause:** Lineup threads close the day after the match.
+**Fix:** Post in your team chat instead. {/* src: src/lib/messaging/dm.ts:136; src/app/me/messages/[conversationId]/page.tsx:49 */}
+
+### I can't see my team chat
+**Cause:** You're not on the team's active roster, for example before your club places you on a team, or after you've left one.
+**Fix:** If you think you should be on the team, ask your captain or your club's admins. {/* src: src/lib/auth/guards.ts:155-168 */}
+
+### I can't see the earlier messages in my team chat
+**Cause:** If you joined the team partway through the season, you see messages from when you joined.
+**Fix:** Nothing to do. Ask a teammate if you need something from before. {/* src: src/lib/chat/messages.ts:147 (joinedAt) */}
+
+### My club's announcements aren't in Messages
+**Cause:** Announcements from your club arrive as emails and in your notifications, the bell at the top of the screen, not in Messages. You can't reply to them.
+**Fix:** To answer, message your captain or email your club. {/* src: src/lib/admin/announce.ts:144-147; src/lib/notifications/inbox.ts:35; notification-bell.tsx:45 */}
+
+### "That was a lot at once — try again in …"
+**Cause:** Lots of messages were sent in a short time.
+**Fix:** Wait for the time shown, then send again. {/* src: src/lib/rate-limit/limiter.ts:175 */}
+
+## Related articles
+
+- [See your next match and which rounds you’re playing](/players/see-your-matches-and-rounds)
+- [Tell your captain whether you can play](/players/set-your-availability)
+
+{/* Last verified: 2026-11-01 against leagues-app 1acc66d */}

@@ -1,0 +1,95 @@
+---
+title: "Follow the standings, player standings and playoffs"
+sidebarTitle: "Standings and playoffs"
+description: "To see how your team is doing, tap Standings. Switch to Players for the player standings, and open Playoffs once the regular season ends. Standings update when both captains confirm a score."
+keywords: ["standings", "table", "rankings", "leaderboard", "player standings", "playoffs", "bracket", "tiebreak", "stats", "win percentage"]
+---
+
+To see how your team is doing, tap **Standings**. Your team is marked **YOU**. Tap **Players** for the player standings, and open **Playoffs** once the regular season ends. Standings update as soon as a match's score is confirmed.
+
+{/* src: leagues-app src/lib/nav/play.ts:57,107-110; src/app/[market]/[season]/standings/page.tsx:93,123-132,287; src/lib/scores/mutations.ts:243 (recompute on confirm) */}
+
+**Before you begin**
+
+- You don't need to be signed in to see standings, player standings or playoffs.
+- Only confirmed results count. A match shows in the standings once both captains agree the score, or once the time to confirm runs out.
+
+{/* src: src/lib/nav/app-nav.ts:52-58 (signed-out header); src/lib/stats/compute.ts:132-134 (CONFIRMED only); src/lib/scores/auto-confirm.ts:70 */}
+
+## See your team's standings
+
+<Steps>
+  <Step title="Open Standings">
+    Tap **Standings**. On a phone, it's in the bar at the bottom of the screen. Captains, it's on **Home** as a button on your team card.
+    {/* src: src/lib/nav/play.ts:107-110 (Captain replaces Standings in the tab bar); src/app/home/page.tsx:381 */}
+  </Step>
+  <Step title="Pick a division">
+    You start on your own division. To see another, tap its name above the table.
+    {/* src: src/app/[market]/[season]/standings/page.tsx:101 (Division nav); default division logic */}
+  </Step>
+  <Step title="Read the table">
+    Each team shows its **W–L** (matches won and lost), **Games** (games won and lost across every round on every court), **Point diff** and **Last 5**.
+    {/* src: standings/page.tsx:270-331,305,320 */}
+  </Step>
+  <Step title="See more numbers">
+    Tap **Stats** for more columns, like **Win %** and results by pairing. Tap **Table** to go back.
+    {/* src: src/components/stats/stats-table.tsx:101-106; standings/page.tsx:200-219 */}
+  </Step>
+</Steps>
+
+**Result:** You see where your team is placed. The line above the table tells you how far you are from the team above or below. {/* src: standings/page.tsx:240-253 */}
+
+<Note>
+  How teams are ordered, and how ties are broken, is set by your league for each season. The note under the table spells out the order for your division, starting "Teams are ordered by …". {/* src: src/lib/standings/footnote.ts:30,43 (from Ruleset.standingsBasis and tiebreakOrder) */}
+</Note>
+
+## See the player standings
+
+On **Standings**, tap **Players**. **Player standings** ranks every player in the division. Tap **Overall**, **Win %**, **Points per game**, **Clutch**, **Most improved** or **Iron player** to sort by that stat. Your row is marked **You**. {/* src: standings/page.tsx:127-132; src/app/[market]/[season]/leaderboard/page.tsx:91,162; src/lib/league/leaderboard.ts:117-124 */}
+
+In the **Stats** view, players need to have played a minimum number of games, set by your league, to be ranked. Players below it are listed without a rank. {/* src: leaderboard/page.tsx:157,303 (Ruleset.playerRankMinGames) */}
+
+## Follow the playoffs
+
+If you're not signed in, open **Playoffs** from the menu at the top of the page. If you're signed in, open it from the email we send when your team qualifies. Before the playoffs start, the page says how many teams qualify. The bracket appears there once the regular season finishes, and fills in round by round as the league schedules each stage. Once the season reaches the playoffs, the page also shows **Season awards**. {/* src: src/lib/nav/app-nav.ts:52-58 (signed-out header only); src/lib/playoffs/generate.ts:254 (PLAYOFFS_QUALIFIED email links here); src/app/[market]/[season]/playoffs/page.tsx:124,153-158,300-302; docs/adr/0035-season-end-awards-and-return-intents.md */}
+
+## Look up a team, club or player
+
+Tap a team's name in the standings to open its page, with its **Overview**, **Roster** and **Schedule**. To find someone, tap the search icon and type at least two letters of a name, team or club. {/* src: src/app/team/[teamId]/page.tsx:20-24; src/app/search/page.tsx:31-43; src/lib/search/global.ts:16 */}
+
+## Why isn't this working?
+
+### Our last match isn't in the standings yet
+**Cause:** The score hasn't been confirmed. One captain enters it and the other confirms it.
+**Fix:** Ask your captain to check that the score has been entered and confirmed. If it isn't confirmed in time, it's confirmed automatically, and the standings update then. {/* src: src/lib/scores/mutations.ts:243; src/lib/scores/auto-confirm.ts:70 */}
+
+### "… hasn't played yet"
+**Cause:** No results have been confirmed in that division yet.
+**Fix:** Check back after week 1. The table fills in once both captains confirm the first scores. {/* src: standings/page.tsx:150-151 */}
+
+### "No players ranked yet"
+**Cause:** No results have been confirmed yet, so there's nothing to rank.
+**Fix:** Check back after the first matches are played and confirmed. {/* src: leaderboard/page.tsx:149 */}
+
+### I'm not ranked in player standings
+**Cause:** In the **Stats** view, you need to have played your league's minimum number of games.
+**Fix:** Switch to the **Table** view, which lists everyone, or keep playing. You're ranked once you reach the minimum. {/* src: leaderboard/page.tsx:157; src/lib/league/leaderboard.ts */}
+
+### Two teams have the same record but different places
+**Cause:** Your league's tiebreaks separated them.
+**Fix:** Read the note under the standings table. It lists the tiebreaks in order. If a tie survives all of them, the league office settles it. {/* src: src/lib/standings/footnote.ts:43 */}
+
+### Search can't find a player
+**Cause:** Players who keep their profile private don't appear in search. You also need to be signed in to search.
+**Fix:** Check the spelling, or ask a teammate or your captain to pass a message on. {/* src: src/app/search/page.tsx:22,43; src/lib/search/global.ts:29-46 */}
+
+### "Not enough teams to run a playoff."
+**Cause:** Fewer than two teams qualified in that division.
+**Fix:** Nothing to do. Ask the league office if you expected playoffs. {/* src: playoffs/page.tsx:170 */}
+
+## Related articles
+
+- [See your next match and which rounds you’re playing](/players/see-your-matches-and-rounds)
+- [Message your team and other players](/players/message-your-team)
+
+{/* Last verified: 2026-11-01 against leagues-app 1acc66d */}
