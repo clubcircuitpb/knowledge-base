@@ -7,14 +7,14 @@ keywords: ["availability", "can you play", "RSVP", "I'm in", "can't make it", "m
 
 To tell your captain whether you can play, open **Home** in ClubCircuit and tap **I’m in**, **Maybe** or **Can’t** under **Can you play?** on your next match. Your answer saves as soon as you tap. You can also answer straight from the email we send before each match, without signing in.
 
-{/* src: leagues-app src/components/match/next-match-card.tsx:88; src/components/availability-control.tsx:12-14 (chips post on tap, no save button) */}
+{/* src: leagues-app src/components/match/next-match-card.tsx:88; src/components/availability-control.tsx:19-21 (chips post on tap, no save button) */}
 
 **Before you begin**
 
 - You need to be on a team's roster. Your club puts you on a team after you register.
-- Your captain builds the lineup from these answers (also called availability or an RSVP), so answer as early as you can.
+- Your captain builds the lineup from these answers (also called availability or an RSVP), so answer as early as you can. Answers close when your team's lineup locks.
 
-{/* src: src/components/match/next-match-card.tsx (shown only to roster players); src/app/a/[token]/one-tap-recorder.tsx:44-45 ("Your captain sees this when building the lineup.") */}
+{/* src: src/components/match/next-match-card.tsx (shown only to roster players); src/app/a/[token]/one-tap-recorder.tsx:44-45 ("Your captain sees this when building the lineup."); src/lib/availability/window.ts (answers close at the lineup lock) */}
 
 ## Answer in the app
 
@@ -29,13 +29,13 @@ To tell your captain whether you can play, open **Home** in ClubCircuit and tap 
   </Step>
   <Step title="Tap your answer">
     Tap **I’m in**, **Maybe** or **Can’t**. There's no save button. Your answer saves as soon as you tap.
-    {/* src: src/components/availability-control.tsx:12-14 */}
+    {/* src: src/components/availability-control.tsx:19-21 */}
   </Step>
 </Steps>
 
 **Result:** The card shows your answer in words, such as **You’re in** or **You can’t make it**. {/* src: src/components/match/next-match-card.tsx:22-25 */}
 
-To answer for later matches, open **Schedule**, choose **Your team**, and tap **In**, **Maybe** or **Can’t** on each match. To see every upcoming match on one page, go to [app.clubcircuitpb.com/me/availability](https://app.clubcircuitpb.com/me/availability). {/* src: src/lib/nav/play.ts:43 ("Schedule"); src/app/[market]/[season]/schedule/page.tsx:94,172; src/components/availability-control.tsx:17 (short labels); src/app/me/availability/page.tsx */}
+To answer for later matches, open **Schedule**, choose **Your team**, and tap **In**, **Maybe** or **Can’t** on each match. To see every upcoming match on one page, go to [app.clubcircuitpb.com/me/availability](https://app.clubcircuitpb.com/me/availability). {/* src: src/lib/nav/play.ts:43 ("Schedule"); src/app/[market]/[season]/schedule/page.tsx:94,172; src/components/availability-control.tsx:24 (short labels); src/app/me/availability/page.tsx */}
 
 ## Answer from the email
 
@@ -52,17 +52,19 @@ Before each match we email you **Can you play?** with two buttons. You don't nee
   </Step>
   <Step title="Check the page that opens">
     Wait for the page to finish saving.
-    {/* src: src/app/a/[token]/one-tap-recorder.tsx:33-37,54-64 (the answer saves once the page opens in a browser) */}
+    {/* src: src/app/a/[token]/one-tap-recorder.tsx:26-37,61-68 (the answer saves once the page opens in a browser) */}
   </Step>
 </Steps>
 
-**Result:** The page says **You’re in — thanks** or **Thanks for letting us know**, with the match date. {/* src: src/app/a/[token]/one-tap-recorder.tsx:42-45 */}
+**Result:** The page says **You’re in — thanks** or **Thanks for letting us know**, with the match date. If your team's lineup has already locked, or the match was cancelled or has started, the page says **Answers for this match are closed** instead, and your answer isn't saved. {/* src: src/app/a/[token]/one-tap-recorder.tsx:42-45; src/app/a/[token]/page.tsx:99-113 (closed state) */}
 
 The email has no **Maybe** button. To answer maybe, use the app. {/* src: src/lib/availability/token.ts:17 */}
 
 ## Change your answer
 
-Tap a different answer on **Home** or **Schedule**, or tap the other button in the email. The newest answer replaces the old one. Your captain doesn't get a separate notice when you change it, so if the lineup is already posted, tell your captain too. {/* src: src/lib/availability/token.ts:11-12 ("answering again just records the new answer"); no notification on change (agent research of src/lib/availability/, src/lib/notifications/dispatch.ts) */}
+Until your team's lineup locks, tap a different answer on **Home** or **Schedule**, or tap the other button in the email. The newest answer replaces the old one. Your captain doesn't get a separate notice when you change it, so if the lineup is already posted, tell your captain too. {/* src: src/lib/availability/token.ts:11-12 ("answering again just records the new answer"); src/app/me/availability/page.tsx:39 ("Change any of them right up to the lineup lock."); no notification on change (agent research of src/lib/availability/, src/lib/notifications/dispatch.ts) */}
+
+When the lineup locks is set by your league for each season: either when the match starts, or at your team's lineup deadline. After that, your answer can't change in the app or from an email, because your captain has already built the lineup. If your plans change, tell your captain directly. {/* src: src/lib/availability/window.ts:33-37 (Ruleset.lineupLocksAt: MATCH_START or the team's own deadline), :39-52; docs/03-match-format-and-lineups.md §3 */}
 
 <Tip>
   **Maybe** tells your captain you're not sure yet, but they still need a yes or no to build the lineup. Change it to **I’m in** or **Can’t** as soon as you know. {/* src: src/lib/play/home.ts:335 ("You’re a maybe for {when} — your captain needs a yes or no.") */}
@@ -81,28 +83,44 @@ To turn these off or on, open your notification settings at [app.clubcircuitpb.c
 **Fix:** Your club places you on a team after registration closes. If the season has started and you still don't see a match, ask your club's admins whether you're on a roster. {/* src: src/components/match/next-match-card.tsx (onRoster); src/app/join/[season]/[division]/registration-form.tsx:118 ("Your club puts you on a team once registration closes.") */}
 
 ### "Your session ended — sign in again and retry."
-**Cause:** You were signed out when you tapped an answer.
-**Fix:** [Sign in](/players/sign-in) again and tap your answer again. {/* src: src/lib/auth/action.ts:30 */}
+**Cause:** You were signed out when you tapped an answer. Messages like this one show right under the answer buttons.
+**Fix:** [Sign in](/players/sign-in) again and tap your answer again. {/* src: src/lib/auth/action.ts:30; src/components/availability-control.tsx:60-64 (error shown under the chips) */}
 
 ### "That didn’t save — check your connection and try again."
 **Cause:** The email button's page couldn't reach ClubCircuit, usually because of a weak signal.
-**Fix:** Move somewhere with better signal, then tap **Yes, I can play** or **Confirm I can’t play** on the page to try again. {/* src: src/app/a/[token]/one-tap-recorder.tsx:30,64 */}
+**Fix:** Move somewhere with better signal, then tap **Yes, I can play** or **Confirm I can’t play** on the page to try again. {/* src: src/app/a/[token]/one-tap-recorder.tsx:30,64-68 */}
 
 ### "This link didn’t work"
 **Cause:** The email link was cut off or changed, often when an email is forwarded or copied.
-**Fix:** Select **Sign in to ClubCircuit** on that page and answer from **Home** instead. {/* src: src/app/a/[token]/page.tsx:36-39,121 */}
+**Fix:** Select **Sign in to ClubCircuit** on that page and answer from **Home** instead. {/* src: src/app/a/[token]/page.tsx:39-46,150 */}
 
 ### "We couldn’t find that match"
 **Cause:** The match was probably rescheduled, so the old email link no longer points to it.
-**Fix:** Sign in and answer on **Home** or **Schedule**, which show the new date. {/* src: src/app/a/[token]/page.tsx:67-68 */}
+**Fix:** Sign in and answer on **Home** or **Schedule**, which show the new date. {/* src: src/app/a/[token]/page.tsx:78-82 */}
 
-### I tapped an answer but it didn't change
-**Cause:** The match may have started, been cancelled, or you may no longer be on that team's roster. In those cases the answer isn't saved.
-**Fix:** Refresh the page. If the match is still upcoming and you're still on the team, contact your captain directly. {/* src: src/app/me/availability/actions.ts:36,42,48 (returns without saving) */}
+### "Your team’s lineup for this match has locked, so your answer can’t change now."
+**Cause:** Your team's lineup has locked, so answers for this match are closed. Your earlier answer still stands.
+**Fix:** If your plans have changed, tell your captain directly. {/* src: src/lib/availability/window.ts:42 */}
+
+### "This match has already started, so answers are closed."
+**Cause:** The match is under way or finished.
+**Fix:** If something's changed, tell your captain directly. {/* src: src/lib/availability/window.ts:41 */}
+
+### "This match was cancelled, so there’s nothing to answer."
+**Cause:** The league cancelled the match.
+**Fix:** Nothing to do. Check **Schedule** for your team's next match. {/* src: src/lib/availability/window.ts:40 */}
+
+### "This match isn’t taking answers any more"
+**Cause:** The match was cancelled or moved, or you're no longer on that team's roster.
+**Fix:** Reload the page to see your current matches. If a match you play in is missing, ask your club's admins whether you're still on the roster. {/* src: src/app/me/availability/actions.ts:20 (NOT_OPEN) */}
+
+### "Answers for this match are closed"
+**Cause:** You tapped a button in an older email after your team's lineup locked, or after the match was cancelled or started. Your answer wasn't saved, and the page says why.
+**Fix:** If your plans have changed, tell your captain directly. {/* src: src/app/a/[token]/page.tsx:99-113; src/lib/availability/one-tap.ts (refuses after the lock) */}
 
 ## Related articles
 
 - [See your next match and which rounds you're playing](/players/see-your-matches-and-rounds)
 - [Sign in to ClubCircuit](/players/sign-in)
 
-{/* Last verified: 2026-11-01 against leagues-app 5b16e55 */}
+{/* Last verified: 2026-11-01 against leagues-app 6543d23 (branch claude/nifty-keller-5d7kep) */}
