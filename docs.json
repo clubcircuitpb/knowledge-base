@@ -1,7 +1,7 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "almond",
-  "name": "Club Circuit Pickleball",
+  "name": "ClubCircuit",
   "colors": {
     "primary": "#ef7025",
     "light": "#eec9bc",
@@ -9,100 +9,123 @@
   },
   "favicon": "/favicon.svg",
   "navigation": {
-    "tabs": [
-      {
-        "tab": "Platform Guide",
-        "groups": [
-          {
-            "group": "Getting Started",
-            "pages": [
-              "introduction",
-              "getting-started/account-setup",
-              "getting-started/joining-a-league",
-              "getting-started/dashboard-overview"
-            ]
-          },
-          {
-            "group": "Leagues & Seasons",
-            "pages": [
-              "leagues/overview",
-              "leagues/creating-a-league",
-              "leagues/managing-seasons",
-              "leagues/registration"
-            ]
-          },
-          {
-            "group": "Teams & Players",
-            "pages": [
-              "players/player-profiles",
-              "players/team-management",
-              "players/skill-ratings"
-            ]
-          },
-          {
-            "group": "Scheduling & Matches",
-            "pages": [
-              "matches/schedule",
-              "matches/score-reporting",
-              "matches/standings"
-            ]
-          },
-          {
-            "group": "Communication",
-            "pages": [
-              "communication/announcements",
-              "communication/notifications"
-            ]
-          }
-        ]
-      },
-      {
-        "tab": "Rulebook",
-        "groups": [
-          {
-            "group": "League Rules",
-            "pages": [
-              "rules/overview",
-              "rules/eligibility",
-              "rules/match-format",
-              "rules/scoring",
-              "rules/sportsmanship"
-            ]
-          },
-          {
-            "group": "Court & Equipment",
-            "pages": [
-              "rules/court-rules",
-              "rules/equipment-standards"
-            ]
-          },
-          {
-            "group": "Disputes & Conduct",
-            "pages": [
-              "rules/dispute-resolution",
-              "rules/code-of-conduct"
-            ]
-          }
-        ]
-      }
+    "pages": [
+      "index"
     ]
   },
   "navbar": {
     "links": [
       {
         "label": "Support",
-        "href": "mailto:support@clubcircuit.com"
+        "href": "mailto:support@clubcircuitpb.com"
       }
     ],
     "primary": {
       "type": "button",
-      "label": "Join a League",
-      "href": "https://app.clubcircuit.com"
+      "label": "Open ClubCircuit",
+      "href": "https://app.clubcircuitpb.com"
     }
   },
-  "footer": {
-    "socials": {
-      "x": "https://x.com/clubcircuit"
+  "redirects": [
+    {
+      "source": "/introduction",
+      "destination": "/"
+    },
+    {
+      "source": "/getting-started/account-setup",
+      "destination": "/"
+    },
+    {
+      "source": "/getting-started/joining-a-league",
+      "destination": "/"
+    },
+    {
+      "source": "/getting-started/dashboard-overview",
+      "destination": "/"
+    },
+    {
+      "source": "/leagues/overview",
+      "destination": "/"
+    },
+    {
+      "source": "/leagues/creating-a-league",
+      "destination": "/"
+    },
+    {
+      "source": "/leagues/managing-seasons",
+      "destination": "/"
+    },
+    {
+      "source": "/leagues/registration",
+      "destination": "/"
+    },
+    {
+      "source": "/players/player-profiles",
+      "destination": "/"
+    },
+    {
+      "source": "/players/team-management",
+      "destination": "/"
+    },
+    {
+      "source": "/players/skill-ratings",
+      "destination": "/"
+    },
+    {
+      "source": "/matches/schedule",
+      "destination": "/"
+    },
+    {
+      "source": "/matches/score-reporting",
+      "destination": "/"
+    },
+    {
+      "source": "/matches/standings",
+      "destination": "/"
+    },
+    {
+      "source": "/communication/announcements",
+      "destination": "/"
+    },
+    {
+      "source": "/communication/notifications",
+      "destination": "/"
+    },
+    {
+      "source": "/rules/overview",
+      "destination": "/"
+    },
+    {
+      "source": "/rules/eligibility",
+      "destination": "/"
+    },
+    {
+      "source": "/rules/match-format",
+      "destination": "/"
+    },
+    {
+      "source": "/rules/scoring",
+      "destination": "/"
+    },
+    {
+      "source": "/rules/sportsmanship",
+      "destination": "/"
+    },
+    {
+      "source": "/rules/court-rules",
+      "destination": "/"
+    },
+    {
+      "source": "/rules/equipment-standards",
+      "destination": "/"
+    },
+    {
+      "source": "/rules/dispute-resolution",
+      "destination": "/"
+    },
+    {
+      "source": "/rules/code-of-conduct",
+      "destination": "/"
     }
-  }
+  ]
 }
