@@ -65,7 +65,21 @@ If the league office waived your fee, or a code covers the whole price, you won'
 
 You join the waitlist instead. The page says **You’re on the waitlist**. We email you as soon as a place opens, and you're charged nothing unless one does. {/* src: done/page.tsx:75,123-125 */}
 
+## If you're a team captain
+
+Many leagues give each team's captain a free registration. There are three ways it reaches you:
+
+- **Your club named you captain before you registered.** You get an email inviting you to register. Register in that division, for that club, **with the same email address the invitation went to**, and your registration is free.
+- **You're made captain after you register.** Your fee is waived if you haven't paid yet, or refunded in full if you have. You stay on your team either way.
+- **The league office sent you a discount code.** Enter it with **Add promotion code** on the payment page.
+
+The form doesn't show the free price until you submit. You'll see it on the confirmation page. {/* src: docs/adr/0056-captains-register-free.md (Ruleset.freeCaptainsPerTeam; nominated before → $0 when registering in that division with that club and email; named after → waived or refunded, stays on team; form doesn't show the waiver before submitting); src/app/club/[slug]/admin/import/page.tsx:88-93; docs/adr/0043-discount-codes-are-stripe-promotion-codes.md */}
+
 ## Why isn't this working?
+
+### I was named captain but I was asked to pay
+**Cause:** You registered with a different email address from the one your club invited, or in a different division or club.
+**Fix:** Pay to keep your place, then ask your club's admins to make you captain of your team. Your fee is refunded in full. {/* src: docs/adr/0056-captains-register-free.md (residual risk: different email doesn't match; making them captain refunds it) */}
 
 ### "Nothing is open for registration yet"
 **Cause:** No season is taking registrations in your location right now.
