@@ -10,7 +10,7 @@ Mintlify publishes it from `main`. It is **public**: anyone on GitHub can read i
 | Players | `players/` | Anyone who plays in a ClubCircuit season |
 | Captains | `captains/` | Team captains |
 | Running a club | `clubs/` | Club admins and club owners. Pages only owners can act on carry `tag: "Owners only"` |
-| League rules | `rules/` | Everyone |
+| League rules | `rules/` | Everyone. One rulebook per league style in `rules/<style>/` (the first is `rules/rally-21/`), plus the overview at `rules/index` |
 
 League (market) admin and platform admin documentation does **not** belong here. It lives outside
 Mintlify.
@@ -37,9 +37,15 @@ a **Why isn't this working?** section, and a source for every step. On top of th
 
 1. **Put a hidden source note on every step**: `{/* src: src/app/match/[matchId]/lineup/page.tsx */}`.
    End each article with `{/* Last verified: <date> against leagues-app <short sha> */}`.
-2. **Never quote a rule's value.** Deadlines, rating caps, roster limits and fees come from each
-   season's `Ruleset` and differ by season. Explain how the rule works and point readers to their
-   season's rules in the app. No "24 hours", no "4.0 cap".
+2. **Never quote a rule's value in a how-to article.** Deadlines, rating caps, roster limits and
+   fees come from each season's `Ruleset` and differ by season. Explain how the rule works and link
+   to the league's rulebook page. No "24 hours", no "4.0 cap".
+   **The exception is the rulebook pages in `rules/<style>/`.** They *are* the published rules, so
+   they state the values. Their source is Larry's rulebook, a Claude Docs document, not the code.
+   Copy its wording and numbers faithfully; don't reword a rule or "fix" a number. Every value must
+   also match what the app enforces for that season, so a change to the season's rules in the app
+   and a change to its rulebook page ship together. Where the app and the rulebook disagree, flag
+   it to Larry; don't pick one yourself.
 3. **Rounds and courts, never game numbers.** "Round 3, Court 2", "You're playing rounds 1, 3 and 6".
 4. **Write for one-handed phone use.** Players read this at a court. Short steps, no tables wider
    than a phone.
