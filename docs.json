@@ -9,8 +9,44 @@
   },
   "favicon": "/favicon.svg",
   "navigation": {
-    "pages": [
-      "index"
+    "tabs": [
+      {
+        "tab": "Players",
+        "icon": "user",
+        "groups": [
+          {
+            "group": "Getting started",
+            "pages": [
+              "index",
+              "players/index"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Captains",
+        "icon": "clipboard-list",
+        "groups": [
+          {
+            "group": "Captains",
+            "pages": [
+              "captains/index"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Running a club",
+        "icon": "building",
+        "groups": [
+          {
+            "group": "Running a club",
+            "pages": [
+              "clubs/index"
+            ]
+          }
+        ]
+      }
     ]
   },
   "navbar": {
