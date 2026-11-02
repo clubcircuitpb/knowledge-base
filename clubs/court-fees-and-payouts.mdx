@@ -1,0 +1,93 @@
+---
+title: "Collect court fees and get paid out"
+sidebarTitle: "Court fees and payouts"
+description: "In Club HQ, open Court fees, tap Set up with Stripe to connect your club's payments account, then choose how players pay and how the fee works, and tap Save fee. Money goes to your club's own Stripe account."
+keywords: ["court fees", "payouts", "Stripe", "get paid", "charge players", "statement", "refund", "money", "fees"]
+tag: "Owners only"
+---
+
+To collect court fees, open **Club HQ** and go to **Court fees**. Tap **Set up with Stripe** to connect your club's own payments account, then choose **How players pay** and **How the fee works**, and tap **Save fee**. Players are charged in the app, and the money goes straight to your club's Stripe account.
+
+{/* src: leagues-app src/app/club/[slug]/admin/court-fees/page.tsx:101,106-108,138,338-411; src/lib/payments/connect.ts:8-16 */}
+
+**Before you begin**
+
+- You need to be one of the club's owners. Admins don't see **Court fees**.
+- Have your club's business details and the bank account you want paid into. You'll give these to Stripe, not to ClubCircuit.
+- Your league decides whether court fees are collected in the app this season. The page tells you.
+
+{/* src: src/lib/nav/club-hq.ts:16,47 (money access only); court-fees/page.tsx:64 (requireClubOwnerBySlug), :135,330-332; src/components/shell/owners-only.tsx:15 */}
+
+## Set up court fees
+
+<Steps>
+  <Step title="Open Court fees">
+    In **Club HQ**, tap **Court fees**.
+    {/* src: club-hq.ts:47 */}
+  </Step>
+  <Step title="Connect your payments account">
+    Tap **Set up with Stripe** and follow Stripe's steps. If you started before, it says **Continue with Stripe**. When you're done, Stripe sends you back to this page.
+    {/* src: court-fees/page.tsx:138; src/lib/payments/connect.ts:73-79 */}
+  </Step>
+  <Step title="Choose how players pay">
+    Under **How players pay**, choose **In the app** or **At our desk**.
+    {/* src: court-fees/page.tsx:338-340 */}
+  </Step>
+  <Step title="Choose how the fee works">
+    Under **How the fee works**, choose **A total per team**, **A fee per player** or **A flat amount per match**, then enter the amounts.
+    {/* src: court-fees/page.tsx:344-385 */}
+  </Step>
+  <Step title="Add tax, if it applies">
+    Under **Tax**, enter your tax rate and how it's shown on the receipt.
+    {/* src: court-fees/page.tsx (Tax rate, Shown on the receipt as) */}
+  </Step>
+  <Step title="Save">
+    Tap **Save fee for** your season.
+    {/* src: court-fees/page.tsx:411 */}
+  </Step>
+</Steps>
+
+**Result:** Players see the fee on the match page from the moment you save. {/* src: court-fees/page.tsx:412 */}
+
+## When players are charged
+
+With **In the app**, each player's card is charged when the fee falls due. Your league sets whether that's when the lineups lock or after the match. Players without a saved card get a link to pay. Under **Coming up**, you can see what's due for each match day and when it's charged. {/* src: court-fees/page.tsx:339; src/lib/court-fees/run.ts:115-139 (Ruleset.courtFeeChargeAt); src/lib/court-fees/forecast.ts:153-156 */}
+
+The page also shows how card processing is handled for your club, as agreed with the league. ClubCircuit takes a collection fee from each payment, which the statement shows as its own line. If a sponsor covers part of the fee, players pay less and ClubCircuit pays your club the rest. {/* src: court-fees/page.tsx:313-321,239-243; docs/adr/0057-court-fee-collection-fee.md; docs/adr/0059-sponsor-court-fee-subsidy.md */}
+
+## See what you've collected
+
+Under **Statement**, you see what's been collected for you, what's still unpaid, and what ClubCircuit owes you or you owe ClubCircuit. Tap **Download CSV** for a spreadsheet. Each Monday after a week with court fees, owners also get a statement email. Payouts reach your bank through Stripe on your usual payout schedule. {/* src: court-fees/page.tsx:211,216-219; src/emails/digest-emails.tsx:140-157; src/lib/court-fees/weekly-statement.ts */}
+
+## Refunds
+
+Refunds, payouts and your tax forms are in your own Stripe Dashboard. Only a full refund shows here as **Refunded**. {/* src: court-fees/page.tsx:145-149; src/lib/payments/connect-events.ts:64-77 */}
+
+## Why isn't this working?
+
+### "Only the club’s owners can see or change its money …"
+**Cause:** You're a club admin, not an owner.
+**Fix:** Ask one of your club's owners. Tap **See who the owners are** to find them. {/* src: src/components/shell/owners-only.tsx:15-19 */}
+
+### "Stripe couldn’t open the payment setup just now."
+**Cause:** Stripe didn't respond.
+**Fix:** Try again in a few minutes. If it keeps happening, email [support@clubcircuitpb.com](mailto:support@clubcircuitpb.com). {/* src: src/lib/payments/connect.ts:36 */}
+
+### The page says players pay at our desk, but I chose In the app
+**Cause:** Your payments account isn't fully set up yet, or your league isn't collecting court fees in the app this season.
+**Fix:** Finish **Set up with Stripe**. If the page says the league isn't collecting fees in the app, players pay at your desk this season. {/* src: court-fees/page.tsx:330-332 */}
+
+### "Enter each fee as a dollar amount, like 30 or 30.00."
+**Cause:** A fee has letters or symbols in it.
+**Fix:** Enter just the number. {/* src: court-fees/actions.ts:49 */}
+
+### A player's fee says Card declined
+**Cause:** Their card was declined.
+**Fix:** Nothing to do. ClubCircuit retries and sends them a link to pay. {/* src: court-fees/page.tsx:28-35; src/lib/court-fees/run.ts */}
+
+## Related articles
+
+- [Add or remove club admins and owners](/clubs/add-club-admins-and-owners)
+- [Set when your courts can host matches](/clubs/set-host-court-availability)
+
+{/* Last verified: 2026-11-02 against leagues-app bb4f3b5 */}

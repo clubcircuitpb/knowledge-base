@@ -1,0 +1,84 @@
+---
+title: "Apply to bring your club into the league"
+sidebarTitle: "Apply to join the league"
+description: "Fill in the club application at app.clubcircuitpb.com/apply/club and tap Submit club application. The league office reviews it. If approved, your point of contact becomes the club's owner and can enter a season from Club HQ."
+keywords: ["club application", "apply", "join the league", "bring your club", "new club", "enter a season", "Club HQ"]
+---
+
+To bring your club into ClubCircuit, fill in the application at [app.clubcircuitpb.com/apply/club](https://app.clubcircuitpb.com/apply/club) and tap **Submit club application**. The league office reviews every application and emails your point of contact with a decision. Once approved, you enter a season from **Club HQ**.
+
+{/* src: leagues-app src/app/apply/club/page.tsx:69-70,238; src/lib/clubs/applications.ts:89-127,243-250 */}
+
+**Before you begin**
+
+- You don't need an account to apply.
+- Have your club's address, email and phone number ready, plus the name and email of the person who'll run the club on ClubCircuit.
+- Applying doesn't guarantee a place. The league office approves every club.
+
+{/* src: src/app/apply/club/page.tsx:94-232 */}
+
+## Apply
+
+<Steps>
+  <Step title="Open the application">
+    Go to [app.clubcircuitpb.com/apply/club](https://app.clubcircuitpb.com/apply/club).
+    {/* src: src/app/apply/club/page.tsx:69 ("Bring your club to ClubCircuit") */}
+  </Step>
+  <Step title="Add your region and club">
+    Under **Your region and club**, choose your **Region** and fill in the club's name, email, address and phone. If your club is a franchise, write the name as Club Name — Location.
+    {/* src: page.tsx:94-158 */}
+  </Step>
+  <Step title="Name your point of contact">
+    Under **Point of contact**, enter the name and email of the person who'll run the club on ClubCircuit. If you're approved, this person is set up to run the club.
+    {/* src: page.tsx:173-187 */}
+  </Step>
+  <Step title="Tell us your plans">
+    Optionally, say roughly how many teams you plan to field, and anything else the league should know.
+    {/* src: page.tsx:194-213 */}
+  </Step>
+  <Step title="Accept the agreement and submit">
+    Tick **I’ve read and accept the participation agreement on behalf of the club**, then tap **Submit club application**.
+    {/* src: page.tsx:220-238 */}
+  </Step>
+</Steps>
+
+**Result:** You see **Application received**, and your point of contact gets a confirmation email. {/* src: page.tsx:46-50; src/emails/registry.tsx:1937 */}
+
+## After you're approved
+
+Your point of contact gets an email saying the club is approved. They're set up as the club's **owner**, which means they can do everything an admin can, plus handle the club's money and decide who helps run it. They sign in with the same email address and open **Club HQ**. {/* src: src/lib/clubs/applications.ts:243-250 (grantClubRoles owner: true); registry.tsx:1955-1965; docs/adr/0049-club-owners.md */}
+
+## Enter a season
+
+Approval doesn't enter your club into a season. When a season opens, **Club HQ** shows a card saying it **is taking entries**. Tap **Tell the league we’re in**. The league office confirms your entry, and you get an email either way. Then add your teams and share your registration link. {/* src: src/app/club/[slug]/admin/page.tsx:114-125; src/lib/admin/enrollment.ts; docs/adr/0055-clubs-enter-seasons-and-league-managers-create-clubs.md */}
+
+If the league invites your club to a season, Club HQ shows **You’re invited to** the season, with **Accept** and **Decline**. {/* src: src/app/club/[slug]/admin/page.tsx:130-141 */}
+
+## Why isn't this working?
+
+### "That region isn’t open for club applications."
+**Cause:** The league isn't taking clubs in that region right now.
+**Fix:** Email [support@clubcircuitpb.com](mailto:support@clubcircuitpb.com) to ask when it opens. {/* src: src/lib/clubs/applications.ts:57 */}
+
+### "Enter the club’s phone number, with area code."
+**Cause:** The phone number is too short.
+**Fix:** Include the area code. {/* src: src/lib/clubs/applications.ts:24-38 */}
+
+### "You need to accept the participation agreement."
+**Cause:** The agreement box isn't ticked.
+**Fix:** Read the agreement, tick the box and submit again. {/* src: src/lib/clubs/applications.ts:24-38 */}
+
+### I applied but haven't heard back
+**Cause:** The league office reviews each application by hand. There's no status page while it does.
+**Fix:** Check your point of contact's inbox and spam folder. To follow up, email [support@clubcircuitpb.com](mailto:support@clubcircuitpb.com). {/* src: src/lib/clubs/applications.ts (no applicant-facing status) */}
+
+### I don't see "Tell the league we’re in"
+**Cause:** No season is taking entries right now, or your club has already asked, been invited or entered.
+**Fix:** If you've already asked, Club HQ says so. Wait for the league office's email. {/* src: src/lib/admin/enrollment.ts:118,227-236; src/app/club/[slug]/admin/page.tsx:125 */}
+
+## Related articles
+
+- [Add or remove club admins and owners](/clubs/add-club-admins-and-owners)
+- [Invite your players and captains to register](/clubs/invite-players-to-register)
+
+{/* Last verified: 2026-11-02 against leagues-app bb4f3b5 */}
