@@ -1,21 +1,21 @@
 ---
 title: "Add or remove club admins and owners"
 sidebarTitle: "Admins and owners"
-description: "Club owners add the people who run the club in Club HQ under Owners & admins: enter their name and email and tap Add admin. Tick the owner box to make them an owner too."
+description: "Club owners add the people who run the club in Club HQ under Owners & admins: enter their name and email and tap Add admin. Tick Make them an owner too and the button reads Add owner."
 keywords: ["club admin", "club owner", "add admin", "remove admin", "who runs the club", "permissions", "Club HQ", "access"]
 tag: "Owners only"
 ---
 
-To add someone who'll help run your club, open **Club HQ**, go to **Owners & admins**, enter their name and email under **Add someone**, and tap **Add admin**. To make them an owner as well, tick **Make them an owner too**. Only club owners can add or remove people.
+To add someone who'll help run your club, open **Club HQ**, go to **Owners & admins**, enter their name and email under **Add someone**, and tap **Add admin**. To make them an owner as well, tick **Make them an owner too** first, and the button reads **Add owner**. Only club owners can add or remove people.
 
-{/* src: leagues-app src/lib/nav/club-hq.ts:69; src/app/club/[slug]/admin/admins/page.tsx:105-112; admin-controls.tsx:36-63; src/lib/auth/guards.ts:198-202 (requireClubOwner) */}
+{/* src: leagues-app src/lib/nav/club-hq.ts:69; src/app/club/[slug]/admin/admins/page.tsx:40,104-108 (canManage: owners and the league office); admin-controls.tsx:40-76 */}
 
 **Before you begin**
 
 - You need to be one of the club's owners. Admins can see who runs the club but can't change it.
 - Admins run the club day to day: teams, roster, venue, captains and announcements. Owners do all that, and also handle the club's money (court fees, payouts and statements) and decide who runs it.
 
-{/* src: src/app/club/[slug]/admin/admins/page.tsx:51,111; docs/adr/0049-club-owners.md */}
+{/* src: src/app/club/[slug]/admin/admins/page.tsx:40,51,110-114; docs/adr/0049-club-owners.md */}
 
 ## Add an admin or owner
 
@@ -25,58 +25,62 @@ To add someone who'll help run your club, open **Club HQ**, go to **Owners & adm
     {/* src: src/lib/nav/club-hq.ts:64,69 */}
   </Step>
   <Step title="Enter their details">
-    Under **Add someone**, enter their first name, last name and email. They'll sign in with that email address.
-    {/* src: admin-controls.tsx:36-43 */}
+    Under **Add someone**, enter their **First name**, **Last name** and **Email**. They sign in with that email address.
+    {/* src: admin-controls.tsx:42-51 */}
   </Step>
   <Step title="Choose owner or admin">
     To make them an owner, tick **Make them an owner too — they’ll see and decide the club’s money, and who runs it**. Leave it unticked for an admin.
-    {/* src: admin-controls.tsx:49 */}
+    {/* src: admin-controls.tsx:52-58 */}
   </Step>
   <Step title="Add them">
-    Tap **Add admin**.
-    {/* src: admin-controls.tsx:63 */}
+    Tap **Add admin**. If you ticked the owner box, the button reads **Add owner**.
+    {/* src: admin-controls.tsx:69-73 */}
   </Step>
 </Steps>
 
-**Result:** They're added straight away and we email them. They sign in with that email and choose **Club HQ**. They don't need to accept anything. {/* src: admin-controls.tsx:58; src/lib/club/admins.ts:69; src/emails/registry.tsx:1975-1984 */}
+**Result:** You see that they're now an admin, or an owner, and that we've emailed them. They're added straight away and don't need to accept anything. They sign in with that email and choose **Club HQ**. {/* src: admin-controls.tsx:64-67; src/lib/club/admins.ts:71-95; src/emails/registry.tsx (club admin added: "Sign in with this email address and choose Club HQ") */}
 
 ## Change someone's role
 
-Next to their name, tap **Make owner** or **Make admin only**, then confirm. {/* src: admin-controls.tsx:112-120 */}
+Next to their name, tap **Make owner** or **Make admin only**, then **Yes, make owner** or **Yes, admin only**. An owner you make admin only keeps running the club, without its money. {/* src: admin-controls.tsx:122-133 */}
 
 ## Remove someone
 
-Next to their name, tap **Remove**, then **Yes, remove**. They lose access to Club HQ straight away. {/* src: admin-controls.tsx:79-85; src/lib/club/admins.ts:116 */}
+Next to their name, tap **Remove**, then **Yes, remove**. They lose access to Club HQ straight away. {/* src: admin-controls.tsx:83-93; src/lib/club/admins.ts:100-120 */}
 
 <Note>
-  A club always needs at least one owner and one admin, so you can't remove the last one. Add or promote someone else first. {/* src: src/lib/club/admins.ts:104,108,132 */}
+  A club always needs at least one owner and one admin, so you can't remove the last one. Add or promote someone else first. {/* src: src/lib/club/admins.ts:109,113,137; page.tsx:78,93 (Remove shows only when more than one person runs the club) */}
 </Note>
 
 ## Why isn't this working?
 
 ### I don't see Add someone
-**Cause:** You're an admin, not an owner. Only owners add and remove people.
-**Fix:** Ask one of your club's owners. Their names are listed on the same page. {/* src: src/app/club/[slug]/admin/admins/page.tsx:110-112 */}
+**Cause:** You're an admin, not an owner. Instead, the page says **The club’s owners add and remove the people who run it.**
+**Fix:** Ask one of your club's owners. They're listed on the same page, marked **Owner**. {/* src: src/app/club/[slug]/admin/admins/page.tsx:40,111-113 */}
 
 ### "That’s the club’s only owner. Make someone else an owner first."
 **Cause:** You tried to remove the club's only owner.
-**Fix:** Make someone else an owner first, then remove them. {/* src: src/lib/club/admins.ts:108 */}
+**Fix:** Make someone else an owner first, then remove them. {/* src: src/lib/club/admins.ts:113 */}
+
+### "They’re the club’s only owner. Make someone else an owner first."
+**Cause:** You tried to make the club's only owner an admin only.
+**Fix:** Tap **Make owner** next to someone else first. {/* src: src/lib/club/admins.ts:137 */}
 
 ### "… needs at least one admin. Add someone else first, then remove this one."
 **Cause:** You tried to remove the last person who runs the club.
-**Fix:** Add someone else first. {/* src: src/lib/club/admins.ts:104 */}
+**Fix:** Add someone else first. {/* src: src/lib/club/admins.ts:109 */}
 
 ### "… already helps run …"
 **Cause:** That email address is already an admin or owner of your club.
-**Fix:** To change their role, use **Make owner** or **Make admin only** next to their name. {/* src: src/lib/club/admins.ts:73 */}
+**Fix:** To change their role, use **Make owner** or **Make admin only** next to their name. {/* src: src/lib/club/admins.ts:78 */}
 
 ### The person I added can't see Club HQ
 **Cause:** They're signed in with a different email address from the one you added.
-**Fix:** Ask them to sign out and sign in with the email you entered. {/* src: src/lib/club/admins.ts:69 (account keyed by that email) */}
+**Fix:** Ask them to sign out and sign in with the email you entered. {/* src: src/lib/club/admins.ts:71-90 (account keyed by that email); admin-controls.tsx:50 */}
 
 ## Related articles
 
 - [Apply to bring your club into the league](/clubs/apply-to-join-the-league)
 - [Collect court fees and get paid out](/clubs/court-fees-and-payouts)
 
-{/* Last verified: 2026-11-02 against leagues-app bb4f3b5 */}
+{/* Last verified: 2026-11-02 against leagues-app ba29829 */}
