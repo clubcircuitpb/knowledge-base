@@ -1,8 +1,8 @@
 ---
 title: "Help for team captains"
 sidebarTitle: "Captains"
-description: "Help for team captains: who can play, your lineups, subs, reschedules and scores."
-keywords: ["captain", "team captain", "lineup", "subs", "scores", "help"]
+description: "Help for team captains: who can play, your lineups, subs, reschedules, DUPR, scores and finals day."
+keywords: ["captain", "team captain", "lineup", "subs", "scores", "DUPR", "playoffs", "finals day", "help"]
 ---
 
 {/* src: leagues-app src/app/club/[slug]/admin/captains (club admins assign captains); prisma/schema.prisma Role.TEAM_CAPTAIN */}
@@ -22,7 +22,10 @@ This section is for team captains. Your club's admins make you captain of a team
     Offer the spot to eligible subs when you're short.
   </Card>
   <Card title="Reschedule a match" icon="calendar-clock" href="/captains/request-a-reschedule">
-    Offer the other captain new dates.
+    Offer the other captain times the host club has offered.
+  </Card>
+  <Card title="Opt in to DUPR" icon="chart-line" href="/captains/opt-in-to-dupr">
+    Choose whether your team's games count toward DUPR.
   </Card>
 </Columns>
 
@@ -33,10 +36,21 @@ This section is for team captains. Your club's admins make you captain of a team
     Enter each court as it finishes; the other captain confirms.
   </Card>
   <Card title="Dispute a result" icon="flag" href="/captains/dispute-a-result">
-    Raise a wrong score with the league office.
+    Raise a wrong score, or report a confirmed result, to the league office.
   </Card>
   <Card title="Contact other captains" icon="message-square" href="/captains/contact-other-captains">
     Lineup changes, late-lineup consent and score discrepancies.
+  </Card>
+</Columns>
+
+## Finals day
+
+<Columns cols={2}>
+  <Card title="Submit your playoff roster" icon="list-check" href="/captains/submit-your-playoff-roster">
+    List who will be at finals day, before the deadline.
+  </Card>
+  <Card title="Set playoff lineups" icon="shuffle" href="/captains/set-playoff-lineups-round-by-round">
+    Take turns with the other captain, one round at a time.
   </Card>
 </Columns>
 
@@ -44,4 +58,4 @@ You're still a player too, so everything in the [Players](/players) section appl
 
 Can't find what you need? Ask your club's admins, or email [support@clubcircuitpb.com](mailto:support@clubcircuitpb.com).
 
-{/* Last verified: 2026-11-01 against leagues-app bb4f3b5 */}
+{/* Last verified: 2026-11-02 against leagues-app ba29829 */}
