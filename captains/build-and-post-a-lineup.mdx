@@ -93,8 +93,8 @@ A late lineup can cost your team games. The penalty is applied automatically onc
 **Cause:** Auto-fill ran out of combinations with the players who said they can play.
 **Fix:** Fill those rounds by hand, or find a sub. {/* src: src/lib/lineup/autofill.ts:307 */}
 
-### "This lineup has locked — the deadline has passed."
-**Cause:** Your league locks lineups at a set time, and that time has passed. The builder shows **Locked — the deadline has passed.** next to **Submit**, and changes no longer save.
+### "This lineup has locked, so it can’t change here."
+**Cause:** Your league locks lineups at a set time (the deadline or the match start, depending on the season's rules), and that time has passed. The builder shows **Locked — this lineup can’t change any more.** next to **Submit**, and changes no longer save.
 **Fix:** If a change is needed, email the league office at [support@clubcircuitpb.com](mailto:support@clubcircuitpb.com). {/* src: src/lib/lineup/save.ts:38 (assertLineupEditable); lineup-builder.tsx:557 */}
 
 ### "This match has started or finished, so its lineup can’t change here."
