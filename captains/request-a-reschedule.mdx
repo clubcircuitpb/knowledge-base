@@ -1,51 +1,65 @@
 ---
 title: "Ask to reschedule a match"
 sidebarTitle: "Reschedule a match"
-description: "In the Captains directory, tap Propose reschedule dates on the other captain's card, say why, offer the dates and times, and tap Send dates. The other captain picks one."
-keywords: ["reschedule", "move a match", "change date", "postpone", "new date", "propose dates", "rain", "venue closed"]
+description: "In the Captains directory, tap Propose reschedule dates on the other captain's card, say why, offer times the host club has offered the league, and tap Send dates. The other captain picks one."
+keywords: ["reschedule", "move a match", "change date", "postpone", "new date", "propose dates", "rain", "venue closed", "withdraw reschedule", "reschedule declined"]
 ---
 
-To reschedule a match, open the **Captains directory**, find the other team's captain, and tap **Propose reschedule dates**. Say why you need to move it, offer the dates and start times, and tap **Send dates**. The other captain picks one, and both teams are told the new time.
+To reschedule a match, open the **Captains directory**, find the other team's captain, and tap **Propose reschedule dates**. Say why you need to move it, offer dates and start times the host club has offered the league, and tap **Send dates**. The other captain picks one, and both teams are told the new time.
 
-{/* src: leagues-app src/app/captains/captains-directory.tsx:22,314,359; src/lib/reschedule/flow.ts:206-230 */}
+{/* src: leagues-app src/app/captains/captains-directory.tsx:22,320,328,368; src/lib/reschedule/flow.ts */}
 
 **Before you begin**
 
 - Try to find a sub first. A reschedule affects the other team and the host club. See [Find a sub when you're short](/captains/find-a-substitute).
-- Your league sets how many reschedules each team gets a season, how far ahead you need to ask, and the latest date a match can move to. The form shows yours.
+- Your league sets how many reschedules each team gets a season, how far ahead you need to ask, and the latest date a match can move to. The form shows yours. See [Rescheduling a match](/rules/rally-21/rescheduling-a-match) in the rulebook.
+- Each new time has to be one the host club has offered the league, with its courts free.
+- A match can have only one open reschedule request at a time.
 
-{/* src: src/lib/reschedule/policy.ts:63-101 (Ruleset.reschedulesPerTeamPerSeason, rescheduleAutoApproveDaysBefore, rescheduleCompletionDeadline); captains-directory.tsx:305-306 */}
+{/* src: src/lib/reschedule/policy.ts (Ruleset.reschedulesPerTeamPerSeason, rescheduleAutoApproveDaysBefore, rescheduleCompletionDeadline); captains-directory.tsx:305-313; src/lib/reschedule/flow.ts:172-178 (checkHostCourts, ADR 0063), :148-152,363-381 (one open request per match, ADR 0082) */}
 
 ## Propose new dates
 
 <Steps>
   <Step title="Open the Captains directory">
     Go to **Manage team** and tap **Captains directory**.
-    {/* src: src/app/team/[teamId]/manage/page.tsx:155 */}
+    {/* src: src/app/team/[teamId]/manage/page.tsx:170 */}
   </Step>
   <Step title="Find the other captain">
-    Find the captain of the team you're playing, and tap **Propose reschedule dates** on their card. If you play them more than once, choose the match.
-    {/* src: captains-directory.tsx:22,288 */}
+    Find the captain of the team you're playing, and tap **Propose reschedule dates** on their card. If you play them more than once, choose **Which match**.
+    {/* src: captains-directory.tsx:22,288-289 */}
   </Step>
   <Step title="Say why">
     Fill in **Why you need to move it**. The other captain and the league see it.
-    {/* src: captains-directory.tsx:314-315; src/lib/reschedule/flow.ts:138 */}
+    {/* src: captains-directory.tsx:320; src/lib/reschedule/flow.ts:163 */}
   </Step>
   <Step title="Offer dates and times">
-    Add the date and start time for each option the form asks for.
-    {/* src: captains-directory.tsx:319 (Ruleset.rescheduleAlternativeDatesRequired) */}
+    Add a date and start time for each option the form asks for. The form says "Pick times the host club has offered the league.", naming the club. If you pick one it hasn't offered, you'll see the times it has.
+    {/* src: captains-directory.tsx:324-347 (Ruleset.rescheduleAlternativeDatesRequired; hostClubName) */}
   </Step>
   <Step title="Send">
     Read any notes on the form, then tap **Send dates**.
-    {/* src: captains-directory.tsx:359; src/lib/reschedule/policy.ts:95-101 */}
+    {/* src: captains-directory.tsx:349-355,368; src/lib/reschedule/policy.ts:101-112 */}
   </Step>
 </Steps>
 
-**Result:** You see "Sent. The other captain picks a date or counters — the original date stands until someone agrees." The other captain gets an email. {/* src: captains-directory.tsx:278; registry CAPTAIN_RESCHEDULE_PROPOSED */}
+**Result:** You see "Sent. The other captain picks a date or counters — the original date stands until someone agrees." The other captain gets an email. Your request shows under **Sent requests** at the top of the directory until they answer. {/* src: captains-directory.tsx:279,42,477-491; registry CAPTAIN_RESCHEDULE_PROPOSED */}
+
+## Withdraw a request you sent
+
+If you no longer need to move the match, and the other captain hasn't answered yet, you can take the request back.
+
+1. Open the **Captains directory**.
+2. Under **Sent requests**, find the request and tap **Withdraw**.
+3. Tap **Yes, withdraw**. To keep it, tap **Keep it**.
+
+**Result:** You see "Withdrawn. The match stays on its original date, and the other captain has been told." You can then send a new request for that match if you need to. {/* src: captains-directory.tsx:513-540; src/lib/reschedule/flow.ts:334-361 (CAPTAIN_RESCHEDULE_WITHDRAWN) */}
 
 ## Answer a reschedule request
 
-Requests from other captains appear in the Captains directory under **Waiting on you**. Under **Pick one**, choose a date and tap **Accept**, or tap **None of these work**. To suggest your own dates instead, tap **None of these work**, then use **Propose reschedule dates** on their card. {/* src: captains-directory.tsx:452,490,510,515 */}
+Requests from other captains appear in the Captains directory under **Waiting on you**. Under **Pick one**, choose a date and tap **Accept** followed by that date. If none work, tap **None of these work**. To suggest your own dates instead, tap **None of these work**, then use **Propose reschedule dates** on their card. {/* src: captains-directory.tsx:461,572,589,592,597 */}
+
+When you decline, the captain who asked gets an email and a notice titled **Reschedule declined**, naming both teams. The match stays on its original date. {/* src: src/lib/reschedule/flow.ts:213-231 (RESCHEDULE_DECLINED); src/emails/registry.tsx:1684-1692; src/lib/notifications/inbox.ts:69-71 */}
 
 ## What happens after a date is agreed
 
@@ -53,35 +67,60 @@ Requests from other captains appear in the Captains directory under **Waiting on
 - **Close to the match:** the league office approves the new date first. Both teams hear as soon as it does.
 - **Your team has used its reschedules for the season:** your league may allow a few more. The league office approves each of those, however far ahead you ask.
 
-{/* src: src/lib/reschedule/flow.ts:206-230 */}
+{/* src: src/lib/reschedule/flow.ts:246-275 */}
 
-The form may also tell you that your team covers any court cost the host club can't recover, or that the request will be flagged as late notice. Both depend on how close to the match you ask. The rulebook has the details. {/* src: src/lib/reschedule/policy.ts:95-101 */}
+The form may also tell you that your team covers any court cost the host club can't recover, or that the request will be flagged as late notice. Both depend on how close to the match you ask. The rulebook has the details. {/* src: src/lib/reschedule/policy.ts:101-112 */}
 
 ## Why isn't this working?
 
+### "… hasn’t offered courts at … Pick one of its offered times: …"
+**Cause:** The host club hasn't offered the league courts at that time, or not enough of them for the whole match.
+**Fix:** Pick one of the times the message lists, or ask the host club to add the time. {/* src: src/lib/reschedule/courts.ts:74-86 */}
+
+### "… hasn’t offered courts on … Days it has offered: …"
+**Cause:** The host club hasn't offered any courts that day.
+**Fix:** Pick one of the days the message lists, or ask the club to add that day. {/* src: src/lib/reschedule/courts.ts:62-65 */}
+
+### "… are already taken by its other home matches."
+**Cause:** The host club's courts at that time are booked for its other home matches.
+**Fix:** Pick one of the other times the message lists, or offer a different date. {/* src: src/lib/reschedule/courts.ts:74 */}
+
+### "… has said it can’t host on … Offer a different date."
+**Cause:** The host club has marked that day as closed.
+**Fix:** Offer a different date. {/* src: src/lib/reschedule/courts.ts:61 */}
+
+### "You’ve already offered … new dates for this match."
+**Cause:** You already have an unanswered request for this match.
+**Fix:** Wait for the other captain's answer, or withdraw the request under **Sent requests** and send a new one. {/* src: src/lib/reschedule/flow.ts:370-371 */}
+
+### "… has already offered new dates for this match."
+**Cause:** The other captain has already asked to move this match.
+**Fix:** Answer it under **Waiting on you**: pick a date, or tap **None of these work** and then offer your own. {/* src: src/lib/reschedule/flow.ts:373-374 */}
+
+### "The other captain has already answered, so it can’t be withdrawn."
+**Cause:** The other captain picked a date or declined before you withdrew.
+**Fix:** If an agreed date no longer works, email the league office at [support@clubcircuitpb.com](mailto:support@clubcircuitpb.com). {/* src: src/lib/reschedule/flow.ts:345 */}
+
 ### "Your team has used its … reschedules this season."
 **Cause:** Your team has used all the reschedules your league allows this season.
-**Fix:** Find a sub if you can. If you still can't play, email [support@clubcircuitpb.com](mailto:support@clubcircuitpb.com). {/* src: src/lib/reschedule/policy.ts:69 */}
+**Fix:** Find a sub if you can. If you still can't play, email [support@clubcircuitpb.com](mailto:support@clubcircuitpb.com). {/* src: src/lib/reschedule/policy.ts:78 */}
 
 ### "… is too late — rescheduled matches must be played …"
 **Cause:** The date you offered is after the latest date your league allows.
-**Fix:** Offer an earlier date. {/* src: src/lib/reschedule/policy.ts:87 */}
-
-### "… has said it can’t host on … Offer a different date."
-**Cause:** The host club has marked that date as unavailable, or doesn't have enough courts free at that time.
-**Fix:** Offer a different date, or a different time that day. {/* src: src/lib/reschedule/courts.ts:40,45 */}
+**Fix:** Offer an earlier date. {/* src: src/lib/reschedule/policy.ts:94-96 */}
 
 ### "This match has already started, so it can’t be rescheduled."
 **Cause:** It's too late to move this match in the app.
-**Fix:** Email [support@clubcircuitpb.com](mailto:support@clubcircuitpb.com). {/* src: src/lib/reschedule/policy.ts:72 */}
+**Fix:** Email [support@clubcircuitpb.com](mailto:support@clubcircuitpb.com). {/* src: src/lib/reschedule/policy.ts:80 */}
 
 ### There's no Propose reschedule dates button
 **Cause:** Your teams don't have a match together that's still to be played.
-**Fix:** Check that you're looking at the captain of the team you're playing. {/* src: src/lib/captains/directory.ts:146 */}
+**Fix:** Check that you're looking at the captain of the team you're playing. {/* src: src/lib/captains/directory.ts; captains-directory.tsx:202,226 */}
 
 ## Related articles
 
+- [Rescheduling a match](/rules/rally-21/rescheduling-a-match), in the rulebook
 - [Find and contact other captains](/captains/contact-other-captains)
 - [Find a sub when you're short](/captains/find-a-substitute)
 
-{/* Last verified: 2026-11-01 against leagues-app bb4f3b5 */}
+{/* Last verified: 2026-11-02 against leagues-app ba29829 */}

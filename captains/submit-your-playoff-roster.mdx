@@ -1,0 +1,96 @@
+---
+title: "Submit your playoff roster for finals day"
+sidebarTitle: "Submit your playoff roster"
+description: "Open Manage team and tap Playoff roster. Tap Add next to each player who will be at finals day, check their standing, then tap Submit playoff roster before the deadline."
+keywords: ["playoff roster", "finals day", "playoffs", "semifinal", "who can play in the playoffs", "playoff eligibility", "submit roster"]
+---
+
+To submit your playoff roster, open **Manage team** and tap **Playoff roster**. Tap **Add** next to each player who will be at finals day, then tap **Submit playoff roster**. Only players on it can play that day, including in the final.
+
+{/* src: leagues-app src/app/team/[teamId]/manage/page.tsx:161-165; src/app/team/[teamId]/playoff-roster/roster-picker.tsx:113,131; src/app/team/[teamId]/playoff-roster/page.tsx:85-89 (ADR 0081) */}
+
+**Before you begin**
+
+- You need to be your team's captain, and your team has to be in the semifinals on finals day.
+- Check who can come. The roster has a limit of men and women, and a deadline before finals day. The page shows both. See [Playoffs](/rules/rally-21/playoffs) in the rulebook for the numbers.
+- A late roster costs your team games in each match it plays that day. The page says how many.
+
+{/* src: src/app/team/[teamId]/manage/page.tsx:63-67 (button only for a semifinalist with a finals day); playoff-roster/page.tsx:41-55,85-97 (Ruleset limits, dueAt, lateRosterPenaltyGames) */}
+
+## Submit your playoff roster
+
+<Steps>
+  <Step title="Open Playoff roster">
+    Go to **Manage team** and tap **Playoff roster** at the top of the page.
+    {/* src: src/app/team/[teamId]/manage/page.tsx:161-165 */}
+  </Step>
+  <Step title="Check the deadline">
+    The line at the top says when the roster is **Due**, or when you submitted it.
+    {/* src: playoff-roster/page.tsx:90-96 */}
+  </Step>
+  <Step title="Add your players">
+    Players are grouped under **Your roster**, **Your club’s other teams** and **Sub list for this division**. Tap **Add** next to each player who will be there. It changes to **On the roster**. Tap again to take them off.
+    {/* src: roster-picker.tsx:19,49-60,94-117 */}
+  </Step>
+  <Step title="Check each player's standing">
+    Each player has a badge saying whether they play free, need the league office's approval, or would have every game they play forfeited. See the table below.
+    {/* src: roster-picker.tsx:118; src/lib/playoffs/eligibility.ts:97-108 */}
+  </Step>
+  <Step title="Check the count">
+    The line at the top shows how many men and women you've listed: **Men … of …** and **Women … of …**.
+    {/* src: roster-picker.tsx:85-87 */}
+  </Step>
+  <Step title="Submit">
+    Tap **Submit playoff roster**.
+    {/* src: roster-picker.tsx:131 */}
+  </Step>
+</Steps>
+
+**Result:** You see **Playoff roster submitted.** The line at the top says when you submitted it, and until when you can change it. {/* src: roster-picker.tsx:70; playoff-roster/page.tsx:90-92 */}
+
+You can change the roster and submit it again until the deadline. After that it's locked. {/* src: playoff-roster/page.tsx:92; src/lib/playoffs/roster.ts:331 */}
+
+## What each standing means
+
+- **… games for this team — plays free:** a regular on your team. No cost.
+- **Regular on your club’s lower-division team — plays free:** no cost.
+- **Regular on your club’s higher-division team — every game they play is forfeited**
+- **Short of … games — needs the league office’s approval:** a teammate short of the games minimum, or a player from the sub list. Each game they play costs your team games.
+
+{/* src: src/lib/playoffs/eligibility.ts:92-108; src/lib/playoffs/roster.ts:350-354 */}
+
+A player who needs approval shows **Waiting on the league office** until the league office decides. Then they show **Approved by the league office**, or **Not approved** with the reason. They can't be put in a round until they're approved. {/* src: playoff-roster/page.tsx:69-76; src/lib/playoffs/roster.ts:19,418-430 */}
+
+## Why isn't this working?
+
+### I don't see Playoff roster on Manage team
+**Cause:** Your team isn't in the semifinals on finals day, or finals day isn't set yet.
+**Fix:** Check the standings. If your team has qualified and it still isn't there, ask the league office. {/* src: manage/page.tsx:63-67; playoff-roster/page.tsx:41-55 ("No playoff roster to submit yet") */}
+
+### "You’ve listed … men, the most for the day. Take someone off first."
+**Cause:** You've reached the limit for that gender.
+**Fix:** Tap a player who's **On the roster** to take them off, then add someone else. {/* src: roster-picker.tsx:53-55 */}
+
+### "Each round needs … men and … women."
+**Cause:** You haven't listed enough men or women to field a full round, so your team would forfeit the match.
+**Fix:** Add players before the deadline. {/* src: src/lib/playoffs/roster.ts:347-348 */}
+
+### "The roster deadline has passed, so your playoff roster is locked."
+**Cause:** The deadline has passed.
+**Fix:** If someone can't make it, email the league office at [support@clubcircuitpb.com](mailto:support@clubcircuitpb.com). {/* src: src/lib/playoffs/roster.ts:331 */}
+
+### "Someone on that list isn’t on your club’s teams or this division’s sub list."
+**Cause:** A player's place changed after you opened the page.
+**Fix:** Reload the page and pick again. {/* src: src/lib/playoffs/roster.ts:337 */}
+
+### "Playoff roster submitted — after the deadline."
+**Cause:** You submitted after the deadline. A late roster costs your team games in each match that day.
+**Fix:** The penalty is applied automatically. If you think it's wrong, email the league office at [support@clubcircuitpb.com](mailto:support@clubcircuitpb.com). {/* src: roster-picker.tsx:70-71 */}
+
+## Related articles
+
+- [Playoffs](/rules/rally-21/playoffs), in the rulebook
+- [Set your playoff lineups round by round](/captains/set-playoff-lineups-round-by-round)
+- [See who can play and manage your team](/captains/manage-your-team)
+
+{/* Last verified: 2026-11-02 against leagues-app ba29829 */}

@@ -2,12 +2,12 @@
 title: "See who can play and manage your team"
 sidebarTitle: "Manage your team"
 description: "Open Manage team to see every upcoming match, who's in, whose lineup is due and who hasn't answered. Nudge the players who haven't answered with one tap."
-keywords: ["manage team", "captain", "roster", "who can play", "availability", "nudge", "reminder", "lineup status", "team"]
+keywords: ["manage team", "captain", "roster", "who can play", "availability", "nudge", "reminder", "lineup status", "team", "DUPR", "playoff roster"]
 ---
 
 To see who can play, open **Manage team**. On a phone, tap **Captain** in the bar at the bottom of the screen. For each upcoming match it shows who's in, who's out and who hasn't answered, plus where your lineup stands. Tap **Nudge** to remind everyone who hasn't answered.
 
-{/* src: leagues-app src/lib/nav/play.ts:101 ("Manage team"), :126 ("Captain" tab); src/app/team/[teamId]/manage/page.tsx:85-86,147,285; nudge-button.tsx:22 */}
+{/* src: leagues-app src/lib/nav/play.ts:105 ("Manage team"), :130 ("Captain" tab); src/app/team/[teamId]/manage/page.tsx:157,303-306,324; nudge-button.tsx:22 */}
 
 **Before you begin**
 
@@ -21,11 +21,11 @@ To see who can play, open **Manage team**. On a phone, tap **Captain** in the ba
 <Steps>
   <Step title="Open Manage team">
     On a phone, tap **Captain** at the bottom of the screen. On a computer, select **Manage team** in the **Captain** menu. You can also tap **Manage team** on your team's page.
-    {/* src: src/lib/nav/play.ts:82,101,126; src/app/team/[teamId]/page.tsx:154 */}
+    {/* src: src/lib/nav/play.ts:86,105,130; src/app/team/[teamId]/page.tsx:163 */}
   </Step>
   <Step title="Look at your next match">
     The **Next match** card lists your players under **In**, **Maybe**, **Out** and **Haven’t answered**.
-    {/* src: src/app/team/[teamId]/manage/page.tsx:282-285,303 */}
+    {/* src: src/app/team/[teamId]/manage/page.tsx:303-306,324 */}
   </Step>
   <Step title="Remind anyone who hasn't answered">
     Tap **Nudge the 1 who hasn’t answered**, or **Nudge the 3 who haven’t answered**. The number on the button is how many haven't answered. They get a reminder email with buttons to answer.
@@ -37,24 +37,30 @@ To see who can play, open **Manage team**. On a phone, tap **Captain** in the ba
   </Step>
 </Steps>
 
-**Result:** You can see at a glance who's playing each match and which lineups still need you. Below the next match, **Still to play** lists the rest of your matches. {/* src: src/app/team/[teamId]/manage/page.tsx:190 */}
+**Result:** You can see at a glance who's playing each match and which lineups still need you. Below the next match, **Still to play** lists the rest of your matches. {/* src: src/app/team/[teamId]/manage/page.tsx:205 */}
 
 ## Other things you can do from Manage team
 
-- **Message your team.** Tap **Team chat**. As captain, you can tick **Announce (emails the roster)** to send a message by email as well as in the chat. {/* src: manage/page.tsx:152; src/app/team/[teamId]/chat/team-chat.tsx:123 */}
-- **Find a sub.** Open the **Subs** tab, or tap **Need a sub?** on a match. See [Find a sub when you're short](/captains/find-a-substitute). {/* src: manage/page.tsx:164-165; sub-request-control.tsx:111 */}
-- **Contact another captain.** Tap **Captains directory**. See [Find and contact other captains](/captains/contact-other-captains). {/* src: manage/page.tsx:155 */}
-- **See your full roster.** Open your team's page and tap **Roster**. {/* src: src/app/team/[teamId]/page.tsx:24-26 */}
+- **Decide on DUPR.** Below your matches, the **DUPR** section shows whether your team's games count toward DUPR, and lets you opt in. It appears only if your league offers DUPR this season. See [Choose whether your games count toward DUPR](/captains/opt-in-to-dupr). {/* src: manage/page.tsx:239-243 (DuprTeamPanel at 241); src/components/dupr/dupr-team-panel.tsx:11-46 */}
+- **Submit your playoff roster.** If your team is playing on finals day, tap **Playoff roster** at the top of the page. See [Submit your playoff roster for finals day](/captains/submit-your-playoff-roster). {/* src: manage/page.tsx:63-67,161-165 */}
+- **Message your team.** Tap **Team chat**. As captain, you can tick **Announce (emails the roster)** to send a message by email as well as in the chat. {/* src: manage/page.tsx:167; src/app/team/[teamId]/chat/team-chat.tsx */}
+- **Find a sub.** Open the **Subs** tab, or tap **Need a sub?** on a match. See [Find a sub when you're short](/captains/find-a-substitute). {/* src: manage/page.tsx:180; sub-request-control.tsx:88 */}
+- **Contact another captain.** Tap **Captains directory**. See [Find and contact other captains](/captains/contact-other-captains). {/* src: manage/page.tsx:170 */}
+- **See your full roster.** Open your team's page and tap **Roster**. Subs appear on it only for the match they're playing. {/* src: src/app/team/[teamId]/page.tsx:27,201; src/lib/subs/expire.ts:61-89 */}
 
 ## Why isn't this working?
 
 ### I can't find Manage team or the Captain tab
 **Cause:** You're not set as this team's captain yet. Only the team's captain sees these.
-**Fix:** Ask your club's admins to make you captain. {/* src: src/lib/auth/guards.ts:105-117; manage/page.tsx:51-55 (404 when not captain) */}
+**Fix:** Ask your club's admins to make you captain. {/* src: src/lib/auth/guards.ts:105-117; manage/page.tsx:53-58 (404 when not captain) */}
 
 ### I want to add or remove a player
 **Cause:** Captains can't change who's on the roster. Your club's admins place players on teams.
-**Fix:** Ask your club's admins. For one match, you can bring in a sub instead. See [Find a sub when you're short](/captains/find-a-substitute). {/* src: src/lib/club/admin.ts:278,375 */}
+**Fix:** Ask your club's admins. For one match, you can bring in a sub instead. See [Find a sub when you're short](/captains/find-a-substitute). {/* src: src/lib/club/admin.ts */}
+
+### I don't see Playoff roster
+**Cause:** It appears only for a team playing on finals day.
+**Fix:** Check the standings. If your team has made the playoffs and it still isn't there, ask the league office. {/* src: manage/page.tsx:63-67 (semifinal on a division with a finals day) */}
 
 ### "You nudged this match recently."
 **Cause:** You can nudge each match only so often, so players aren't flooded with reminders.
@@ -70,11 +76,12 @@ To see who can play, open **Manage team**. On a phone, tap **Captain** in the ba
 
 ### "No upcoming matches"
 **Cause:** The league hasn't published your team's schedule yet, or your season's matches are all played.
-**Fix:** Check back once the schedule is published. {/* src: manage/page.tsx:182 */}
+**Fix:** Check back once the schedule is published. {/* src: manage/page.tsx:197 */}
 
 ## Related articles
 
 - [Tell your captain whether you can play](/players/set-your-availability), what your players see
 - [Find a sub when you're short](/captains/find-a-substitute)
+- [Choose whether your games count toward DUPR](/captains/opt-in-to-dupr)
 
-{/* Last verified: 2026-11-01 against leagues-app bb4f3b5 */}
+{/* Last verified: 2026-11-02 against leagues-app ba29829 */}

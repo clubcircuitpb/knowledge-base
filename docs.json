@@ -69,7 +69,8 @@
               "captains/manage-your-team",
               "captains/build-and-post-a-lineup",
               "captains/find-a-substitute",
-              "captains/request-a-reschedule"
+              "captains/request-a-reschedule",
+              "captains/opt-in-to-dupr"
             ]
           },
           {
@@ -78,6 +79,13 @@
               "captains/enter-and-confirm-scores",
               "captains/dispute-a-result",
               "captains/contact-other-captains"
+            ]
+          },
+          {
+            "group": "Finals day",
+            "pages": [
+              "captains/submit-your-playoff-roster",
+              "captains/set-playoff-lineups-round-by-round"
             ]
           }
         ]

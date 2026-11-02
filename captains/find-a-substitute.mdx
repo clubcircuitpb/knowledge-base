@@ -2,74 +2,98 @@
 title: "Find a sub when you're short"
 sidebarTitle: "Find a sub"
 description: "Open Manage team, go to the Subs tab, pick the match, and tap Offer a spot or Offer to all. Eligible subs get an email, and the first to accept joins your team for that match."
-keywords: ["sub", "substitute", "find a sub", "short a player", "need a sub", "offer a spot", "fill in", "spare"]
+keywords: ["sub", "substitute", "find a sub", "short a player", "need a sub", "offer a spot", "fill in", "spare", "cancel sub request"]
 ---
 
-To find a sub, open **Manage team**, go to the **Subs** tab and pick the match. Under **Who could fill in**, tap **Offer a spot** for one player, or **Offer to all** for everyone listed. Each sub you offer gets an email, and the first to accept joins your team for that match.
+To find a sub, open **Manage team**, go to the **Subs** tab and pick the match. Under **Who could fill in**, tap **Offer a spot** for one player, or **Offer to all** for everyone listed. Each sub you offer gets an email, and the first to accept joins your team for that match. Your ClubCircuit inbox tells you, by name, who accepts or declines.
 
-{/* src: leagues-app src/app/team/[teamId]/manage/page.tsx:165,433-445,473,478,553; src/lib/subs/offer.ts:183-205,221-248 */}
+{/* src: leagues-app src/app/team/[teamId]/manage/page.tsx:180,494,499,574; src/lib/subs/offer.ts:280-300; src/lib/notifications/inbox.ts:94-96 */}
 
 **Before you begin**
 
 - You need to be your team's captain.
 - Only subs who can play this match are listed. They've signed up to sub for your division, pass your league's sub rules for this match, aren't blocked out that day, and live within the distance they'll travel.
+- Your team has one open sub request per match. Each offer you make for that match joins it.
 
-{/* src: manage/page.tsx:484-485; src/lib/subs/candidates.ts:157-183; src/lib/rules/rules/substitute.ts:17-32 */}
+{/* src: manage/page.tsx:505-506; src/lib/subs/candidates.ts; src/lib/rules/rules/substitute.ts; src/lib/subs/request.ts:94-108 (one open request per match, team and gender, A6) */}
 
 ## Offer the spot to subs
 
 <Steps>
   <Step title="Open the Subs tab">
-    Go to **Manage team** and tap **Subs**. If **Home** says you're short for a match, tap **Find a sub** to go straight there.
-    {/* src: manage/page.tsx:165; src/lib/play/needs-you.ts:125,127 */}
+    Go to **Manage team** and tap **Subs**. If **Home** says you're short for a match, tap **Find a sub** to go straight there. **Ask for a sub** in the lineup builder opens it too.
+    {/* src: manage/page.tsx:180; src/lib/play/needs-you.ts:129; src/lib/team/manage-links.ts:6-10 */}
   </Step>
   <Step title="Pick the match">
     Tap the match you need a sub for. The page tells you who you're short.
-    {/* src: manage/page.tsx:396-399,433-445 */}
+    {/* src: manage/page.tsx:416-420,450-463,476-485 */}
   </Step>
   <Step title="Choose who to ask">
     Under **Who could fill in**, check each sub's rating, distance and how often they've subbed.
-    {/* src: manage/page.tsx:406-421,473 */}
+    {/* src: manage/page.tsx:434-438,494 */}
   </Step>
   <Step title="Send the offer">
-    Tap **Offer a spot** next to one sub, or **Offer to all** to ask everyone listed at once.
-    {/* src: manage/page.tsx:478,553 */}
+    Tap **Offer a spot** next to one sub. To ask everyone listed at once, tap **Offer to all**, which shows how many that is. You can tap **Offer a spot** on more subs later; they're added to the same request.
+    {/* src: manage/page.tsx:496-500,574; src/lib/subs/request.ts:94-108 (a second offer joins the open request) */}
   </Step>
 </Steps>
 
-**Result:** Each sub you offered shows **Offered · waiting**. When one accepts, they show **Accepted**. You're notified, your team chat says they've joined, and they appear in your lineup builder as available for that match. {/* src: manage/page.tsx:360-364; src/lib/subs/offer.ts:221-248,286-301 */}
+**Result:** You see "Offer sent to …. They get an email with Accept and Decline, and your ClubCircuit inbox tells you, by name, when they answer." Each sub you offered shows **Offered · waiting**. When one accepts, they show **Accepted**, your inbox says so by name, your team chat says they've joined, and they appear in your lineup builder for that match. {/* src: manage/page.tsx:382,472,536-552; src/lib/subs/offer.ts:283-301; src/lib/notifications/inbox.ts:94 */}
 
-You can also tap **Need a sub?** on your next match, choose **Gender needed (optional)** and add a **Note to candidates (optional)**, then tap **Send offers**. {/* src: sub-request-control.tsx:62-81 */}
+You can also tap **Need a sub?** on a match, choose **Gender needed (optional)** and add a **Note to candidates (optional)**, then tap **Send offers**. {/* src: sub-request-control.tsx:87-108 */}
 
 <Note>
-  The first sub to accept gets the spot, and the other offers close. Some divisions charge subs an activation before their first match there. The spot isn't held while they pay, so the sub may take a little longer to accept. {/* src: src/lib/subs/offer.ts:151-175,183-218; docs/adr/0058-substitute-activation-per-division.md */}
+  The first sub to accept gets the spot, and the other offers close. Some divisions charge subs an activation before their first match there. The spot isn't held while they pay, so the sub may take a little longer to accept. {/* src: src/lib/subs/offer.ts:151-218; docs/adr/0058-substitute-activation-per-division.md */}
 </Note>
+
+## Cancel a sub request
+
+If you no longer need a sub, open the **Subs** tab and pick the match. On the line that starts **Sub request:**, tap **Cancel request**. Any offers still waiting are withdrawn, and each sub you offered it to is told your team doesn't need a sub after all. You see "Request cancelled." with how many people were told. {/* src: sub-request-control.tsx:49-81 (Cancel needs the request id, which only the Subs tab passes: manage/page.tsx:73-77,485);  src/lib/subs/request.ts:204-240 (offers WITHDRAWN, SUB_REQUEST_CANCELLED); src/emails/registry.tsx:627 */}
+
+You can't cancel a request once it's filled. {/* src: sub-request-control.tsx:63 (canCancel only when not FILLED) */}
 
 ## If nobody accepts
 
-The request closes when the match starts, and we email you to say whether it was filled. Asking a few days ahead gives subs more time to say yes. To try again, tap **Offer again** next to a sub who declined or didn't answer. {/* src: src/lib/subs/request.ts:109 (expiresAt = match start); src/lib/subs/expire.ts; registry SUB_REQUEST_EXPIRED; manage/page.tsx:553 */}
+The request closes when the match starts, and we email you to say whether it was filled. Asking a few days ahead gives subs more time to say yes. When a sub declines, your inbox says they can't sub this time. To try again, tap **Offer again** next to a sub who declined or didn't answer, or offer the spot to someone else. {/* src: src/lib/subs/request.ts:126-127 (expiresAt = match start); src/lib/subs/expire.ts (SUB_REQUEST_EXPIRED); src/lib/notifications/inbox.ts:96; manage/page.tsx:574 */}
+
+## After the match
+
+A sub is on your roster only for the match they accepted. Once that match is settled, they leave your roster automatically. Their games and results stay in their history. To have them again, offer them another match. {/* src: src/lib/subs/expire.ts:61-89 (endSettledSubMemberships, A7) */}
 
 ## Why isn't this working?
 
 ### "No eligible substitutes right now"
 **Cause:** Nobody signed up to sub for your division can play this match today under your league's sub rules.
-**Fix:** Check again closer to the match, since subs sign up and change their dates. You can also ask the league office for help. {/* src: manage/page.tsx:492 */}
+**Fix:** Check again closer to the match, since subs sign up and change their dates. You can also ask the league office for help. {/* src: manage/page.tsx:513 */}
 
 ### A sub I know isn't on the list
-**Cause:** They aren't signed up to sub for your division, they've blocked out that date, they live outside their travel distance, or your league's sub rules don't allow them in this match.
-**Fix:** Ask them to check their **Subbing** page. See [Sign up to sub for other teams](/players/sign-up-to-sub). {/* src: src/lib/subs/candidates.ts:157-183 */}
+**Cause:** They aren't signed up to sub for your division, they've blocked out that date, they live outside their travel distance, or your league's sub rules don't allow them in this match. If you're short only men or only women, only that gender is listed.
+**Fix:** Ask them to check their **Subbing** page. See [Sign up to sub for other teams](/players/sign-up-to-sub). {/* src: src/lib/subs/candidates.ts; manage/page.tsx:422-423,506 */}
+
+### I don't see Offer to all
+**Cause:** You already have an open request for this match, or only one sub is listed.
+**Fix:** Tap **Offer a spot** next to each sub you want to add. They join the open request. {/* src: manage/page.tsx:496 */}
+
+### "They already have an offer for this match. You’ll hear when they answer."
+**Cause:** You've already offered that sub this match.
+**Fix:** Nothing to do. Your inbox tells you when they answer. {/* src: src/lib/subs/request.ts:105 */}
+
+### "Everyone eligible already has an offer for this match."
+**Cause:** Every sub who can play this match has already been offered it.
+**Fix:** Wait for answers, or check again later as more subs sign up. {/* src: src/lib/subs/request.ts:105 */}
 
 ### "No eligible, opted-in substitutes match this request right now."
 **Cause:** No sub fits the request, often because you asked for one gender and nobody of that gender is available.
-**Fix:** Try again with **Gender needed (optional)** set to **Either**, if your lineup allows it. {/* src: src/lib/subs/request.ts:92; sub-request-control.tsx:67-73 */}
+**Fix:** Try again with **Gender needed (optional)** set to **Either**, if your lineup allows it. {/* src: src/lib/subs/request.ts:92; sub-request-control.tsx:90-96 */}
 
-### The same sub keeps showing in my lineup after their match
-**Cause:** A sub who accepts stays on your team's list for the season.
-**Fix:** Nothing to do. Only place them in matches they've agreed to play. {/* src: src/lib/subs/offer.ts:234 (ACTIVE SUB membership) */}
+### "That sub request is already closed."
+**Cause:** The request was filled, cancelled or closed when the match started.
+**Fix:** Refresh the page to see where it stands. {/* src: src/lib/subs/request.ts:205 */}
 
 ## Related articles
 
 - [Accept or decline a request to sub](/players/answer-a-sub-request), what your subs see
 - [Build and post your lineup](/captains/build-and-post-a-lineup)
+- [Substitutes and injuries](/rules/rally-21/substitutes-and-injuries), in the rulebook
 
-{/* Last verified: 2026-11-01 against leagues-app bb4f3b5 */}
+{/* Last verified: 2026-11-02 against leagues-app ba29829 */}
