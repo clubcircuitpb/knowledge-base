@@ -1,0 +1,41 @@
+---
+title: "Fees"
+sidebarTitle: "Fees"
+description: "Regular players $79 a season. One free captain per team. Subs join free and pay $12.50 per division at their first match. Everyone pays a court share for each match they play."
+keywords: ["fees", "cost", "price", "$79", "registration fee", "captain", "sub fee", "$12.50", "court share", "court fee"]
+---
+
+**The short version:** regular players pay $79 for the season. Each team gets one free captain registration. Subs join the pool free and pay $12.50 per division at their first match. Everyone, subs included, pays a court share for each match they play.
+
+How each fee works is explained in the [Player fee schedule](/rules/policies/fees). The app always shows the exact amount before you pay.
+
+## Registration
+
+| Who | Registration |
+|---|---|
+| Regular player | $79 per season |
+| Captain | Free, one per team |
+| Sub | Free to join the pool. $12.50 per division at your first match |
+
+{/* src: Club Partnership Deck, slide 9 (Role / Registration table); leagues-app src/lib/admin/league-types.ts rr-rally-21 preset (freeCaptainsPerTeam: 1, subActivationFeeCents: 1250). Registration price is set per season in League HQ: confirm it is 7900 cents for the winter season. */}
+
+You pay it once per division, at your first match there. A sub can play up to two matches for the same team. To play a third for that team, you join its roster, and the $12.50 you paid in that division comes off your $79. See [Substitutes and injuries](/rules/rally-21/substitutes-and-injuries). {/* src: rules/rally-21/substitutes-and-injuries; docs/adr/0058 (credit toward registration: $79 − $12.50 = $66.50) */}
+
+## Court shares
+
+Each hosted match has a court charge: $120 for the home team and $240 for the away team. Each team's charge is split evenly among its players on court that day.
+
+| Players on court | Home | Away |
+|---|---|---|
+| 8 | $15 each | $30 each |
+| 10 | $12 each | $24 each |
+| 12 | $10 each | $20 each |
+
+You pay only for matches you play. {/* src: Club Partnership Deck, slides 4 and 9; leagues-app Ruleset.matchFeeSplit (EVEN_SPLIT). Per-club court fees are set in Club HQ: confirm each host club's home and away targets are 12000 and 24000 cents. */}
+
+## Related
+
+- [Player fee schedule](/rules/policies/fees)
+- [Pay a court fee and see what you’ve paid](/players/pay-court-fees-and-see-payments)
+
+{/* Last verified: 2026-11-02 against the Club Partnership Deck and leagues-app bb4f3b5 */}

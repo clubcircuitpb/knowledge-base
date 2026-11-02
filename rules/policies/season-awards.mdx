@@ -1,0 +1,38 @@
+---
+title: "Season awards"
+sidebarTitle: "Season awards"
+description: "Four awards each season, worked out from results with no voting: Division champion, Player of the season, Most improved and Iron player."
+keywords: ["awards", "champion", "player of the season", "MVP", "most improved", "iron player", "trophy", "all-star"]
+---
+
+**The short version:** each division has four awards, worked out from the season's results. Nobody votes. To win a player award, you need to have played enough of your team's games.
+
+## The awards
+
+- **Division champion:** the team that wins the final. If there's no final, the team in first place when the season ends.
+- **Player of the season:** the division's top-ranked player.
+- **Most improved:** the biggest rise in DUPR rating from the start of the season to the end.
+- **Iron player:** whoever played the most rounds.
+
+Ties go to the higher-ranked player. {/* src: leagues-app src/lib/season/awards.ts:1-20 */}
+
+## Who can win?
+
+To win a player award, you must have played a minimum share of your team's games. Your league's rulebook sets the share. {/* src: Ruleset.awardsMinGamesPct */}
+
+If your profile is set to **Private**, you're never named for an award, and it goes to the next player down. {/* src: src/lib/season/awards.ts (PRIVATE players never named) */}
+
+## Where to see them
+
+Awards show on your division's season pages in ClubCircuit. Each one links to the results it came from. {/* src: src/lib/season/awards.ts ("each links to where it came from") */}
+
+## All-Stars
+
+There's no All-Star selection in the first season. {/* src: decision, Larry 2 Nov 2026 (item 18) */}
+
+## Related
+
+- [Follow the standings, player standings and playoffs](/players/follow-standings-and-stats)
+- [Edit your profile and choose who can see it](/players/edit-your-profile-and-privacy)
+
+{/* Last verified: 2026-11-02 against leagues-app bb4f3b5 */}

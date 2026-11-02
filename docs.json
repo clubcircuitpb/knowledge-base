@@ -105,7 +105,18 @@
               "rules/rally-21/penalties-and-forfeits",
               "rules/rally-21/playoffs",
               "rules/rally-21/rescheduling-a-match",
+              "rules/rally-21/fees",
               "rules/rally-21/key-terms"
+            ]
+          },
+          {
+            "group": "Policies for every league",
+            "pages": [
+              "rules/policies/code-of-conduct",
+              "rules/policies/eligibility-and-ratings",
+              "rules/policies/fees",
+              "rules/policies/club-and-team-participation",
+              "rules/policies/season-awards"
             ]
           }
         ]

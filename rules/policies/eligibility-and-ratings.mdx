@@ -1,0 +1,59 @@
+---
+title: "Player eligibility and rating policy"
+sidebarTitle: "Eligibility and ratings"
+description: "Who can play in which division. ClubCircuit checks your age, your DUPR rating and your club when you register. Each league's rulebook sets the numbers."
+keywords: ["eligibility", "DUPR", "rating", "rating cap", "rating lock", "division", "age", "unrated", "no DUPR", "play up", "one club", "duplicate account", "sandbagging"]
+---
+
+**The short version:** you must be an adult, your DUPR rating must fit the division, and you play for one club per league type in your market. ClubCircuit checks these when you register. Your league's rulebook sets each limit.
+
+This policy applies in every ClubCircuit league. The numbers, like each division's rating range, are in your league's rulebook and in the app when you register.
+
+## Who can play?
+
+Adults only. ClubCircuit refuses registrations from anyone under the minimum age, and no one can override this. {/* src: leagues-app Ruleset.minAge; src/lib/rules/codes.ts AGE_MINIMUM (not overridable, docs/02 "Overrides"); docs/adr/0003 */}
+
+## Which rating counts?
+
+Your DUPR rating. Each division has a rating range. Your rating is locked at a set point, usually when you register, so a change during the season doesn't move you. A division can also require that your rating is active, and set a limit on your singles rating. {/* src: Ruleset.ratingSource, ratingLockPoint (default AT_REGISTRATION), requiresActiveRatingAtOrAbove, singlesRatingTolerance; Division.duprCeiling, duprFloor */}
+
+Add your DUPR ID to your profile before you register. See [Add your DUPR ID](/players/connect-dupr).
+
+## What if I don't have a DUPR rating?
+
+You can still register. The league office places you in a division, and your first season counts as provisional. {/* src: decision, Larry 2 Nov 2026 (item 8) */}
+
+## Can I play in more than one division?
+
+Sometimes. Your league's rulebook says how many divisions you can play in a season, and whether they must be next to each other. {/* src: Ruleset.maxSkillLevelsPerSeason, skillLevelsMustBeAdjacent */}
+
+## Can I play for more than one club?
+
+No. You play for one club per league type in your market, and you can't be on two rosters at once. {/* src: Ruleset.clubLoyaltyScope (PER_MARKET_PER_LEAGUE_TYPE), doubleRosteringAllowed (false) */}
+
+## What happens if my registration is flagged?
+
+Sometimes the check passes but needs a person to look at it. You can still register, and you're marked as under review until the league office decides. If you're later ruled ineligible, the games you played may be forfeited. Your league's rulebook explains how. {/* src: docs/02 "Eligibility outcomes at registration" (FLAGGED); rules/rally-21/substitutes-and-injuries */}
+
+## Can the league make an exception?
+
+For some rules, yes. The league office can grant an exception for one rule at a time, with a reason, and it's recorded. The age rule has no exceptions. {/* src: docs/02 "Overrides" */}
+
+## Ratings manipulation
+
+Losing on purpose, or entering made-up results, to stay under a division's range is fraud. The league office can move the player up, remove their results, or suspend or remove them. See the [Code of conduct and discipline](/rules/policies/code-of-conduct). {/* src: Terms of Use §21; decision, Larry 2 Nov 2026 (item 9) */}
+
+## One account per person
+
+Each person has one ClubCircuit account. If we find a duplicate, we close it and move its results to the real account. {/* src: decision, Larry 2 Nov 2026 (item 10) */}
+
+## Who checks ratings?
+
+ClubCircuit checks each player's rating against DUPR before the season starts, and can correct mistakes that affect fair play. {/* src: Terms of Use §6; decision, Larry 2 Nov 2026 (item 11) */}
+
+## Related
+
+- [Add your DUPR ID](/players/connect-dupr)
+- [Register for a season](/players/register-for-a-season)
+
+{/* Last verified: 2026-11-02 against leagues-app bb4f3b5 and Larry's decisions of 2 Nov 2026 */}
