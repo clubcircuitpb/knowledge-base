@@ -2,7 +2,7 @@
 title: "Build and post your lineup"
 sidebarTitle: "Build your lineup"
 description: "Open your match's lineup, place a player in every court for every round (or tap Auto-fill), fix anything the checks flag, then tap Submit. Your players are told which rounds they're playing."
-keywords: ["lineup", "set lineup", "submit lineup", "lineup builder", "auto-fill", "partners", "rounds", "courts", "resubmit", "late lineup"]
+keywords: ["lineup", "set lineup", "submit lineup", "lineup builder", "auto-fill", "partners", "rounds", "courts", "resubmit", "late lineup", "lineup locked"]
 ---
 
 To post your lineup, open the match's lineup from **Home** or **Manage team**, put a player on every court in every round, or tap **Auto-fill**, then tap **Submit**. Your changes save as you go. When you submit, each player in the lineup is told which rounds and courts they're playing.
@@ -14,8 +14,9 @@ To post your lineup, open the match's lineup from **Home** or **Manage team**, p
 - You need to be the team's captain.
 - Ask your players whether they can play first. The builder shows each player's answer. See [See who can play and manage your team](/captains/manage-your-team).
 - Your lineup has a deadline, and it locks at a set time. Both are set by your league for the season. The builder shows when yours is due.
+- This is for regular-season matches. On finals day, playoff matches are set round by round at the venue instead. See [Set your playoff lineups round by round](/captains/set-playoff-lineups-round-by-round).
 
-{/* src: src/lib/lineup/workspace.ts:126-128 (deadline from Ruleset home/awayLineupDueHoursBefore); Ruleset.lineupLocksAt; src/lib/play/facts.ts:81-88 (due fact) */}
+{/* src: src/lib/lineup/workspace.ts:134-135,208 (dueAt from the Ruleset; lockAt = deadline or match start per Ruleset.lineupLocksAt); src/lib/play/facts.ts (due fact); src/app/match/[matchId]/lineup/page.tsx:80-84 (turn-based playoff match gets its own screen, ADR 0081) */}
 
 ## Build and submit your lineup
 
@@ -54,11 +55,11 @@ Your league decides when each team sees the other's lineup. Until then, their co
 
 ## Change a lineup you've already submitted
 
-Make your changes, then tap **Resubmit**. Only the players whose rounds changed are told. You can keep changing it until it locks. {/* src: lineup-builder.tsx:1124,416-418; src/lib/lineup/save.ts (LINEUP_CHANGED to players whose rounds changed) */}
+Make your changes, then tap **Resubmit**. On a computer, it's **Resubmit lineup**. Only the players whose rounds changed are told, and the other captain if what they see changed. You can keep changing it until it locks. {/* src: lineup-builder.tsx:701,1127,419-423; src/lib/lineup/save.ts:197-200,272-277 (LINEUP_CHANGED to players whose rounds changed; notifyCounterCaptains) */}
 
-<Warning>
-  Changes save as soon as you make them, and the other team can see them once lineups are revealed, even before you tap **Resubmit**. {/* src: lineup-builder.tsx:285-297 */}
-</Warning>
+<Note>
+  Your edits are saved, but they stay private until you resubmit. The status line says **Edited — the other team sees the posted lineup until you resubmit**. The other team, the match page and the scoresheet keep showing the lineup you last submitted. {/* src: lineup-builder.tsx:547-554; src/lib/lineup/save.ts:44-68 (saveAssignments: draft once submitted, A5), :192-195 (posted on resubmit) */}
+</Note>
 
 ## Change a lineup after the deadline
 
@@ -70,7 +71,7 @@ A late lineup can cost your team games. The penalty is applied automatically onc
 
 ### "Add 1 more men to the squad — each round needs … of each on court."
 **Cause:** Every round needs a set number of men and women on court, and you haven't placed enough.
-**Fix:** Place more players of that gender. If you don't have enough, tap **Ask for a sub**. See [Find a sub when you're short](/captains/find-a-substitute). {/* src: src/lib/rules/rules/lineup.ts:83; lineup-builder.tsx:1733 */}
+**Fix:** Place more players of that gender. If you don't have enough, tap **Ask for a sub**. It opens the **Subs** tab on **Manage team** for this match. See [Find a sub when you're short](/captains/find-a-substitute). {/* src: src/lib/rules/rules/lineup.ts:80-83; lineup-builder.tsx:1073,1731-1733; src/lib/team/manage-links.ts:6-10 (?tab=subs&match=) */}
 
 ### "… are paired in rounds … This league allows a pair to play together … a night"
 **Cause:** Two players are partnered more often than your league allows.
@@ -92,9 +93,17 @@ A late lineup can cost your team games. The penalty is applied automatically onc
 **Cause:** Auto-fill ran out of combinations with the players who said they can play.
 **Fix:** Fill those rounds by hand, or find a sub. {/* src: src/lib/lineup/autofill.ts:307 */}
 
-### "This lineup locked when the match started, so it can’t be changed here."
-**Cause:** The lineup has locked.
-**Fix:** If something needs correcting, email [support@clubcircuitpb.com](mailto:support@clubcircuitpb.com). {/* src: src/lib/rules/rules/lineup.ts:37 */}
+### "This lineup has locked — the deadline has passed."
+**Cause:** Your league locks lineups at a set time, and that time has passed. The builder shows **Locked — the deadline has passed.** next to **Submit**, and changes no longer save.
+**Fix:** If a change is needed, email the league office at [support@clubcircuitpb.com](mailto:support@clubcircuitpb.com). {/* src: src/lib/lineup/save.ts:38 (assertLineupEditable); lineup-builder.tsx:557 */}
+
+### "This match has started or finished, so its lineup can’t change here."
+**Cause:** The match is under way or over, so the lineup can't be edited. You may also see "This lineup locked when the match started, so it can’t be changed here."
+**Fix:** If something needs correcting, email the league office at [support@clubcircuitpb.com](mailto:support@clubcircuitpb.com). {/* src: src/lib/lineup/save.ts:35-37; src/lib/rules/rules/lineup.ts:37 */}
+
+### "One of those players isn’t on your roster for this match."
+**Cause:** Someone you placed has left your roster for this match since you opened the builder, for example a sub whose match is settled.
+**Fix:** Reload the lineup and pick from your squad. {/* src: src/lib/lineup/save.ts:39-41 */}
 
 ### "That change didn’t save — check your signal and try again."
 **Cause:** Your phone lost its connection.
@@ -104,5 +113,7 @@ A late lineup can cost your team games. The penalty is applied automatically onc
 
 - [See your next match and which rounds you’re playing](/players/see-your-matches-and-rounds), what your players see
 - [Find a sub when you're short](/captains/find-a-substitute)
+- [Set your playoff lineups round by round](/captains/set-playoff-lineups-round-by-round)
+- [Rosters and lineups](/rules/rally-21/rosters-and-lineups), in the rulebook
 
-{/* Last verified: 2026-11-01 against leagues-app bb4f3b5 */}
+{/* Last verified: 2026-11-02 against leagues-app ba29829 */}
