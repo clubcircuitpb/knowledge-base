@@ -60,8 +60,31 @@
           {
             "group": "Running a club",
             "pages": [
-              "clubs/index",
-              "clubs/invite-players-to-register"
+              "clubs/index"
+            ]
+          },
+          {
+            "group": "Get your club set up",
+            "pages": [
+              "clubs/apply-to-join-the-league",
+              "clubs/set-up-your-club-page",
+              "clubs/add-club-admins-and-owners",
+              "clubs/set-host-court-availability"
+            ]
+          },
+          {
+            "group": "Build your teams",
+            "pages": [
+              "clubs/invite-players-to-register",
+              "clubs/form-teams-for-a-season",
+              "clubs/assign-team-captains",
+              "clubs/message-your-members"
+            ]
+          },
+          {
+            "group": "Money",
+            "pages": [
+              "clubs/court-fees-and-payouts"
             ]
           }
         ]

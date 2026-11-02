@@ -1,0 +1,85 @@
+---
+title: "Set when your courts can host matches"
+sidebarTitle: "Host availability"
+description: "In Club HQ, open Schedule > Host availability. Pick a date, tap the courts and times you can offer, and tap Save this day. Tick Also every to repeat it each week."
+keywords: ["host availability", "hosting", "courts", "home matches", "venue", "court count", "can't host", "schedule"]
+---
+
+To tell the league when your courts can host, open **Club HQ** and go to **Schedule** > **Host availability**. Pick a date, tap the courts and times you can offer, and tap **Save this day**. To repeat it every week, tick **Also every** before you save.
+
+{/* src: leagues-app src/lib/nav/club-hq.ts:43; src/components/hosting/host-grid.tsx:208,464-468 */}
+
+**Before you begin**
+
+- You need to be a club admin or owner.
+- Your venue's court count must be set first. The grid has one column per court.
+
+{/* src: src/app/club/[slug]/admin/availability/page.tsx:48 (requireClubAdminBySlug), :86-93; src/components/venue/venue-form.tsx:25,107 */}
+
+## Offer your courts for a day
+
+<Steps>
+  <Step title="Open Host availability">
+    In **Club HQ**, go to **Schedule** > **Host availability**. If you see **First, how many courts does your venue have?**, tap **Add your court count**, fill in **Courts at this venue**, and come back.
+    {/* src: club-hq.ts:43; availability/page.tsx:86-93; venue-form.tsx:107 */}
+  </Step>
+  <Step title="Pick a date">
+    Use **Previous day** and **Next day**, the date picker, or tap one of the season's dates.
+    {/* src: host-grid.tsx:219-254 */}
+  </Step>
+  <Step title="Tap the courts and times you can offer">
+    Under **Courts you can offer**, tap a court at a time to offer it. One tap is one match's worth of time. Tap again to take it back. To offer a court all day, tap **offer all day** under its name.
+    {/* src: host-grid.tsx:120-140,211,330 */}
+  </Step>
+  <Step title="Repeat it weekly, if you like">
+    Tick **Also every** to offer the same courts on that weekday until the season ends.
+    {/* src: host-grid.tsx:464; src/lib/club/host-blocks.ts:161-164 */}
+  </Step>
+  <Step title="Save">
+    Tap **Save this day**. If you're repeating it, the button says **Save every** and the weekday.
+    {/* src: host-grid.tsx:468 */}
+  </Step>
+</Steps>
+
+**Result:** You see a message confirming the day and the courts you offered. The shaded rows show when the league would like matches to start. {/* src: host-grid.tsx:184-191,211 */}
+
+## Tell the league you can't host a day
+
+Open the date, make sure nothing is offered (tap **Clear the day** if needed), then tap **Can’t host this day**. A day you never touch counts as no objection. {/* src: host-grid.tsx:459,467-476; src/lib/club/host-blocks.ts:166-197; docs/adr/0063-host-availability-grid.md */}
+
+## Name courts and set opening hours
+
+Tap **Courts and hours** to name each court, hide a court the league shouldn't use, and set when you open and close. Tap **Save courts and hours**. {/* src: host-grid.tsx:549-604 */}
+
+## How the league uses this
+
+The league's schedule places your home matches on days you can host, as long as enough courts are free. If a day needs more courts than you have, Club HQ tells you under **Not enough courts**, and the league may move a start time or a venue. {/* src: src/lib/admin/schedule.ts:205-212; src/components/hosting/hosting-panel.tsx:90-112 */}
+
+## Why isn't this working?
+
+### "Add your venue and how many courts it has first"
+**Cause:** Your venue's court count isn't set.
+**Fix:** Go to **Club settings** > **Home venue**, fill in **Courts at this venue**, and save. {/* src: src/lib/club/host-blocks.ts:153; venue-form.tsx:107 */}
+
+### My changes disappeared
+**Cause:** You changed the date before saving. The grid shows **Not saved yet** while you have unsaved changes.
+**Fix:** Paint the day again and tap **Save this day**. {/* src: host-grid.tsx:478 */}
+
+### "Already scheduled here: …"
+**Cause:** A match is already scheduled on that day at your courts.
+**Fix:** Keep at least those courts offered so the match still fits. {/* src: host-grid.tsx:272-273 */}
+
+### "… needs … courts at once — you have …"
+**Cause:** More matches are scheduled at your club that day than your courts can hold at once.
+**Fix:** Tap **Open that day** and offer every court you can, so the league can adjust. {/* src: hosting-panel.tsx:102-112 */}
+
+### "Closing time has to be at least an hour after opening."
+**Cause:** The opening hours you set are too short.
+**Fix:** Set a later closing time. {/* src: src/lib/club/host-blocks.ts:216 */}
+
+## Related articles
+
+- [Set up your club's page, venue and jerseys](/clubs/set-up-your-club-page)
+- [Form your club's teams for a season](/clubs/form-teams-for-a-season)
+
+{/* Last verified: 2026-11-02 against leagues-app bb4f3b5 */}

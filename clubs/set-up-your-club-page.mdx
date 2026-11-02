@@ -1,0 +1,91 @@
+---
+title: "Set up your club's page, venue and jerseys"
+sidebarTitle: "Club page, venue and jerseys"
+description: "In Club HQ, open Club settings. Set your color, logo and description under Branding & photos, your address and court count under Home venue, and jersey orders under Jerseys."
+keywords: ["club page", "branding", "logo", "club color", "venue", "address", "courts", "jerseys", "photos", "club profile"]
+---
+
+To set up your club, open **Club HQ** and go to **Club settings**. Add your color, logo and a line about your club under **Branding & photos**, your address and court count under **Home venue**, and your jersey orders under **Jerseys**. Club HQ's **Set up your club** card tracks what's left.
+
+{/* src: leagues-app src/lib/nav/club-hq.ts:64-69; src/lib/club/setup-steps.ts:19-41; src/app/club/[slug]/admin/setup-card.tsx:16 */}
+
+**Before you begin**
+
+- You need to be a club admin or owner.
+- Have your logo as a PNG, JPEG or WebP file, up to 1 MB and 1024×1024 pixels.
+
+{/* src: src/app/club/[slug]/admin/branding/branding-editor.tsx:84-85 */}
+
+## Set your color, logo and profile
+
+<Steps>
+  <Step title="Open Branding & photos">
+    In **Club HQ**, under **Club settings**, tap **Branding & photos**.
+    {/* src: club-hq.ts:67 */}
+  </Step>
+  <Step title="Pick your club color">
+    Under **Club color**, choose a **Primary color**. You can also add a **Secondary color (optional)**. Any color works: the app always picks a readable text color to go with it.
+    {/* src: branding-editor.tsx:65-74; src/lib/club/branding.ts:11 (contrast guard never blocks a save) */}
+  </Step>
+  <Step title="Upload your logo">
+    Under **Logo**, tap **Upload logo**. It saves as soon as it uploads.
+    {/* src: branding-editor.tsx:82,131,265 */}
+  </Step>
+  <Step title="Add a line about your club">
+    Under **Profile & links**, fill in **About your club**, and add your **Website**, **Instagram** or **Facebook** if you have them.
+    {/* src: branding-editor.tsx:95-108 */}
+  </Step>
+  <Step title="Save">
+    Tap **Save branding**. Your color, profile and links save together.
+    {/* src: branding-editor.tsx:129,131 */}
+  </Step>
+</Steps>
+
+**Result:** Your club page shows your logo, color and description. You can also add up to four photos of your courts under **Photos**. Don't include people's faces, since you'd need their consent. {/* src: src/app/club/[slug]/page.tsx:95-110; src/app/club/[slug]/admin/branding/photos-editor.tsx:58-59 */}
+
+## Add your home venue
+
+Go to **Club settings** > **Home venue**. Fill in the venue name and address, and **Courts at this venue**, then tap **Save venue**. Visiting players get this address and directions in their match emails, on the match page and in their calendars. Your court count is required before you can offer courts for hosting. {/* src: src/app/club/[slug]/admin/venue/page.tsx:51-52; src/components/venue/venue-form.tsx:25,80-122 */}
+
+Your public club page shows only the venue's name, city and state, never the street address. {/* src: src/app/club/[slug]/page.tsx:102 */}
+
+To name your courts or set opening hours, see [Set when your courts can host matches](/clubs/set-host-court-availability).
+
+## Order jerseys
+
+Players choose their jersey size when they register. Under **Club settings** > **Jerseys**, you see each team's sizes and who's missing one. Tap **Manage** on a team, then:
+
+1. Tap **Build order** to make an order from the sizes collected so far. It uses your club's current logo and colors.
+2. Tap **Approve artwork**.
+3. Update the **Status** and **Vendor reference** as the order moves along, and tap **Save order**.
+
+When you set the status to shipped, the team's players are told. {/* src: src/app/club/[slug]/admin/jerseys/jerseys-table.tsx:48-109; jersey-admin-row.tsx:80-103; src/lib/jersey/order.ts:120,180; registration-form.tsx:283 */}
+
+## Why isn't this working?
+
+### "That image is larger than 1024 KB. Please upload a smaller logo."
+**Cause:** The logo file is over 1 MB.
+**Fix:** Save a smaller version of your logo and upload it again. {/* src: src/lib/club/logo.ts:39; branding/actions.ts:37 */}
+
+### "That doesn’t look like a PNG, JPEG or WebP image."
+**Cause:** The file isn't one of the supported image types.
+**Fix:** Save your logo as a PNG, JPEG or WebP and try again. {/* src: src/lib/club/logo.ts:44 */}
+
+### "That doesn’t look like a full web address (it should start with https://)."
+**Cause:** A link is missing part of its address.
+**Fix:** Copy the full address from your browser, starting with https://. {/* src: src/lib/club/branding.ts:52 */}
+
+### Matches say "Venue to be confirmed"
+**Cause:** Your home venue's address isn't complete.
+**Fix:** Fill in every address field under **Home venue** and tap **Save venue**. Upcoming home matches without a venue pick it up. {/* src: src/app/club/[slug]/admin/venue/page.tsx:57-58; src/lib/venue/manage.ts:87-97 */}
+
+### "Build the order before approving artwork."
+**Cause:** There's no jersey order for that team yet.
+**Fix:** Tap **Build order** first. {/* src: src/lib/jersey/order.ts:144 */}
+
+## Related articles
+
+- [Set when your courts can host matches](/clubs/set-host-court-availability)
+- [Message your club's players](/clubs/message-your-members)
+
+{/* Last verified: 2026-11-02 against leagues-app bb4f3b5 */}

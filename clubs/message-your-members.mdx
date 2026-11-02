@@ -1,0 +1,69 @@
+---
+title: "Message your club's players"
+sidebarTitle: "Message your players"
+description: "In Club HQ, open Reach people, choose who to send to (everyone or one team), write a subject and message, and tap Send announcement. It reaches players by email and in the app."
+keywords: ["announcement", "message players", "email club", "club news", "reach people", "club messages", "contact other club"]
+---
+
+To message your club's players, open **Club HQ** and tap **Reach people**. Under **Send to**, choose everyone in your club or one team, write a subject and message, and tap **Send announcement**. Players get it by email and in the app.
+
+{/* src: leagues-app src/lib/nav/club-hq.ts:49-50; src/app/club/[slug]/admin/comms/page.tsx:52-98; src/lib/notifications/dispatch.ts:68,92 (LEAGUE_ANNOUNCEMENT, transactional) */}
+
+**Before you begin**
+
+- You need to be a club admin or owner.
+- An announcement only goes to players who are on one of your teams' rosters.
+
+{/* src: src/lib/admin/announce.ts:68-90,176 */}
+
+## Send an announcement
+
+<Steps>
+  <Step title="Open Reach people">
+    In **Club HQ**, tap **Reach people**.
+    {/* src: club-hq.ts:49-50 */}
+  </Step>
+  <Step title="Choose who it's for">
+    Under **Send to**, choose **Everyone in** your club, or pick one team.
+    {/* src: comms/page.tsx:69-77 */}
+  </Step>
+  <Step title="Write it">
+    Add a **Subject** and your **Message**.
+    {/* src: comms/page.tsx:86-95 */}
+  </Step>
+  <Step title="Send">
+    Tap **Send announcement**.
+    {/* src: comms/page.tsx:95 */}
+  </Step>
+</Steps>
+
+**Result:** You see how many people it was sent to, and it's listed under **Sent**. {/* src: comms/page.tsx:64,106,118 */}
+
+<Note>
+  Announcements are always delivered. Players can't turn off club news, and they can't reply to an announcement. For a conversation, use your team's captains or team chat. {/* src: comms/page.tsx:98; src/lib/admin/announce.ts */}
+</Note>
+
+## Message another club
+
+To reach another club in your league about reschedules, courts or anything else captains don't cover, open **Reach people** > **Messages**. Under **Start a conversation with**, choose the club and tap **Start**. Their club's admins get your message. {/* src: club-hq.ts:53; src/app/club/[slug]/admin/messages/page.tsx:50-69; src/lib/messaging/club.ts:86-95 */}
+
+## Why isn't this working?
+
+### "No one is on a roster there yet, so there’s no one to send to."
+**Cause:** The team or club you chose has no players placed on a roster yet.
+**Fix:** Place players on your teams first, or message them once they're on a team. {/* src: src/lib/admin/announce.ts:176 */}
+
+### "You can only message clubs in your market."
+**Cause:** The other club is in a different league.
+**Fix:** Email [support@clubcircuitpb.com](mailto:support@clubcircuitpb.com) if you need to reach them. {/* src: src/lib/messaging/club.ts:46 */}
+
+### A player says they didn't get my announcement
+**Cause:** It may be in their spam folder, or they're not on a roster yet.
+**Fix:** Ask them to check spam and the notification bell in the app. Check they're on one of your teams. {/* src: src/lib/notifications/inbox.ts:34; announce.ts:68-90 */}
+
+## Related articles
+
+- [Message your team and other players](/players/message-your-team), what players see
+- [Form your club's teams for a season](/clubs/form-teams-for-a-season)
+
+{/* Last verified: 2026-11-02 against leagues-app bb4f3b5 */}
