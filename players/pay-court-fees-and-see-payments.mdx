@@ -16,6 +16,15 @@ Some clubs charge a court fee when you play on their courts. To pay court fees a
 
 {/* src: src/app/me/payments/page.tsx:121,144 */}
 
+## Who pays a court fee
+
+You pay only if you're on court. Your league sets when the fee is charged:
+
+- **When the lineups lock:** you're charged if your captain's posted lineup puts you in at least one round. If you're on the bench, only said you're available, or your captain hasn't posted the lineup, you aren't charged.
+- **After the match:** you're charged only if you played.
+
+If you don't have a card saved and a fee is coming, **Home** shows **A court fee is coming**. It starts "You pay only if you’re in the lineup", or "You pay only if you play" when the fee is charged after the match. Tap **Save a card** to save one. {/* src: src/lib/court-fees/run.ts:120-143 (Ruleset.courtFeeChargeAt; posted lineup, at least one game); src/lib/play/needs-you.ts:158-171 */}
+
 ## Save a card for court fees
 
 <Steps>
@@ -124,6 +133,10 @@ We email you when a fee is refunded, or when the league office waives one. A wai
 ### I want to stop automatic charges
 **Fix:** On **Payments**, tap **Remove card**. You'll get a pay link by email for each new fee instead. {/* src: src/app/me/payments/page.tsx:133-139; src/lib/court-fees/card-notice.ts:7 */}
 
+### I was charged but I didn't play
+**Cause:** When your league charges at lineup lock, the fee is charged once the lineups lock, if your captain's posted lineup had you in at least one round. That's before anyone plays.
+**Fix:** If you were taken out of the lineup or didn't play, email [support@clubcircuitpb.com](mailto:support@clubcircuitpb.com) with the club, the date of the match and the receipt's **Reference**. {/* src: src/lib/court-fees/run.ts:120-143 */}
+
 ### I think I was charged twice or charged by mistake
 **Fix:** Email [support@clubcircuitpb.com](mailto:support@clubcircuitpb.com) with the club, the date of the match and the receipt's **Reference**.
 
@@ -132,4 +145,4 @@ We email you when a fee is refunded, or when the league office waives one. A wai
 - [Register for a season](/players/register-for-a-season)
 - [Download your data or delete your account](/players/export-or-delete-your-data)
 
-{/* Last verified: 2026-11-02 against leagues-app 36d0f59 */}
+{/* Last verified: 2 November 2026 against leagues-app cf1ea20 */}

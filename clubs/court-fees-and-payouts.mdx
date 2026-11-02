@@ -53,6 +53,13 @@ To collect court fees, open **Club HQ** and go to **Court fees**. Tap **Set up w
 
 With **In the app**, each player's card is charged when the fee falls due. Your league sets whether that's when the lineups lock or after the match. Players without a saved card get a link to pay. Under **Coming up**, you can see what's due for each match day and when it's charged. {/* src: court-fees/page.tsx:332,155-189; src/lib/court-fees/run.ts (Ruleset.courtFeeChargeAt); src/lib/court-fees/forecast.ts */}
 
+Only players who are actually on court are charged:
+
+- **When the lineups lock:** once both captains have posted their lineups, each player the posted lineup puts in at least one round is charged. Players on the bench, players who only said they're available, and anyone in a lineup the captain hasn't posted aren't charged.
+- **After the match:** only the players who played.
+
+If a match's result is confirmed before anyone was charged, for example because a lineup came in late, the players who played are charged. {/* src: src/lib/court-fees/run.ts:120-143 (POSTED_LINEUP_STATUSES SUBMITTED or LATE; players in at least one game; confirmed fallback to played games), :167-171; src/lib/lineup/save.ts:44-67 (unposted edits stay off the posted lineup); docs/adr/0054-court-fees-at-lineup-lock.md (amended 2 November 2026) */}
+
 The page also shows how card processing is handled for your club, as agreed with the league. ClubCircuit takes a collection fee from each payment, which the statement shows as its own line. If a sponsor covers part of the fee, players pay less and ClubCircuit pays your club the rest. {/* src: court-fees/page.tsx:299-307,233-235,213; docs/adr/0057-court-fee-collection-fee.md; docs/adr/0059-sponsor-court-fee-subsidy.md */}
 
 ## See what you've collected
@@ -87,11 +94,11 @@ Refunds, payouts and your tax forms are in your own Stripe Dashboard. A full ref
 
 ### A player's fee says Card declined
 **Cause:** Their card was declined.
-**Fix:** Nothing to do. ClubCircuit retries and sends them a link to pay. {/* src: src/lib/court-fees/labels.ts:8; src/lib/court-fees/run.ts:20-30,263-316 */}
+**Fix:** Nothing to do. ClubCircuit retries and sends them a link to pay. {/* src: src/lib/court-fees/labels.ts:8; src/lib/court-fees/run.ts:23-25,268-330,360-385 */}
 
 ## Related articles
 
 - [Add or remove club admins and owners](/clubs/add-club-admins-and-owners)
 - [Set when your courts can host matches](/clubs/set-host-court-availability)
 
-{/* Last verified: 2026-11-02 against leagues-app ba29829 */}
+{/* Last verified: 2 November 2026 against leagues-app cf1ea20 */}
