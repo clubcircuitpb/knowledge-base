@@ -117,6 +117,38 @@
             ]
           }
         ]
+      },
+      {
+        "tab": "League rules",
+        "icon": "scale",
+        "groups": [
+          {
+            "group": "League rules",
+            "pages": [
+              "rules/index"
+            ]
+          },
+          {
+            "group": "Rally to 21 league",
+            "pages": [
+              "rules/rally-21/index",
+              "rules/rally-21/season-and-divisions",
+              "rules/rally-21/match-format",
+              "rules/rally-21/scoring-and-serving",
+              "rules/rally-21/serving-and-rallies",
+              "rules/rally-21/kitchen-faults-and-line-calls",
+              "rules/rally-21/rosters-and-lineups",
+              "rules/rally-21/substitutes-and-injuries",
+              "rules/rally-21/on-match-day",
+              "rules/rally-21/equipment-and-what-to-wear",
+              "rules/rally-21/scores-and-standings",
+              "rules/rally-21/penalties-and-forfeits",
+              "rules/rally-21/playoffs",
+              "rules/rally-21/rescheduling-a-match",
+              "rules/rally-21/key-terms"
+            ]
+          }
+        ]
       }
     ]
   },
@@ -200,39 +232,39 @@
     },
     {
       "source": "/rules/overview",
-      "destination": "/"
+      "destination": "/rules"
     },
     {
       "source": "/rules/eligibility",
-      "destination": "/"
+      "destination": "/rules"
     },
     {
       "source": "/rules/match-format",
-      "destination": "/"
+      "destination": "/rules"
     },
     {
       "source": "/rules/scoring",
-      "destination": "/"
+      "destination": "/rules"
     },
     {
       "source": "/rules/sportsmanship",
-      "destination": "/"
+      "destination": "/rules"
     },
     {
       "source": "/rules/court-rules",
-      "destination": "/"
+      "destination": "/rules"
     },
     {
       "source": "/rules/equipment-standards",
-      "destination": "/"
+      "destination": "/rules"
     },
     {
       "source": "/rules/dispute-resolution",
-      "destination": "/"
+      "destination": "/rules"
     },
     {
       "source": "/rules/code-of-conduct",
-      "destination": "/"
+      "destination": "/rules"
     }
   ]
 }
