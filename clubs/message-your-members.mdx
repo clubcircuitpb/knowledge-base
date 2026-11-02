@@ -1,20 +1,21 @@
 ---
 title: "Message your club's players"
 sidebarTitle: "Message your players"
-description: "In Club HQ, open Reach people, choose who to send to (everyone or one team), write a subject and message, and tap Send announcement. It reaches players by email and in the app."
+description: "In Club HQ, open Reach people, choose who to send to (everyone in your club this season, or one team), write a subject and message, and tap Send announcement. It reaches players by email and in the app, signed with your club's name."
 keywords: ["announcement", "message players", "email club", "club news", "reach people", "club messages", "contact other club"]
 ---
 
-To message your club's players, open **Club HQ** and tap **Reach people**. Under **Send to**, choose everyone in your club or one team, write a subject and message, and tap **Send announcement**. Players get it by email and in the app.
+To message your club's players, open **Club HQ** and tap **Reach people**. Under **Send to**, choose everyone in your club or one team, write a subject and message, and tap **Send announcement**. Players get it by email and in the app, signed with your club's name.
 
-{/* src: leagues-app src/lib/nav/club-hq.ts:49-50; src/app/club/[slug]/admin/comms/page.tsx:52-98; src/lib/notifications/dispatch.ts:68,92 (LEAGUE_ANNOUNCEMENT, transactional) */}
+{/* src: leagues-app src/lib/nav/club-hq.ts:49-50; src/app/club/[slug]/admin/comms/page.tsx:56-60,74-112; src/lib/admin/announce.ts:249-260 (clubName: signed with the club's name); src/lib/notifications/dispatch.ts (LEAGUE_ANNOUNCEMENT, transactional) */}
 
 **Before you begin**
 
 - You need to be a club admin or owner.
-- An announcement only goes to players who are on one of your teams' rosters.
+- **Everyone in** your club reaches this season's people only: the players on your teams, and those registered with your club for a season that's registering or in play. People from past seasons don't get it.
+- A message to one team reaches the players on that team's roster.
 
-{/* src: src/lib/admin/announce.ts:68-90,176 */}
+{/* src: src/lib/admin/announce.ts:68-133 (CURRENT_SEASON_STATUSES; paid or approved registrations; a team scope is its roster only); comms/page.tsx:78-82 */}
 
 ## Send an announcement
 
@@ -24,23 +25,23 @@ To message your club's players, open **Club HQ** and tap **Reach people**. Under
     {/* src: club-hq.ts:49-50 */}
   </Step>
   <Step title="Choose who it's for">
-    Under **Send to**, choose **Everyone in** your club, or pick one team.
-    {/* src: comms/page.tsx:69-77 */}
+    Under **Send to**, choose **Everyone in** your club, or pick one team. The hint under it names the seasons **Everyone in** reaches.
+    {/* src: comms/page.tsx:74-96 */}
   </Step>
   <Step title="Write it">
     Add a **Subject** and your **Message**.
-    {/* src: comms/page.tsx:86-95 */}
+    {/* src: comms/page.tsx:98-103 */}
   </Step>
   <Step title="Send">
     Tap **Send announcement**.
-    {/* src: comms/page.tsx:95 */}
+    {/* src: comms/page.tsx:105-108 */}
   </Step>
 </Steps>
 
-**Result:** You see how many people it was sent to, and it's listed under **Sent**. {/* src: comms/page.tsx:64,106,118 */}
+**Result:** You see how many people it was sent to, and it's listed under **Sent**. {/* src: comms/page.tsx:69-73,117-121 */}
 
 <Note>
-  Announcements are always delivered. Players can't turn off club news, and they can't reply to an announcement. For a conversation, use your team's captains or team chat. {/* src: comms/page.tsx:98; src/lib/admin/announce.ts */}
+  Announcements are always delivered. Players can't turn off club news, and they can't reply to an announcement. For a conversation, use your team's captains or team chat. {/* src: comms/page.tsx:110-112; src/lib/admin/announce.ts */}
 </Note>
 
 ## Message another club
@@ -49,21 +50,25 @@ To reach another club in your league about reschedules, courts or anything else 
 
 ## Why isn't this working?
 
+### "No one is registered with your club or on its teams in a season that’s registering or in play …"
+**Cause:** You chose **Everyone in** your club, but no season is registering or in play, or nobody has registered with your club for one yet.
+**Fix:** Pick one of your teams instead, or send it once players have registered for the new season. {/* src: src/lib/admin/announce.ts:226-232; comms/page.tsx:81 */}
+
 ### "No one is on a roster there yet, so there’s no one to send to."
-**Cause:** The team or club you chose has no players placed on a roster yet.
-**Fix:** Place players on your teams first, or message them once they're on a team. {/* src: src/lib/admin/announce.ts:176 */}
+**Cause:** The team you chose has no players on its roster yet.
+**Fix:** Place players on the team first, or choose **Everyone in** your club. {/* src: src/lib/admin/announce.ts:230 */}
 
 ### "You can only message clubs in your market."
 **Cause:** The other club is in a different league.
 **Fix:** Email [support@clubcircuitpb.com](mailto:support@clubcircuitpb.com) if you need to reach them. {/* src: src/lib/messaging/club.ts:46 */}
 
 ### A player says they didn't get my announcement
-**Cause:** It may be in their spam folder, or they're not on a roster yet.
-**Fix:** Ask them to check spam and the notification bell in the app. Check they're on one of your teams. {/* src: src/lib/notifications/inbox.ts:34; announce.ts:68-90 */}
+**Cause:** It may be in their spam folder, or they weren't in the group you sent to. For example, they played for you in a past season but haven't registered for this one.
+**Fix:** Ask them to check spam and the notification bell in the app. Check they're on one of your teams or registered with your club this season. {/* src: src/lib/notifications/inbox.ts; announce.ts:68-133 */}
 
 ## Related articles
 
 - [Message your team and other players](/players/message-your-team), what players see
 - [Form your club's teams for a season](/clubs/form-teams-for-a-season)
 
-{/* Last verified: 2026-11-02 against leagues-app bb4f3b5 */}
+{/* Last verified: 2026-11-02 against leagues-app ba29829 */}

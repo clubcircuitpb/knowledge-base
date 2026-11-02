@@ -7,37 +7,37 @@ keywords: ["captain", "assign captain", "make captain", "change captain", "team 
 
 To make someone captain, open the **Team builder**, open the player's **⋯** menu and tap **Make captain**. You can also tap **Choose a captain** on the team's card in **Club HQ**. Each team has one captain, who sets its lineups and enters its scores.
 
-{/* src: leagues-app src/app/club/[slug]/admin/teams/team-builder.tsx:478-479; src/app/club/[slug]/admin/page.tsx:221 */}
+{/* src: leagues-app src/app/club/[slug]/admin/teams/team-builder.tsx:512-524; src/app/club/[slug]/admin/page.tsx:242-246 */}
 
 **Before you begin**
 
 - You need to be a club admin or owner.
 - The captain has to be on the team's roster first. See [Form your club's teams for a season](/clubs/form-teams-for-a-season).
 
-{/* src: src/lib/club/admin.ts:58 */}
+{/* src: src/lib/club/admin.ts:60 */}
 
 ## Make someone captain
 
 <Steps>
   <Step title="Open the team">
     In **Club HQ**, open **Registrations** > **Team builder**, or find the team's card on **Club HQ**.
-    {/* src: formation/page.tsx:157; src/app/club/[slug]/admin/page.tsx:212-221 */}
+    {/* src: formation/page.tsx:158; src/lib/nav/club-hq.ts:32-34; src/app/club/[slug]/admin/page.tsx:242-246 */}
   </Step>
   <Step title="Choose the player">
     In the Team builder, tap **⋯** next to the player. On a team card, tap **Choose a captain**.
-    {/* src: team-builder.tsx:478; page.tsx:221 */}
+    {/* src: team-builder.tsx:512-516; page.tsx:244 */}
   </Step>
   <Step title="Make them captain">
     Tap **Make captain**, or tap the player on the team card.
-    {/* src: team-builder.tsx:478; captain-picker.tsx */}
+    {/* src: team-builder.tsx:516; captain-picker.tsx */}
   </Step>
 </Steps>
 
-**Result:** You see that they're captain, with a note about their registration fee. We email them to say they're captain of the team. {/* src: team-builder.tsx:483; captain-picker.tsx:40; registry CAPTAIN_ASSIGNED */}
+**Result:** You see that they're captain, with a note about their registration fee. We email them to say they're captain of the team. {/* src: team-builder.tsx:282-286,521; captain-picker.tsx; registry CAPTAIN_ASSIGNED */}
 
 ## Change the captain
 
-Make someone else captain the same way, using **Change captain** on the team card. The previous captain goes back to being a player on the team. A team can't have two captains. {/* src: src/lib/club/admin.ts:71-87 (other captain grants revoked); page.tsx:221 */}
+Make someone else captain the same way, using **Change captain** on the team card. The previous captain goes back to being a player on the team. A team can't have two captains. {/* src: src/lib/club/admin.ts (other captain grants revoked); page.tsx:244 */}
 
 ## Captains and registration fees
 
@@ -55,7 +55,7 @@ To name a captain before they register, so they register free from the start, us
 
 ### "A captain must be an active member of the team."
 **Cause:** The player isn't on that team's roster.
-**Fix:** Place them on the team first, then make them captain. {/* src: src/lib/club/admin.ts:58 */}
+**Fix:** Place them on the team first, then make them captain. {/* src: src/lib/club/admin.ts:60 */}
 
 ### "Their registration fee couldn’t be refunded automatically …"
 **Cause:** The refund to their card didn't go through.
@@ -70,4 +70,4 @@ To name a captain before they register, so they register free from the start, us
 - [Help for team captains](/captains), what captains do
 - [Form your club's teams for a season](/clubs/form-teams-for-a-season)
 
-{/* Last verified: 2026-11-02 against leagues-app bb4f3b5 */}
+{/* Last verified: 2026-11-02 against leagues-app ba29829 */}
