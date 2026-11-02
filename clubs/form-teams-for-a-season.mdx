@@ -1,0 +1,96 @@
+---
+title: "Form your club's teams for a season"
+sidebarTitle: "Form your teams"
+description: "In Club HQ, open Registrations, tap Team builder, add a team for each division, then tap a player and Place here on their team. When a team can field a match, tap Confirm team."
+keywords: ["team builder", "form teams", "place players", "add a team", "roster", "confirm team", "waitlist", "registrations"]
+---
+
+To form your teams, open **Club HQ** > **Registrations** and tap **Team builder**. Add a team for each division you're playing in, then tap a player under **Players to place** and tap **Place here** on their team. When a team has enough players to field a match, tap **Confirm team**.
+
+{/* src: leagues-app src/app/club/[slug]/admin/formation/page.tsx:157; src/app/club/[slug]/admin/teams/page.tsx:203; team-builder.tsx:85,146,552 */}
+
+**Before you begin**
+
+- You need to be a club admin or owner.
+- Your club must be entered in the season. See [Apply to bring your club into the league](/clubs/apply-to-join-the-league).
+- Your league sets how many players a team needs and how many it can have, for each division.
+
+{/* src: src/app/club/[slug]/admin/teams/page.tsx:218-223; src/lib/club/capacity.ts (Division.rosterMax, rosterMin/MaxPerGender, format minPlayersPerGender) */}
+
+## Build your teams
+
+<Steps>
+  <Step title="Open the Team builder">
+    In **Club HQ**, tap **Registrations**, then **Team builder**.
+    {/* src: club-hq.ts:26; formation/page.tsx:157 */}
+  </Step>
+  <Step title="Add a team">
+    Tap **Add a team**, choose the **Division**, and tap **Add team**. Leave **Team name (optional)** blank to name it after your club and the division.
+    {/* src: teams/page.tsx:203; add-team-form.tsx:63-102 */}
+  </Step>
+  <Step title="Pick a player">
+    Under **Players to place**, tap the player you want to place.
+    {/* src: team-builder.tsx:146 */}
+  </Step>
+  <Step title="Place them on a team">
+    Tap **Place here** on the team they should play for.
+    {/* src: team-builder.tsx:85,128,441 */}
+  </Step>
+  <Step title="Confirm the team">
+    When the team shows **Can field**, tap **Confirm team…**, then **Confirm team**.
+    {/* src: team-builder.tsx:428,552,590 */}
+  </Step>
+</Steps>
+
+**Result:** Each player you place gets an email saying which team they're on. A confirmed team is entered in its division and counts toward the division running. {/* src: team-builder.tsx:47,574-575; registry PLAYER_PLACED_ON_TEAM */}
+
+<Warning>
+  After you confirm a team, roster changes go through the league office. Confirm a team only when you're happy with it. {/* src: team-builder.tsx:519,574-575 */}
+</Warning>
+
+## Let ClubCircuit suggest a start
+
+Under **Want a head start?**, ClubCircuit suggests a lineup of teams, strongest players first, filled to what each team needs. Tap **Accept** to place them all and email each one, or ignore it and place people yourself. {/* src: src/app/club/[slug]/admin/teams/page.tsx:277-329 */}
+
+## Players you can't place yet
+
+On a player, open the **⋯** menu:
+
+- **Put on your waitlist** emails them that there's no spot yet. You can still place them later.
+- **Suggest they sub instead** emails them a link to sign up as a sub.
+- **Take off this team** sends a placed player back to **Players to place**. Nobody is emailed.
+
+{/* src: team-builder.tsx:295-307,490-491 */}
+
+## Why isn't this working?
+
+### "Your club isn’t entered in … yet, so you can’t add teams to it."
+**Cause:** Your club hasn't entered this season.
+**Fix:** On **Club HQ**, accept the league's invitation, or tap **Tell the league we’re in**. {/* src: teams/page.tsx:218-223; src/app/club/[slug]/admin/page.tsx:119 */}
+
+### "… is full — it's at its …-player cap."
+**Cause:** The team has as many players as your league allows.
+**Fix:** Move someone off, place the player on another team in that division, or add them to the sub roster. {/* src: src/lib/club/capacity.ts:27-28 */}
+
+### "… already has … — the most this division allows."
+**Cause:** The team already has the most players of that gender the division allows.
+**Fix:** Place them on another team in the division, or move someone of that gender off first. {/* src: src/lib/club/capacity.ts:73 */}
+
+### The Confirm button says "Confirm when it can field"
+**Cause:** The team doesn't have enough men or women to field a match yet.
+**Fix:** Place more players until the team shows **Can field**. {/* src: team-builder.tsx:552; src/lib/club/capacity.ts:85-92 */}
+
+### "That team is confirmed with the league. Ask the league office to change its roster."
+**Cause:** You tried to change a confirmed team.
+**Fix:** Email [support@clubcircuitpb.com](mailto:support@clubcircuitpb.com) with the change you need. {/* src: src/lib/club/teams.ts:172 */}
+
+### A player is registered for a different division
+**Cause:** The team builder warns when you place someone on a team outside the division they registered for.
+**Fix:** Check with the player, or place them on a team in their own division. {/* src: team-builder.tsx:125,445 */}
+
+## Related articles
+
+- [Assign a captain to each team](/clubs/assign-team-captains)
+- [Invite your players and captains to register](/clubs/invite-players-to-register)
+
+{/* Last verified: 2026-11-02 against leagues-app bb4f3b5 */}
