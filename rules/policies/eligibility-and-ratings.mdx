@@ -17,11 +17,13 @@ Adults only. ClubCircuit refuses registrations from anyone under the minimum age
 
 Your DUPR rating. Each division has a rating range. Your rating is locked at a set point, usually when you register, so a change during the season doesn't move you. A division can also require that your rating is active, and set a limit on your singles rating. {/* src: Ruleset.ratingSource, ratingLockPoint (default AT_REGISTRATION), requiresActiveRatingAtOrAbove, singlesRatingTolerance; Division.duprCeiling, duprFloor */}
 
+You can't change your rating in ClubCircuit yourself. The first time you register, you enter the rating DUPR shows you, and the league office checks it against DUPR. After that, only that check updates it. A rating counts as active once ClubCircuit has checked it against DUPR and DUPR shows a rating. {/* src: leagues-app src/app/me/profile/page.tsx ("The league office checks it against DUPR. You can’t edit it here."); src/lib/registration/finalize.ts (a rating already on file isn't replaced by a typed one; only a new player's first rating is self-reported; duprIsActive only when checked); src/lib/dupr/checks.ts (League HQ DUPR checks set duprSyncedAt and the rating); src/lib/rules/rules/registration.ts ratingActiveRequired */}
+
 Add your DUPR ID to your profile before you register. See [Add your DUPR ID](/players/connect-dupr).
 
 ## What if I don't have a DUPR rating?
 
-You can still register. The league office places you in a division, and your first season counts as provisional. {/* src: decision, Larry 2 Nov 2026 (item 8) */}
+You can still register, as long as you have a DUPR ID: every league that uses DUPR ratings needs one to register. Leave the rating blank. The league office reviews your registration and places you in a division, and your first season counts as provisional. {/* src: leagues-app src/lib/rules/rules/registration.ts (RATING_ID_REQUIRED fails without a DUPR ID when Ruleset.ratingSource is DUPR, the default; RATING_CEILING warns with no rating: "A league admin will review this registration."); src/app/join/[season]/[division]/registration-form.tsx ("Leave blank if you don’t have one yet."); decision, Larry 2 Nov 2026 (item 8) */}
 
 ## Can I play in more than one division?
 
@@ -56,4 +58,4 @@ ClubCircuit checks each player's rating against DUPR before the season starts, a
 - [Add your DUPR ID](/players/connect-dupr)
 - [Register for a season](/players/register-for-a-season)
 
-{/* Last verified: 2026-11-02 against leagues-app bb4f3b5 and Larry's decisions of 2 Nov 2026 */}
+{/* Last verified: 2 November 2026 against leagues-app cf1ea20 */}

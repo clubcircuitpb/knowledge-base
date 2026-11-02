@@ -18,7 +18,10 @@ Only if both teams in the match have opted in. Each team decides for itself.
 - **Who opts in:** the team's captain or its club, in the ClubCircuit app. The app shows which teams have opted in, so you can see before each match whether it will count.
 - **When:** any time up to the midpoint of the regular season (end of week 4). It takes effect from the team's next match.
 - **Once in, stays in:** a team that opts in stays in for the rest of the season, including the playoffs.
-- **What gets submitted:** every game of a match where both teams opted in. Forfeits recorded as 1–0, and forfeited games with fewer than 13 total points, are never submitted.
+- **What gets submitted:** every game of a match where both teams opted in. Forfeits recorded as 1–0, and forfeited games with fewer than 13 total points, are never submitted. Nor are the games of a playoff match's deciding round.
+- **Everyone needs a DUPR ID:** a game goes to DUPR only once all four players in it have a DUPR ID on their profile. Until then it waits, and it's sent with a later batch once they do.
+
+{/* src: leagues-app src/lib/dupr/submission-rules.ts (duprGameDecision: TIEBREAKER games never submitted; the playoff decider's games are tiebreaker games in the rr-rally-21 playoff format); src/lib/dupr/results.ts (missingDuprId, readyToUpload); rr-rally-21 preset duprOptInClosesAfterWeek: 4, duprForfeitExcludedWinnerPoints: 1, duprForfeitExcludedLoserPoints: 0, duprForfeitMinTotalPoints: 13 */}
 
 <Note>
   **Example:** your team has opted in, but this week's opponent hasn't. This week's games won't go to DUPR. Next week's opponent has opted in, so those games will.
@@ -43,4 +46,4 @@ By match win percentage. A draw counts as half a win. If two teams are level, th
 
 {/* src: Larry's rulebook "ClubCircuit Rulebook — Inaugural Winter Season", tab "Scores and standings" (Claude Docs 12b29ca1-72ad-4549-83c4-cc3dc1f3d58f) */}
 
-{/* Last verified: 2026-11-02 against the rulebook as of 2 Nov 2026 */}
+{/* Last verified: 2 November 2026 against leagues-app cf1ea20 */}

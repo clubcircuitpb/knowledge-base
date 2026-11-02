@@ -1,11 +1,11 @@
 ---
 title: "Fees"
 sidebarTitle: "Fees"
-description: "Regular players $79 a season. One free captain per team. Subs join free and pay $12.50 per division at their first match. Everyone pays a court share for each match they play."
+description: "Regular players $79 a season. One free captain per team. Subs join free and pay $12.50 per division at their first match. Everyone pays a court share for each match they're in the lineup for."
 keywords: ["fees", "cost", "price", "$79", "registration fee", "captain", "sub fee", "$12.50", "court share", "court fee"]
 ---
 
-**The short version:** regular players pay $79 for the season. Each team gets one free captain registration. Subs join the pool free and pay $12.50 per division at their first match. Everyone, subs included, pays a court share for each match they play.
+**The short version:** regular players pay $79 for the season. Each team gets one free captain registration. Subs join the pool free and pay $12.50 per division at their first match. Everyone, subs included, pays a court share for each match they're in the lineup for.
 
 How each fee works is explained in the [Player fee schedule](/rules/policies/fees). The app always shows the exact amount before you pay.
 
@@ -23,19 +23,21 @@ You pay it once per division, at your first match there. A sub can play up to tw
 
 ## Court shares
 
-Each hosted match has a court charge: $120 for the home team and $240 for the away team. Each team's charge is split evenly among its players on court that day.
+Each hosted match has a court charge: $120 for the home team and $240 for the away team. Each team's charge is split evenly among its players in that match's lineup.
 
-| Players on court | Home | Away |
+| Players in the lineup | Home | Away |
 |---|---|---|
 | 8 | $15 each | $30 each |
 | 10 | $12 each | $24 each |
 | 12 | $10 each | $20 each |
 
-You pay only for matches you play. {/* src: Club Partnership Deck, slides 4 and 9; leagues-app Ruleset.matchFeeSplit (EVEN_SPLIT). Per-club court fees are set in Club HQ: confirm each host club's home and away targets are 12000 and 24000 cents. */}
+You pay only for matches you're in the lineup for. The court share is charged when the lineups lock, to each player your captain's posted lineup puts in at least one game. You don't pay if you're on the bench, only said you're available, or were in a lineup your captain never posted. If you're swapped out on the day, the league office refunds you.
+
+{/* src: Club Partnership Deck, slides 4 and 9; leagues-app src/lib/admin/league-types.ts rr-rally-21 preset (season.courtFeeHomeTeamTargetCents: 12000, courtFeeAwayTeamTargetCents: 24000); src/lib/court-fees/policy.ts (a club with no saved policy starts from TEAM_TOTALS at the season's targets); src/lib/court-fees/pricing.ts feesForMatch (TEAM_TOTALS: each team's total split among that team's paying players); src/lib/court-fees/run.ts accrueMatchCourtFees (LINEUP_LOCK, the default Ruleset.courtFeeChargeAt: only a SUBMITTED or LATE lineup, only players in at least one game); docs/18-court-fees-plan.md "Charging per match" (swapped-out player refunded by the league office from League HQ). Per-club court fees are set in Club HQ: confirm each host club uses the team-total setting at 12000 and 24000 cents. */}
 
 ## Related
 
 - [Player fee schedule](/rules/policies/fees)
 - [Pay a court fee and see what you’ve paid](/players/pay-court-fees-and-see-payments)
 
-{/* Last verified: 2026-11-02 against the Club Partnership Deck and leagues-app bb4f3b5 */}
+{/* Last verified: 2 November 2026 against leagues-app cf1ea20 */}

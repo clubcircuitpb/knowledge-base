@@ -29,12 +29,12 @@ The host club runs its building: access, safety, staff and the courts. The host 
 
 ## How do I report a problem?
 
-- **Captains:** report it in ClubCircuit by disputing the match and choosing conduct as the reason.
-- **Anyone else:** email [support@clubcircuitpb.com](mailto:support@clubcircuitpb.com) with the match, what happened and who was there.
+- **Players in the match:** open the match in ClubCircuit and tap **Report a conduct problem**. You can do this from the match's start until the time your season's rules set; the match page says until when. Only the league office sees your report. See [Report a conduct problem](/players/report-a-conduct-problem).
+- **Anyone else, or after that time:** email [support@clubcircuitpb.com](mailto:support@clubcircuitpb.com) with the match, what happened and who was there.
 
 Any player, captain or club admin can report. Report as soon as you can after the match, while people still remember it clearly.
 
-{/* src: leagues-app prisma/schema.prisma DisputeType CONDUCT; decision, Larry 2 Nov 2026 (item 5). Ruleset.incidentReportWindowHours is not yet enforced by the app, so no deadline is stated here. */}
+{/* src: leagues-app src/app/match/[matchId]/conduct-section.tsx ("Report a conduct problem"; "Reporting from the app closed … email the league office"); src/lib/incidents/window.ts (opens at the scheduled start, closes Ruleset.incidentReportWindowHours later); src/lib/incidents/reports.ts (requireMatchPlayer: players on either team; only the league office sees reports; LEAGUE_OFFICE_EMAIL); docs/adr/0080; decision, Larry 2 Nov 2026 (item 5) */}
 
 ## What happens after a report?
 
@@ -60,4 +60,4 @@ Yes, once. Email [support@clubcircuitpb.com](mailto:support@clubcircuitpb.com) w
 - [League rules](/rules)
 - [Player eligibility and rating policy](/rules/policies/eligibility-and-ratings)
 
-{/* Last verified: 2026-11-02 against leagues-app bb4f3b5 and Larry's decisions of 2 Nov 2026 */}
+{/* Last verified: 2 November 2026 against leagues-app cf1ea20 */}
