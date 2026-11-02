@@ -49,7 +49,8 @@
             "group": "Captains",
             "pages": [
               "captains/index",
-              "captains/report-matches-to-dupr"
+              "captains/report-matches-to-dupr",
+              "captains/send-your-playoff-roster"
             ]
           }
         ]

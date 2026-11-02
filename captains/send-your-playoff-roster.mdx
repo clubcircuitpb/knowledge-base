@@ -1,0 +1,93 @@
+---
+title: "Send your playoff roster"
+sidebarTitle: "Send your playoff roster"
+description: "To choose who can play for your team in the playoffs, open Manage team, tap Playoff roster, tick your players and tap Send playoff roster before the deadline. Only players on it can go in a playoff lineup."
+keywords: ["playoff roster", "playoffs", "who can play in playoffs", "playoff eligibility", "regular", "playoff sub", "finals day"]
+---
+
+To choose who can play for your team in the playoffs, open **Manage team**, tap **Playoff roster**, tick your players and tap **Send playoff roster**. Only players on it can go in a playoff lineup, so send it before the deadline.
+
+{/* src: leagues-app src/app/team/[teamId]/playoff-roster/page.tsx; src/lib/lineup/save.ts (playoff lineups take only rostered players); docs/adr/0077-playoff-eligibility-and-roster.md */}
+
+**Before you begin**
+
+- Your team needs to be in the playoffs. The tab appears once the league office seeds them.
+- You need to be the team’s captain, or an admin of the team’s club.
+- Your league sets how many of each gender you can list, the deadline, and how many games a player needs to be a regular. The page shows them. See your league’s rules in the app for the details.
+
+{/* src: src/app/team/[teamId]/manage/page.tsx (Playoff roster tab when seeded); src/lib/auth/guards.ts requireTeamCaptainOrClubAdmin; src/lib/playoffs/roster.ts getPlayoffRosterForm (max per gender, due time and minimum from the Ruleset) */}
+
+## Send your roster
+
+<Steps>
+  <Step title="Open your playoff roster">
+    As captain, open your team’s page, tap **Manage team**, then **Playoff roster**. As a club admin, open **Overview** in Club HQ and tap **Playoff roster** on the team’s card.
+    {/* src: src/app/team/[teamId]/manage/page.tsx; src/app/club/[slug]/admin/page.tsx (Playoff roster, seeded teams only) */}
+  </Step>
+  <Step title="Check each player’s standing">
+    Each player shows their games for your team and a label: **Regular**, **Regular in a lower division**, **Substitute, approved**, **Needs league approval** or **Regular in a higher division — can’t play**.
+    {/* src: src/lib/playoffs/eligibility-rules.ts STANDING_LABEL */}
+  </Step>
+  <Step title="Tick your players">
+    Tick the men and women who may play. Players marked **Needs league approval** or **Regular in a higher division — can’t play** can’t be ticked.
+    {/* src: playoff-roster/page.tsx (checkboxes disabled unless the standing is rosterable); eligibility-rules.ts ROSTERABLE */}
+  </Step>
+  <Step title="Send it">
+    Tap **Send playoff roster**. To change it later, tick or untick players and tap **Update playoff roster**.
+    {/* src: playoff-roster/page.tsx (button labels) */}
+  </Step>
+</Steps>
+
+**Result:** the page says when the roster was sent, and only those players can go in your playoff lineups.
+
+{/* src: playoff-roster/page.tsx ("Sent …"); src/lib/playoffs/roster.ts submitPlayoffRoster ("Saved. Only these players can go in your playoff lineups.") */}
+
+## Who can play
+
+- **Regulars** have played your league’s minimum number of regular-season games for your team.
+- A **regular on a lower-division team** of your club can play too.
+- A **regular on a higher-division team** of your club can’t. If they play anyway, every game they play is forfeited.
+- **Anyone else** needs the league office’s approval first, and costs your team part of a game for each game they play.
+
+{/* src: src/lib/playoffs/eligibility-rules.ts classifyPlayoffPlayer; src/lib/playoffs/roster.ts enforcePlayoffEligibility; docs/adr/0077 decision 2 */}
+
+## Why isn’t this working?
+
+### I don’t see the Playoff roster tab
+
+**Cause:** your team isn’t in the playoffs yet, or you aren’t its captain or one of its club’s admins.
+
+**Fix:** the tab appears once the league office seeds the playoffs and your team qualifies. If you should have access, ask your club’s admins.
+
+{/* src: manage/page.tsx (tab only when seeded); playoff-roster/page.tsx ("Not in the playoffs") */}
+
+### A player says Needs league approval
+
+**Cause:** they haven’t played enough regular-season games for your team, and aren’t a regular on a lower-division team of your club.
+
+**Fix:** email [support@clubcircuitpb.com](mailto:support@clubcircuitpb.com) and ask the league office to approve them. Once approved, they show as **Substitute, approved** and you can tick them.
+
+{/* src: eligibility-rules.ts (NEEDS_APPROVAL → APPROVED_SUB once the league office records an override); src/lib/playoffs/roster.ts classifyForTeam (override rule PLAYOFF_MIN_GAMES) */}
+
+### It says the roster deadline has passed
+
+**Cause:** your league’s deadline for playoff rosters is over.
+
+**Fix:** send it anyway. A late roster costs your team games in each playoff match that day, so send it as soon as you can.
+
+{/* src: playoff-roster/page.tsx ("The roster deadline has passed…"); roster.ts applyLateRosterPenalties */}
+
+### My lineup says a player isn’t on our playoff roster
+
+**Cause:** a playoff lineup only takes players on your playoff roster.
+
+**Fix:** take them out of the lineup, or add them to the roster if they can play.
+
+{/* src: src/lib/lineup/save.ts playoffRosterProblem ("… isn’t on your playoff roster.") */}
+
+## Related articles
+
+- [Help for team captains](/captains)
+- [Report your team’s matches to DUPR](/captains/report-matches-to-dupr)
+
+{/* Last verified: 2026-11-02 against leagues-app 047eda7 */}
