@@ -7,80 +7,110 @@ keywords: ["delete account", "close account", "remove account", "download my dat
 
 To download your data, open your account menu, tap **Account**, then tap **Your data**. A file downloads with everything ClubCircuit holds about you. To delete your account, open **Delete your account** on the same page, type `DELETE` and tap **Delete my account**. Deleting can't be undone.
 
-{/* src: leagues-app src/components/shell/account-menu.tsx:143-146; src/app/me/page.tsx:299,308,321-326 */}
+{/* src: leagues-app src/components/shell/account-menu.tsx:143-146; src/app/me/page.tsx:309,318,350-355 */}
 
 ## Download your data
 
 <Steps>
   <Step title="Open Your account">
     Open your account menu and tap **Account**. On a phone, tap your initials at the top of the screen first.
-    {/* src: account-menu.tsx:143-146 */}
+    {/* src: src/components/shell/account-menu.tsx:143-146; src/components/shell/play-chrome.tsx:393 */}
   </Step>
   <Step title="Tap Your data">
-    Tap **Your data**.
-    {/* src: src/app/me/page.tsx:299 */}
+    Under **Settings**, tap **Your data**.
+    {/* src: src/app/me/page.tsx:305,309 */}
   </Step>
   <Step title="Save the file">
     A file named like `clubcircuit-data-2026-11-02.json` downloads. Save it somewhere safe.
-    {/* src: src/app/api/me/export/route.ts:34-39 */}
+    {/* src: src/app/api/me/export/route.ts:34-40 */}
   </Step>
 </Steps>
 
-**Result:** The file holds your account details, the seasons you registered for, what you paid, your teams, your availability answers and your stats. It doesn't include other players' details. {/* src: src/lib/account/export.ts:1-10 */}
+**Result:** The file holds what ClubCircuit has about you:
+
+- Your account and player details, and your notification settings
+- The seasons you registered for and what you paid, including court fees
+- Your teams, your availability answers and your stats
+- The lineups you were picked in, and the games you played, round by round, with the score from your side
+- The messages you wrote: direct messages, lineup threads and team chat
+- Your DUPR checks and snapshots, and any exception the league office made to an eligibility rule for you
+- Disputes and conduct reports you sent, and your answers to "same team next season?"
+- Your perks card and its uses, and the terms you agreed to
+
+It doesn't include other players' details. Other people's replies aren't in it, and opponents appear by team name only. {/* src: src/lib/account/export.ts:7-61 */}
 
 ## Delete your account
 
 <Warning>Deleting your account happens straight away and can't be undone.</Warning>
 
 <Steps>
-  <Step title="Remove your saved card first">
-    If you saved a card for court fees, open **Payments** and tap **Remove card**. Pay or settle anything you owe first.
-    {/* src: src/app/me/payments/page.tsx:110-114 */}
-  </Step>
   <Step title="Open Your account">
     Open your account menu and tap **Account**.
-    {/* src: account-menu.tsx:143-146 */}
+    {/* src: src/components/shell/account-menu.tsx:143-146 */}
   </Step>
   <Step title="Open Delete your account">
-    Scroll to the bottom and tap **Delete your account**. Read what happens.
-    {/* src: src/app/me/page.tsx:300-317 */}
+    Scroll to **Settings** and tap **Delete your account**.
+    {/* src: src/app/me/page.tsx:311-319 */}
+  </Step>
+  <Step title="Read what goes and what stays">
+    The panel lists what's removed and what stays. If you have a saved card, it names the card. If you owe court fees, it shows the total. You don't need to remove your card first.
+    {/* src: src/app/me/page.tsx:326-348 */}
   </Step>
   <Step title="Type DELETE">
-    In **Type DELETE to confirm**, type `DELETE` in capitals.
-    {/* src: page.tsx:321 */}
+    In **Type DELETE to confirm**, type `DELETE`. Capitals or lower case both work.
+    {/* src: src/app/me/page.tsx:350; src/lib/account/delete-confirm.ts:3-11 */}
   </Step>
   <Step title="Delete">
     Tap **Delete my account**.
-    {/* src: page.tsx:325 */}
+    {/* src: src/app/me/page.tsx:354-356 */}
   </Step>
 </Steps>
 
-**Result:** You're signed out, and the account can't be signed in to again. Your name, email, phone number, emergency contact, photo, bio and DUPR ID are removed, and your name shows as **Former player**. Any captain or club admin role you had is removed too. {/* src: src/lib/account/delete.ts:1-25; src/lib/account/anonymize.ts:36-51 (FORMER_PLAYER_NAME) */}
+**Result:** You're signed out and land on the sign-in page with a message that your ClubCircuit account is deleted. You can't sign in to it again. {/* src: src/app/me/actions.ts:216-220; src/lib/account/delete-confirm.ts:13-15 */}
 
-## What stays after you delete
+## What's removed
 
-The results of matches you played stay in the league's records, so standings and other players' history still add up. Your name is removed from them. {/* src: src/app/me/page.tsx:315-317; src/lib/account/delete.ts:22-25 */}
+- Your name, email, phone, date of birth, gender, photo and emergency contact
+- Your DUPR details
+- Your saved card. It's removed from Stripe too.
+- Any unpaid court fees. Deleting cancels them, so your card is never charged for them. To pay them first, open **Payments** before you delete.
+- Your notification settings, phone notifications and calendar feed
+- Any captain or club admin role you had, and your sub sign-up
+
+{/* src: src/app/me/page.tsx:326-343; src/lib/account/delete.ts:16-28 */}
+
+## What stays
+
+- Results of matches you played, under "Former player"
+- Your team-chat and lineup-thread messages, also under "Former player"
+- Payments and refunds already made
+- The record of the terms you agreed to (when, and from which device), which shows you agreed to them
+
+Standings and other players' history still add up, without your name. {/* src: src/app/me/page.tsx:344-348; src/lib/account/delete.ts:30-38 */}
 
 ## Why isn't this working?
 
 ### "Type DELETE to confirm you want your account deleted."
-**Cause:** The box was empty or didn't say `DELETE` exactly.
-**Fix:** Type `DELETE` in capital letters and tap **Delete my account** again. {/* src: src/app/me/actions.ts:185-187 */}
+**Cause:** The box was empty, or it didn't say DELETE.
+**Fix:** Type `DELETE` in the box and tap **Delete my account** again. {/* src: src/app/me/actions.ts:210-213 */}
 
 ### Nothing happened when I tapped Your data
 **Cause:** Your browser saved the file without showing you.
-**Fix:** Check your Downloads folder, or your phone's Files app. {/* src: route.ts:39 (content-disposition: attachment) */}
+**Fix:** Check your Downloads folder, or your phone's Files app. {/* src: src/app/api/me/export/route.ts:39 (content-disposition: attachment) */}
+
+### I want to pay what I owe before I delete
+**Fix:** Open **Payments** from the link in the delete panel, or from your account menu, and pay the court fees there. Then come back and delete. [Pay a court fee](/players/pay-court-fees-and-see-payments). {/* src: src/app/me/page.tsx:335-339 */}
 
 ### I want to delete only some of my details
-**Fix:** You don't need to delete your account. Change or clear them on **Your account** or your **Profile** instead. To hide your profile, choose **Private** under **Who can see your profile**. {/* src: src/app/me/page.tsx:254; src/app/me/profile/page.tsx:20-24 */}
+**Fix:** You don't need to delete your account. Change or clear them under **Your details** on **Your account**, or on your profile. To hide your profile, choose **Private** under **Who can see your profile**. {/* src: src/app/me/page.tsx:202-204; src/app/me/profile/page.tsx */}
 
 ### I changed my mind after deleting
 **Cause:** Deleting can't be undone.
-**Fix:** To play again, sign in with your email and register for a season. You start as a new player. Your old history stays without your name.
+**Fix:** To play again, sign in with your email. That starts a new account, and you register for a season as a new player. Your old history stays under "Former player". {/* src: src/lib/account/delete-confirm.ts:14-15 */}
 
 ## Related articles
 
 - [Edit your profile and choose who can see it](/players/edit-your-profile-and-privacy)
 - [Pay a court fee and see what you’ve paid](/players/pay-court-fees-and-see-payments)
 
-{/* Last verified: 2026-11-02 against leagues-app bb4f3b5 */}
+{/* Last verified: 2026-11-02 against leagues-app 36d0f59 */}
