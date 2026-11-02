@@ -45,7 +45,7 @@ To tell the league when your courts can host, open **Club HQ** and go to **Sched
 
 ## Tell the league you can't host a day
 
-Open the date, make sure nothing is offered (tap **Clear the day** if needed), then tap **Can’t host this day**. A day you never touch counts as no objection. {/* src: host-grid.tsx:459,467-476; src/lib/club/host-blocks.ts:166-197; docs/adr/0063-host-availability-grid.md */}
+Open the date, make sure nothing is offered (tap **Clear the day** if needed), then tap **Can’t host this day**. A day you don't offer courts on gets no home matches anyway, so you only need **Can’t host this day** to tell the league you're closed. {/* src: host-grid.tsx:457,467-475; src/lib/schedule/offer.ts (HostDay NOT_OFFERED: no home match goes there); docs/adr/0063-host-availability-grid.md (amendment, 2 Nov 2026: pass 2) */}
 
 ## Name courts and set opening hours
 
@@ -53,7 +53,11 @@ Tap **Courts and hours** to name each court, hide a court the league shouldn't u
 
 ## How the league uses this
 
-The league's schedule places your home matches on days you can host, as long as enough courts are free. If a day needs more courts than you have, Club HQ tells you under **Not enough courts**, and the league may move a start time or a venue. {/* src: src/lib/admin/schedule.ts:205-212; src/components/hosting/hosting-panel.tsx:90-112 */}
+The schedule starts your home matches only at the league's start times, and only where you've offered enough courts for the whole match. A day you haven't offered gets no home matches: the visiting club hosts instead, or the league places the match by hand. {/* src: src/lib/schedule/offer.ts (fitsOffer, freeCourts); src/lib/schedule/placement.ts:138-200; src/app/club/[slug]/admin/availability/page.tsx:27-28; docs/adr/0063-host-availability-grid.md (amendment, 2 Nov 2026) */}
+
+Captains can only move a match to a time you've offered. {/* src: src/lib/reschedule/flow.ts:174-178 (checkHostCourts on every offered date); availability/page.tsx:27; src/lib/club/needs-you.ts:70 */}
+
+If a day needs more courts than you have, Club HQ tells you under **Not enough courts**. {/* src: src/components/hosting/hosting-panel.tsx:90-112 */}
 
 ## Why isn't this working?
 
@@ -64,6 +68,10 @@ The league's schedule places your home matches on days you can host, as long as 
 ### My changes disappeared
 **Cause:** You changed the date before saving. The grid shows **Not saved yet** while you have unsaved changes.
 **Fix:** Paint the day again and tap **Save this day**. {/* src: host-grid.tsx:478 */}
+
+### "Before the grid, you noted courts … for this date"
+**Cause:** You noted courts for this date before the grid had times. The schedule only uses times you've painted, so this day counts as not offered.
+**Fix:** Paint the courts and times you can offer and tap **Save this day**. To withdraw the day instead, save it empty. {/* src: host-grid.tsx:263-267; src/lib/schedule/offer.ts (a courts note with no times is NOT_OFFERED) */}
 
 ### "Already scheduled here: …"
 **Cause:** A match is already scheduled on that day at your courts.
@@ -82,4 +90,4 @@ The league's schedule places your home matches on days you can host, as long as 
 - [Set up your club's page, venue and jerseys](/clubs/set-up-your-club-page)
 - [Form your club's teams for a season](/clubs/form-teams-for-a-season)
 
-{/* Last verified: 2026-11-02 against leagues-app bb4f3b5 */}
+{/* Last verified: 2026-11-02 against leagues-app ba29829 */}
