@@ -1,0 +1,49 @@
+---
+title: "Player fee schedule"
+sidebarTitle: "Fees"
+description: "Regular players pay a registration fee once a season. Captains can register free. Subs join the pool free and pay a sub registration fee per division only when they first play. Everyone pays a court share for the matches they play."
+keywords: ["fees", "cost", "price", "registration fee", "captain free", "sub fee", "substitute fee", "court share", "court fee", "refund"]
+---
+
+**The short version:** regular players pay a registration fee once a season. Captains can register free. Subs join the pool free and pay a sub registration fee only when they first play in a division. Everyone, subs included, pays a court share for the matches they play, and nothing for matches they don't.
+
+This policy explains how each fee works in every ClubCircuit league. The amounts are set each season. For the winter season, see [Rally to 21 league: fees](/rules/rally-21/fees). You always see the exact amount in the app before you pay.
+
+## Registration fee
+
+A one-time fee for the season, paid when you register. It isn't a subscription and doesn't renew. {/* src: leagues-app src/lib/legal/content.ts, Terms of Use §10; Season.registrationPriceCents, Division.registrationPriceCents */}
+
+## Captains
+
+Each team can have a set number of free captain registrations, usually one. Your club names its captain. {/* src: Ruleset.freeCaptainsPerTeam (default 1); Club Participation Agreement §1 (one complimentary captain registration per team) */}
+
+## Substitutes
+
+Joining the sub pool is free. A sub pays a sub registration fee for a division only when they first play there:
+
+1. A captain asks you to sub, and you say yes.
+2. You pay that division's sub fee.
+3. Your spot is confirmed, and the captain can put you in the lineup.
+
+The fee covers a set number of matches in that division. To play more, you join a roster, and the sub fee you paid comes off your registration fee. If the league cancels the match you paid for and you have nothing else in that division, you get the fee back.
+
+The sub registration fee doesn't cover courts. Subs pay a court share for each match they play, like everyone else. {/* src: docs/adr/0058-substitute-activation-per-division.md (pay at first confirmed placement; credit toward registration; refund on cancellation); Ruleset.subActivationFeeCents, maxSubAppearancesPerTeam, subActivationCreditsRegistration; decision, Larry 2 Nov 2026 */}
+
+## Court shares
+
+Clubs charge for their courts on match day. Your team's share is split evenly among the players on court, so you pay only for matches you play. The fee is charged to your saved card, or you get a pay link. See [Pay a court fee and see what you’ve paid](/players/pay-court-fees-and-see-payments). {/* src: Ruleset.matchFeeSplit (EVEN_SPLIT), courtFeesInApp; src/lib/court-fees/; Club Partnership Deck ("Players pay for the pickleball they play") */}
+
+Some clubs add a card processing charge. If they do, you see it on the pay page before you pay. {/* src: src/app/pay/court-fee/[token]/page.tsx (Card processing line) */}
+
+An unpaid court fee that goes overdue has to be paid before you can register for another season. {/* src: src/lib/rules/rules/registration.ts (COURT_FEE_UNPAID) */}
+
+## Refunds
+
+Registration fees follow the [Refund Policy](https://app.clubcircuitpb.com/legal/refunds). In short, you get a refund if we can't place you on a team, or if your division doesn't go ahead. Fees you pay a club directly follow that club's own policy. {/* src: Terms of Use §12; Refund Policy */}
+
+## Related
+
+- [Register for a season](/players/register-for-a-season)
+- [Sign up to sub for other teams](/players/sign-up-to-sub)
+
+{/* Last verified: 2026-11-02 against leagues-app bb4f3b5 and the Club Partnership Deck */}
