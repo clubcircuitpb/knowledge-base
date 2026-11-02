@@ -1,0 +1,98 @@
+---
+title: "Report a conduct problem"
+sidebarTitle: "Report a conduct problem"
+description: "Open the match, scroll to Conduct and tap Report a conduct problem. Say what happened, then tap Send to the league office. Only the league office sees your report."
+keywords: ["report", "conduct", "behavior", "behaviour", "sportsmanship", "unsportsmanlike", "harassment", "incident", "complaint", "report a player", "code of conduct"]
+---
+
+To report a conduct problem at a match you played in, open the match, scroll to **Conduct** and tap **Report a conduct problem**. Say what happened, then tap **Send to the league office**. Only the league office sees your report.
+
+{/* src: leagues-app src/app/match/[matchId]/conduct-section.tsx:30-48; src/app/match/[matchId]/report-conduct/report-form.tsx:86-88 */}
+
+**Before you begin**
+
+- You need to have been a player on either team in that match, and be signed in.
+- You can report from the match's start until a time set by your season's rules. The **Conduct** section says until when. After that, email [support@clubcircuitpb.com](mailto:support@clubcircuitpb.com).
+- This is for behaviour that broke the [code of conduct](/rules/policies/code-of-conduct). For a wrong score, your captain disputes the result instead.
+
+{/* src: src/app/match/[matchId]/report-conduct/page.tsx:17-20,52-58,73-76; src/lib/incidents/window.ts:4-14 (Ruleset.incidentReportWindowHours, from scheduled start); src/app/match/[matchId]/conduct-section.tsx:41-45 */}
+
+## Send a report
+
+<Steps>
+  <Step title="Open the match">
+    Open the match from **Home** or **Schedule**.
+    {/* src: src/app/match/[matchId]/page.tsx */}
+  </Step>
+  <Step title="Find Conduct">
+    Scroll down to **Conduct**, then tap **Report a conduct problem**.
+    {/* src: src/app/match/[matchId]/conduct-section.tsx:31-48; src/app/match/[matchId]/page.tsx (not shown on the Scores tab) */}
+  </Step>
+  <Step title="Say what happened">
+    In **What happened**, say who, what and when. Stick to what you saw and heard.
+    {/* src: src/app/match/[matchId]/report-conduct/report-form.tsx:34-38 */}
+  </Step>
+  <Step title="Add who, and where, if you know">
+    If you can, pick the player in **Who it’s about (optional)**, and the **Round (optional)** and **Court (optional)**. Leave them as **Not sure** if you don't know.
+    {/* src: src/app/match/[matchId]/report-conduct/report-form.tsx:40-84 */}
+  </Step>
+  <Step title="Send it">
+    Tap **Send to the league office**.
+    {/* src: src/app/match/[matchId]/report-conduct/report-form.tsx:86-88 */}
+  </Step>
+</Steps>
+
+**Result:** You're back on the match page. It says your report is with the league office, and only they can see it. They may contact you if they need more. {/* src: src/app/match/[matchId]/report-conduct/actions.ts:38-44 */}
+
+## Who sees your report
+
+Only the league office. The captains, the clubs and the player it's about don't see it, and it doesn't change the result of the match. {/* src: src/app/match/[matchId]/report-conduct/page.tsx:69-77 */}
+
+## Check on your report
+
+Open the match and scroll to **Conduct**. Under **Your reports**, each report shows when you sent it and its status:
+
+- **Sent to the league office**
+- **Reviewed by the league office**
+- **Closed by the league office**
+
+{/* src: src/app/match/[matchId]/conduct-section.tsx:59-70; src/lib/incidents/reports.ts:319-323 (REPORTER_STATUS_LABEL; the office's note is never shown) */}
+
+For what happens next, see [What happens after a report?](/rules/policies/code-of-conduct) in the code of conduct.
+
+## Why isn't this working?
+
+### I don't see Conduct on the match page
+**Cause:** Only players on either team in that match see it. It also doesn't show before the match starts, on the **Scores** tab, or for a cancelled match or a bye.
+**Fix:** Sign in with your own account and open the match's main page. If you weren't playing, email [support@clubcircuitpb.com](mailto:support@clubcircuitpb.com). {/* src: src/app/match/[matchId]/page.tsx (requireMatchPlayer; tab !== 'scores'); src/app/match/[matchId]/conduct-section.tsx:27; src/lib/incidents/window.ts:46-48 */}
+
+### "Only players on either team in this match can report from here."
+**Cause:** You weren't a player in that match, or you're signed in with a different account.
+**Fix:** If you saw something there, email [support@clubcircuitpb.com](mailto:support@clubcircuitpb.com). {/* src: src/app/match/[matchId]/report-conduct/page.tsx:52-58 */}
+
+### "Reporting from the app closed …"
+**Cause:** The time your season's rules allow for reporting from the app has passed.
+**Fix:** Email [support@clubcircuitpb.com](mailto:support@clubcircuitpb.com) with the match, what happened and who was there. {/* src: src/app/match/[matchId]/conduct-section.tsx:50-57; src/lib/incidents/reports.ts:87 */}
+
+### "You can report a conduct problem here once the match has started."
+**Cause:** The match hasn't started yet.
+**Fix:** Come back once it has. {/* src: src/lib/incidents/reports.ts:83 */}
+
+### "Tell the league office what happened."
+**Cause:** **What happened** was empty.
+**Fix:** Write a few sentences: who, what and when. Then tap **Send to the league office** again. What you picked stays filled in. {/* src: src/lib/incidents/reports.ts:223; src/app/match/[matchId]/report-conduct/report-form.tsx:16-23 */}
+
+### "Keep it under … characters"
+**Cause:** Your report is too long.
+**Fix:** Shorten it to the main points. The league office will ask if they need more. {/* src: src/lib/incidents/reports.ts:227-230 */}
+
+### "You’ve sent several conduct reports recently."
+**Cause:** There's a limit on how many reports you can send in a short time.
+**Fix:** To add more, email [support@clubcircuitpb.com](mailto:support@clubcircuitpb.com). {/* src: src/lib/incidents/reports.ts:244-251 (incidentReportPerUser) */}
+
+## Related articles
+
+- [Code of conduct and discipline](/rules/policies/code-of-conduct)
+- [See your next match and which rounds you’re playing](/players/see-your-matches-and-rounds)
+
+{/* Last verified: 2026-11-02 against leagues-app 36d0f59 */}

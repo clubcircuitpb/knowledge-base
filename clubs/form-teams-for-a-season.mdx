@@ -7,7 +7,7 @@ keywords: ["team builder", "form teams", "place players", "add a team", "roster"
 
 To form your teams, open **Club HQ** > **Registrations** and tap **Team builder**. Add a team for each division you're playing in, then tap a player under **Players to place** and tap **Place here** on their team. When a team has enough players to field a match, tap **Confirm team**.
 
-{/* src: leagues-app src/app/club/[slug]/admin/formation/page.tsx:157; src/app/club/[slug]/admin/teams/page.tsx:203; team-builder.tsx:85,146,552 */}
+{/* src: leagues-app src/app/club/[slug]/admin/formation/page.tsx:158; src/app/club/[slug]/admin/teams/page.tsx:206-212; team-builder.tsx:96,147,165,600 */}
 
 **Before you begin**
 
@@ -22,51 +22,65 @@ To form your teams, open **Club HQ** > **Registrations** and tap **Team builder*
 <Steps>
   <Step title="Open the Team builder">
     In **Club HQ**, tap **Registrations**, then **Team builder**.
-    {/* src: club-hq.ts:26; formation/page.tsx:157 */}
+    {/* src: club-hq.ts:26; formation/page.tsx:158 */}
   </Step>
   <Step title="Add a team">
     Tap **Add a team**, choose the **Division**, and tap **Add team**. Leave **Team name (optional)** blank to name it after your club and the division.
-    {/* src: teams/page.tsx:203; add-team-form.tsx:63-102 */}
+    {/* src: teams/page.tsx:206-212; add-team-form.tsx:63-102 */}
   </Step>
   <Step title="Pick a player">
     Under **Players to place**, tap the player you want to place.
-    {/* src: team-builder.tsx:146 */}
+    {/* src: team-builder.tsx:165,290-317 */}
   </Step>
   <Step title="Place them on a team">
-    Tap **Place here** on the team they should play for.
-    {/* src: team-builder.tsx:85,128,441 */}
+    Tap **Place here** on the team they should play for. On a team card, the button shows their first name: **Place … here**.
+    {/* src: team-builder.tsx:147,473-480 */}
   </Step>
   <Step title="Confirm the team">
     When the team shows **Can field**, tap **Confirm team…**, then **Confirm team**.
-    {/* src: team-builder.tsx:428,552,590 */}
+    {/* src: team-builder.tsx:461,600,638 */}
   </Step>
 </Steps>
 
-**Result:** Each player you place gets an email saying which team they're on. A confirmed team is entered in its division and counts toward the division running. {/* src: team-builder.tsx:47,574-575; registry PLAYER_PLACED_ON_TEAM */}
+**Result:** Each player you place gets an email saying which team they're on. A confirmed team is entered in its division and counts toward the division running. {/* src: team-builder.tsx:58,622-623; registry PLAYER_PLACED_ON_TEAM */}
 
 <Warning>
-  After you confirm a team, roster changes go through the league office. Confirm a team only when you're happy with it. {/* src: team-builder.tsx:519,574-575 */}
+  After you confirm a team, its roster changes go through the league office. You can't place players on it, or move or take anyone off it, from Club HQ. You can still rename it. Confirm a team only when you're happy with it. {/* src: team-builder.tsx:49-52,122-128,467-470,526-547,566-568; src/lib/club/admin.ts:271,396; docs/adr/0082-club-roster-moves-tryouts-and-reschedule-requests.md (decision 3) */}
 </Warning>
 
 ## Let ClubCircuit suggest a start
 
-Under **Want a head start?**, ClubCircuit suggests a lineup of teams, strongest players first, filled to what each team needs. Tap **Accept** to place them all and email each one, or ignore it and place people yourself. {/* src: src/app/club/[slug]/admin/teams/page.tsx:277-329 */}
+Under **Want a head start?**, ClubCircuit suggests who fills your short teams, strongest players first, filled to what each team needs. On a team, tap **Accept — place … on** that team to place them all and email each one, or ignore it and place people yourself. {/* src: src/app/club/[slug]/admin/teams/page.tsx:278-356; src/lib/club/propose-teams.ts:78 (skips teams that can field or are confirmed) */}
 
 ## Players you can't place yet
 
-On a player, open the **⋯** menu:
+On a player under **Players to place**, open the **⋯** menu:
 
 - **Put on your waitlist** emails them that there's no spot yet. You can still place them later.
 - **Suggest they sub instead** emails them a link to sign up as a sub.
-- **Take off this team** sends a placed player back to **Players to place**. Nobody is emailed.
 
-{/* src: team-builder.tsx:295-307,490-491 */}
+{/* src: team-builder.tsx:318-341 */}
+
+## Players invited to a tryout
+
+On your **Registrations** page, under **Tryouts**, you can invite players you haven't placed yet. We email them when and where. They stay in **Players to place**, marked **Invited to tryout** or **Came to tryout** with the tryout's name, until you place them. {/* src: formation/page.tsx:409-414,667-687; team-builder.tsx:311-316; src/lib/formation/tryouts.ts (TRYOUT_INVITATION email); docs/adr/0082 (decisions 1, 2) */}
+
+## Move a player or rename a team
+
+On a placed player, open the **⋯** menu:
+
+- **Move to another team** puts them straight onto another of your teams this season, and emails them their new team. A confirmed team is listed, but you can't choose it.
+- **Take off this team** sends them back to **Players to place**. Nobody is emailed.
+
+To rename a team, open the **⋯** menu on the team's card and tap **Rename team**. Enter the **Team name** and tap **Save name**. No two teams in a division can share a name.
+
+{/* src: team-builder.tsx:512-547,652-727 (MoveToTeam), 729-806 (RenameTeam); src/lib/club/teams.ts:245-264; docs/adr/0082 (decisions 4, 5) */}
 
 ## Why isn't this working?
 
 ### "Your club isn’t entered in … yet, so you can’t add teams to it."
 **Cause:** Your club hasn't entered this season.
-**Fix:** On **Club HQ**, accept the league's invitation, or tap **Tell the league we’re in**. {/* src: teams/page.tsx:218-223; src/app/club/[slug]/admin/page.tsx:119 */}
+**Fix:** On **Club HQ**, accept the league's invitation, or tap **Tell the league we’re in**. {/* src: teams/page.tsx:222-232; src/app/club/[slug]/admin/page.tsx:141 */}
 
 ### "… is full — it's at its …-player cap."
 **Cause:** The team has as many players as your league allows.
@@ -78,19 +92,23 @@ On a player, open the **⋯** menu:
 
 ### The Confirm button says "Confirm when it can field"
 **Cause:** The team doesn't have enough men or women to field a match yet.
-**Fix:** Place more players until the team shows **Can field**. {/* src: team-builder.tsx:552; src/lib/club/capacity.ts:85-92 */}
+**Fix:** Place more players until the team shows **Can field**. {/* src: team-builder.tsx:600; src/lib/club/capacity.ts:85-92 */}
 
-### "That team is confirmed with the league. Ask the league office to change its roster."
-**Cause:** You tried to change a confirmed team.
-**Fix:** Email [support@clubcircuitpb.com](mailto:support@clubcircuitpb.com) with the change you need. {/* src: src/lib/club/teams.ts:172 */}
+### "… is confirmed with the league, so its roster changes go through the league office."
+**Cause:** You tried to place a player on a confirmed team, or move someone on or off one. A confirmed team has no **Place here** button.
+**Fix:** Email [support@clubcircuitpb.com](mailto:support@clubcircuitpb.com) with the change you need, or use a team that isn't confirmed yet. {/* src: src/lib/club/placement.ts:28-30; src/lib/club/admin.ts:271,396; team-builder.tsx:122-128,467-470; src/lib/club/teams.ts:172 */}
+
+### "Another team in … is already called “…”. Pick a different name."
+**Cause:** A team in the same division already has that name.
+**Fix:** Choose a different **Team name** and tap **Save name** again. {/* src: src/lib/club/teams.ts:264 */}
 
 ### A player is registered for a different division
 **Cause:** The team builder warns when you place someone on a team outside the division they registered for.
-**Fix:** Check with the player, or place them on a team in their own division. {/* src: team-builder.tsx:125,445 */}
+**Fix:** Check with the player, or place them on a team in their own division. {/* src: team-builder.tsx:144,481-485 */}
 
 ## Related articles
 
 - [Assign a captain to each team](/clubs/assign-team-captains)
 - [Invite your players and captains to register](/clubs/invite-players-to-register)
 
-{/* Last verified: 2026-11-02 against leagues-app bb4f3b5 */}
+{/* Last verified: 2026-11-02 against leagues-app ba29829 */}

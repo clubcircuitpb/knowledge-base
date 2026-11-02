@@ -51,9 +51,13 @@ To see your next match, open **Home**. The **Next match** card shows when and wh
 
 On the match page, open the **Lineups** tab. Choose **By round** to see every court in each round, or **By player** to see each teammate's rounds and partners. You see the other team's lineup once the league's rules for your season allow it, and everyone sees both lineups once the match starts. {/* src: src/app/match/[matchId]/page.tsx:608-609,668; src/lib/lineup/reveal.ts:34-47 (Ruleset.revealPolicy) */}
 
+## Check whether the match counts toward DUPR
+
+In seasons that use DUPR, the match page says **Counts toward DUPR** when both teams opted in before the match. Otherwise it says **Doesn’t count toward DUPR**, and why. See [Do our games count toward DUPR?](/rules/rally-21/scores-and-standings). {/* src: src/app/match/[matchId]/page.tsx (dupr-count); src/lib/dupr/opt-in-rules.ts:95-110 */}
+
 ## See all your matches
 
-Tap **Schedule**. With **Your team** selected, you see each of your team's matches with its date, opponent, venue and, after it's played, the result. Times are in your league's local time. Open a match to see its lineups, scores and your rounds. {/* src: src/lib/nav/play.ts:106; src/app/[market]/[season]/schedule/page.tsx:94,106,194-210 */}
+On **Home**, under **Coming up**, tap **All your matches**, or tap **Add to my calendar** to subscribe to them. You can also tap **Schedule**. With **Your team** selected, you see each of your team's matches with its date, opponent, venue and, after it's played, the result. Times are in your league's local time. Open a match to see its lineups, scores and your rounds. {/* src: src/app/home/page.tsx:430-436; src/lib/nav/play.ts:65; src/app/[market]/[season]/schedule/page.tsx */}
 
 ## Why isn't this working?
 
@@ -89,5 +93,6 @@ Tap **Schedule**. With **Your team** selected, you see each of your team's match
 
 - [Tell your captain whether you can play](/players/set-your-availability)
 - [Sign in to ClubCircuit](/players/sign-in)
+- [Report a conduct problem](/players/report-a-conduct-problem)
 
-{/* Last verified: 2026-11-01 against leagues-app 5b16e55 */}
+{/* Last verified: 2026-11-02 against leagues-app 36d0f59 */}

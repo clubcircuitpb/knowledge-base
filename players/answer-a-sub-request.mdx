@@ -13,9 +13,9 @@ To answer a request to sub, tap **Accept the spot** or **Can’t this time** in 
 
 - You need to be signed up to sub. See [Sign up to sub for other teams](/players/sign-up-to-sub).
 - To accept, sign in with the **same email address the request was sent to**. A request is for one player only.
-- Answer quickly. Requests close when the match starts, or as soon as someone else accepts.
+- Answer quickly. Requests close when the match starts, as soon as someone else accepts, or if the captain cancels the request.
 
-{/* src: src/app/s/[token]/page.tsx:85-91 (must be signed in as the offered player); src/lib/subs/offer.ts:124,183-218; src/app/s/[token]/page.tsx:47-48 */}
+{/* src: src/app/s/[token]/page.tsx:85-91 (must be signed in as the offered player); src/lib/subs/offer.ts:124,183-218; src/app/s/[token]/page.tsx:45-49; src/lib/subs/request.ts:181-211 */}
 
 ## Accept from the email
 
@@ -40,9 +40,17 @@ To answer a request to sub, tap **Accept the spot** or **Can’t this time** in 
 
 **Result:** The page says you've been added to the team for this match and your captain has been told. You're marked as available for that match, and your captain puts you into rounds when they build the lineup. {/* src: src/app/s/[token]/offer-responder.tsx:25; src/lib/subs/offer.ts:221-248,283-301 */}
 
+## After the match
+
+You're on that team's roster just for the match you accepted. Once that match is settled, you leave the roster. Your results and history from it stay on your record, and you're back in the pool for future requests. {/* src: src/lib/subs/expire.ts:62-68 (A7: SUB membership ends once every accepted match is settled; history kept) */}
+
+## If the captain cancels the request
+
+If the team no longer needs a sub, the captain can cancel the request. We email you with the subject **"… doesn’t need a sub after all"**, with the team's name, and you get a notice in the app. The offer link stops working. Nothing else to do. {/* src: src/lib/subs/request.ts:181-237; src/emails/registry.tsx:622-629 (SUB_REQUEST_CANCELLED); src/lib/notifications/inbox.ts:97-98 */}
+
 ## Accept or decline in the app
 
-Open the account menu and select **Subbing**, or tap **See the offer** on your **Home** page. Under **Open requests you fit**, tap **I can play** or **Not this one**. {/* src: src/components/shell/account-control.tsx (Subbing row); src/lib/play/needs-you.ts:169-171; src/app/subs/page.tsx:101; offer-responder.tsx:61,69 */}
+Open the account menu and select **Subbing**, or tap **See the offer** on your **Home** page. Under **Open requests you fit**, tap **I can play** or **Not this one**. {/* src: src/lib/nav/personal-rows.ts:23 (Subbing row); src/lib/play/needs-you.ts:169-171; src/app/subs/page.tsx:101; offer-responder.tsx:61,69 */}
 
 ## Decline from the email
 
@@ -83,13 +91,17 @@ The spot isn't held while you pay. If someone else accepts first, your activatio
 **Cause:** The division charges a sub activation, but online payment isn't switched on yet.
 **Fix:** Email [support@clubcircuitpb.com](mailto:support@clubcircuitpb.com) and say which match the request was for. {/* src: src/lib/subs/offer.ts:162,174 */}
 
+### "Already answered"
+**Cause:** You already declined, or the offer is no longer open: someone else took the spot, or the captain cancelled the request.
+**Fix:** Tap **Back to your sub list** to see the requests that are still open for you. {/* src: src/app/s/[token]/page.tsx:64-74 */}
+
 ### "Offer not found"
-**Cause:** The link was cut off or mistyped, or the captain withdrew the request.
-**Fix:** Open **Subbing** in the app to see the requests that are still open for you. {/* src: src/app/s/[token]/page.tsx:36-37 */}
+**Cause:** The link was cut off or mistyped, or the request was withdrawn.
+**Fix:** Open **Subbing** in the app to see the requests that are still open for you. {/* src: src/app/s/[token]/page.tsx:34-38 */}
 
 ## Related articles
 
 - [Sign up to sub for other teams](/players/sign-up-to-sub)
 - [See your next match and which rounds you’re playing](/players/see-your-matches-and-rounds)
 
-{/* Last verified: 2026-11-01 against leagues-app 5873526 */}
+{/* Last verified: 2026-11-02 against leagues-app 36d0f59 */}

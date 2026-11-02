@@ -1,86 +1,148 @@
 ---
 title: "Pay a court fee and see what you’ve paid"
 sidebarTitle: "Pay court fees"
-description: "Save a card under Payments and court fees are paid automatically. Without one, tap the pay link we email you, or open Payments and tap Pay. Every fee and its status is listed there."
-keywords: ["court fee", "court fees", "pay", "payment", "payments", "card", "receipt", "overdue", "refund", "Stripe"]
+description: "Open Payments from your account menu. Save a card and court fees are paid automatically; without one, tap the pay link we email you, or tap Pay on Payments. Tap Receipt next to a paid fee to see its receipt."
+keywords: ["court fee", "court fees", "pay", "payment", "payments", "card", "receipt", "overdue", "refund", "waived", "Stripe", "registration payment"]
 ---
 
-Some clubs charge a court fee when you play on their courts. To pay court fees automatically, open **Payments** from **Your account** and tap **Save a card**. Without a saved card, we email you a pay link, or you can open **Payments** and tap **Pay** next to the fee.
+Some clubs charge a court fee when you play on their courts. To pay court fees automatically, open your account menu, tap **Payments** and tap **Save a card**. Without a saved card, we email you a pay link, or you can open **Payments** and tap **Pay** for the fee. Next to each paid fee, tap **Receipt** to see what you paid.
 
-{/* src: leagues-app src/app/me/page.tsx:298; src/app/me/payments/page.tsx:32,80-90,99-101 */}
+{/* src: leagues-app src/lib/nav/personal-rows.ts:24; src/app/me/payments/page.tsx:100-110,131,237-244 */}
 
 **Before you begin**
 
 - Only clubs that collect their court fee through ClubCircuit charge you here.
 - Your card is kept by Stripe. ClubCircuit never sees the number.
 
-{/* src: src/app/me/payments/page.tsx:97,103,111 */}
+{/* src: src/app/me/payments/page.tsx:121,144 */}
+
+## Who pays a court fee
+
+You pay only if you're on court. Your league sets when the fee is charged:
+
+- **When the lineups lock:** you're charged if your captain's posted lineup puts you in at least one round. If you're on the bench, only said you're available, or your captain hasn't posted the lineup, you aren't charged.
+- **After the match:** you're charged only if you played.
+
+If you don't have a card saved and a fee is coming, **Home** shows **A court fee is coming**. It starts "You pay only if you’re in the lineup", or "You pay only if you play" when the fee is charged after the match. Tap **Save a card** to save one. {/* src: src/lib/court-fees/run.ts:120-143 (Ruleset.courtFeeChargeAt; posted lineup, at least one game); src/lib/play/needs-you.ts:158-171 */}
 
 ## Save a card for court fees
 
 <Steps>
-  <Step title="Open Your account">
-    Open your account menu and tap **Account**.
-    {/* src: src/components/shell/account-menu.tsx:143-146 */}
-  </Step>
   <Step title="Open Payments">
-    Tap **Payments**.
-    {/* src: src/app/me/page.tsx:298 */}
+    Open your account menu and tap **Payments**. On a phone, tap your initials at the top of the screen first. You can also find it on **Your account**, under **Settings**.
+    {/* src: src/lib/nav/personal-rows.ts:24; src/components/shell/play-chrome.tsx:386; src/app/me/page.tsx:308 */}
   </Step>
   <Step title="Save a card">
     Under **Card for court fees**, tap **Save a card**.
-    {/* src: payments/page.tsx:92,107 */}
+    {/* src: src/app/me/payments/page.tsx:114-131 */}
   </Step>
   <Step title="Enter your card with Stripe">
     Enter your card on the Stripe page that opens, and confirm. You come back to **Payments** when you're done.
-    {/* src: src/app/me/payments/actions.ts:23 */}
+    {/* src: src/app/me/payments/actions.ts */}
   </Step>
 </Steps>
 
-**Result:** Your card shows under **Card for court fees**. When you play at a club that collects through ClubCircuit, its fee is charged to this card and you get a receipt. {/* src: payments/page.tsx:95-97 */}
+**Result:** You see **Card saved.** and your card shows under **Card for court fees**. If you don't see it yet, refresh after a few seconds. Any fee that was waiting for a card is tried again. When you play at a club that collects through ClubCircuit, its fee is charged to this card and you get a receipt. {/* src: src/lib/court-fees/card-notice.ts:6; src/app/me/payments/page.tsx:118-121 */}
 
 ## Pay a fee yourself
 
-If you have a fee to pay, **Payments** shows **A court fee to pay** with a **Pay** button for each one, showing the amount, the club and the date. Tap it, check the amount, then tap **Pay** on the next page. You can also tap the pay link in the email we send you. {/* src: payments/page.tsx:70,78-82; src/app/pay/court-fee/[token]/page.tsx:73,96-98 */}
+<Steps>
+  <Step title="Open the fee">
+    On **Payments**, under **A court fee to pay**, tap the **Pay** button for the fee. It shows the amount, the club and the date. Or tap the pay link in the email we sent you.
+    {/* src: src/app/me/payments/page.tsx:88-110 */}
+  </Step>
+  <Step title="Check the amount">
+    Check the court fee and the **Total**.
+    {/* src: src/app/pay/court-fee/[token]/page.tsx:42-63 */}
+  </Step>
+  <Step title="Pay with Stripe">
+    Under **Pay now**, tap **Pay** with the amount, and pay on the Stripe page that opens.
+    {/* src: src/app/pay/court-fee/[token]/page.tsx:99-114 */}
+  </Step>
+</Steps>
+
+**Result:** You see **Paid — thank you.** Your receipt is in your email and on **Payments**. {/* src: src/app/pay/court-fee/[token]/page.tsx:74-81 */}
+
+If your saved card is already being charged for that fee, the pay page says so instead of offering **Pay now**, so you can't pay twice. {/* src: src/app/pay/court-fee/[token]/page.tsx:82-89; src/lib/court-fees/pay.ts:15-16,101-103 */}
+
+## See a receipt
+
+<Steps>
+  <Step title="Find the fee">
+    On **Payments**, find the fee under **Court fees**. Fees are listed a page at a time, so go to the next page for older ones.
+    {/* src: src/app/me/payments/page.tsx:147-195 */}
+  </Step>
+  <Step title="Tap Receipt">
+    Next to a fee marked **Paid**, tap **Receipt**.
+    {/* src: src/app/me/payments/page.tsx:174,237-244 */}
+  </Step>
+</Steps>
+
+**Result:** You see **Court fee receipt**, with the court fee, **Total paid**, any amount **Refunded to your card**, **Paid on** and a **Reference**. For card payments, tap **Stripe’s receipt for this card payment** for Stripe's copy. Tap **Back to Payments** to go back. {/* src: src/app/me/payments/receipts/[chargeId]/page.tsx:39-79 */}
+
+## Registration payments
+
+Below your court fees, **Registration payments** lists what you paid to register for each season, and any refund. {/* src: src/app/me/payments/page.tsx:200-230 */}
 
 ## Pay on time
 
-Each season sets how long you have to pay. An overdue fee has to be paid before you can register for a new season. Some seasons also stop captains placing you in a lineup until it's paid. Check your season's rules in the app for the grace period and whether lineups are affected. {/* src: src/lib/rules/rules/registration.ts:39 (COURT_FEE_UNPAID); src/lib/lineup/workspace.ts:147 (Ruleset.courtFeeUnpaidBlocksLineup); src/lib/rules/rules/lineup.ts:251-260; Ruleset.courtFeeGraceDays */}
+Each season sets how long you have to pay a court fee. An overdue fee has to be paid before you can register for a new season. Some seasons also stop captains placing you in a lineup until it's paid. When your season does, **Payments** and the pay page say so. Check your season's rules in the app for the details. {/* src: src/app/me/payments/page.tsx:68-98; src/app/pay/court-fee/[token]/page.tsx:104-107; src/lib/rules/rules/registration.ts (COURT_FEE_UNPAID); Ruleset.courtFeeUnpaidBlocksLineup */}
 
 ## What each status means
 
 - **Charging:** Your saved card is being charged.
-- **Paid:** Done. Your receipt is in your email.
+- **Paid:** Done. Tap **Receipt** to see it.
+- **Partly refunded:** You paid, and part of it went back to your card. The amount refunded shows next to it.
 - **To pay:** You owe this fee. Pay it before the grace period ends.
 - **Overdue:** Past the grace period. Pay it as soon as you can.
 - **Waived:** You don't owe this fee.
 - **Refunded:** Your money was returned.
 
-{/* src: payments/page.tsx:5-11 (STATUS) */}
+We email you when a fee is refunded, or when the league office waives one. A waived fee's pay link stops working. {/* src: src/app/me/payments/page.tsx:24-37; src/emails/registry.tsx:2102-2145 (COURT_FEE_REFUNDED, COURT_FEE_WAIVED) */}
 
 ## Why isn't this working?
 
+### "Card not saved — nothing changed."
+**Cause:** You left Stripe's page before saving the card.
+**Fix:** Tap **Save a card** again and finish on Stripe's page. If you already had a card saved, it stays as it was. {/* src: src/lib/court-fees/card-notice.ts:8 */}
+
+### "Your saved card is being charged for this court fee right now."
+**Cause:** Your saved card is already paying this fee, so you can't pay it a second time.
+**Fix:** Check **Payments** in a few minutes. If the card doesn't go through, we email you a link to pay. {/* src: src/lib/court-fees/pay.ts:101-103 */}
+
 ### My card was declined
 **Cause:** Your bank turned the charge down. The reason shows under the fee's status.
-**Fix:** Tap **Replace card** to save a different card, or tap **Pay** next to the fee and pay with another card. {/* src: payments/page.tsx:90,138 (lastError) */}
+**Fix:** Tap **Replace card** to save a different card, or tap **Pay** for the fee and pay with another card. {/* src: src/app/me/payments/page.tsx:131,170,184 (lastError) */}
 
 ### "Thanks — Stripe has your payment and we’re waiting on confirmation"
 **Cause:** Stripe is still confirming your payment. This usually takes a few seconds.
-**Fix:** Refresh the page in a moment. Your receipt arrives by email. {/* src: pay/court-fee/[token]/page.tsx:82-84 */}
+**Fix:** Refresh the page in a moment. Your receipt arrives by email. {/* src: src/app/pay/court-fee/[token]/page.tsx:94-97 */}
 
 ### "There’s nothing to pay on this court fee."
-**Cause:** The fee was already paid, waived or cancelled.
-**Fix:** Nothing to do. Check **Payments** to see its status. {/* src: pay/court-fee/[token]/page.tsx:77-80 */}
+**Cause:** The fee was waived or refunded.
+**Fix:** Nothing to do. Check **Payments** to see its status. {/* src: src/lib/court-fees/pay.ts:100; src/app/pay/court-fee/[token]/page.tsx:90-93 */}
+
+### "That pay link isn’t valid."
+**Cause:** The link was cut short, or it's from an old email.
+**Fix:** Open the latest court-fee email, or open **Payments** from your account menu. {/* src: src/lib/court-fees/pay.ts:98 */}
+
+### I don't see Receipt next to a fee
+**Cause:** Only paid fees have a receipt.
+**Fix:** If the fee says **To pay** or **Overdue**, pay it first. {/* src: src/app/me/payments/page.tsx:237-238 */}
 
 ### I want to stop automatic charges
-**Fix:** On **Payments**, tap **Remove card**. You'll get a pay link by email for each new fee instead. {/* src: payments/page.tsx:99-101,110-114 */}
+**Fix:** On **Payments**, tap **Remove card**. You'll get a pay link by email for each new fee instead. {/* src: src/app/me/payments/page.tsx:133-139; src/lib/court-fees/card-notice.ts:7 */}
+
+### I was charged but I didn't play
+**Cause:** When your league charges at lineup lock, the fee is charged once the lineups lock, if your captain's posted lineup had you in at least one round. That's before anyone plays.
+**Fix:** If you were taken out of the lineup or didn't play, email [support@clubcircuitpb.com](mailto:support@clubcircuitpb.com) with the club, the date of the match and the receipt's **Reference**. {/* src: src/lib/court-fees/run.ts:120-143 */}
 
 ### I think I was charged twice or charged by mistake
-**Fix:** Email [support@clubcircuitpb.com](mailto:support@clubcircuitpb.com) with the club and the date of the match.
+**Fix:** Email [support@clubcircuitpb.com](mailto:support@clubcircuitpb.com) with the club, the date of the match and the receipt's **Reference**.
 
 ## Related articles
 
 - [Register for a season](/players/register-for-a-season)
 - [Download your data or delete your account](/players/export-or-delete-your-data)
 
-{/* Last verified: 2026-11-02 against leagues-app bb4f3b5 */}
+{/* Last verified: 2 November 2026 against leagues-app 346f7a4 */}

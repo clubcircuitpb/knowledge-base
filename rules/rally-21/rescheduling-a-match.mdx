@@ -1,11 +1,11 @@
 ---
 title: "Rescheduling a match"
 sidebarTitle: "Rescheduling a match"
-description: "Find a sub before asking to reschedule. Each team gets one automatic reschedule a season if it asks more than 3 weeks ahead."
-keywords: ["reschedule", "move a match", "postpone", "new date", "weather", "court closed"]
+description: "Find a sub before asking to reschedule. Each team gets one automatic reschedule a season if it asks 3 weeks or more ahead."
+keywords: ["reschedule", "move a match", "postpone", "new date", "weather", "court closed", "counter-offer", "playoff reschedule"]
 ---
 
-**The short version:** find a sub before asking to reschedule. Each team gets one automatic reschedule a season if it asks more than 3 weeks ahead. Asking later can mean paying for unused court time and being put on probation.
+**The short version:** find a sub before asking to reschedule. Each team gets one automatic reschedule a season if it asks 3 weeks or more ahead. Asking later can mean paying for unused court time and being put on probation.
 
 ## Should we reschedule or find a sub?
 
@@ -17,13 +17,17 @@ It depends on how far ahead you ask.
 
 | How far ahead | What happens |
 | --- | --- |
-| More than 3 weeks | Your team's first request of the season is approved automatically once the other captain picks a date. A second request needs ClubCircuit's approval. After that, contact ClubCircuit. |
-| 1 to 3 weeks | May be approved. Your team covers any court time the host club can't rebook. |
+| 3 weeks or more | Your team's first request of the season is approved automatically once the other captain picks a date. A second request needs ClubCircuit's approval. After that, contact ClubCircuit. |
+| 1 week to under 3 weeks | May be approved. Your team covers any court time the host club can't rebook. |
 | Less than 1 week | Same as above, and your team goes on probation. A second request this late in a season may lead to removal from the league. |
 
 ## How do we pick a new date?
 
-When your captain asks to reschedule in ClubCircuit, they offer three dates and times. The other team's captain picks one, or offers their own dates instead. If no date works for both teams, your team plays at the original time or forfeits the match.
+When your captain asks to reschedule in ClubCircuit, they offer three dates and times. Each one has to be a time the host club has offered for its courts. The other team's captain picks one. To offer their own dates instead, they decline the request, then propose their own. If no date works for both teams, your team plays at the original time or forfeits the match.
+
+A match can have only one open request at a time. If the other team's counter-proposal is accepted, it counts as that team's reschedule, not yours.
+
+{/* src: leagues-app src/lib/reschedule/flow.ts (proposeReschedule: checkHostCourts, openRequestRefusal; respondToReschedule: "Declined. Counter with dates that work for you if you can."; usedThisSeason counts the proposing team's granted requests); src/lib/reschedule/courts.ts; Ruleset.rescheduleAlternativeDatesRequired (default 3) */}
 
 Rescheduled matches must be played before the regular season ends in week 7, unless ClubCircuit approves otherwise.
 
@@ -31,6 +35,12 @@ Rescheduled matches must be played before the regular season ends in week 7, unl
 
 If a host club closes its courts, or ClubCircuit cancels a match for weather or safety, ClubCircuit reschedules it. It doesn't count as either team's request.
 
-{/* src: Larry's rulebook "ClubCircuit Rulebook — Inaugural Winter Season", tab "Rescheduling a match" (Claude Docs 12b29ca1-72ad-4549-83c4-cc3dc1f3d58f) */}
+## Can a playoff match be rescheduled?
 
-{/* Last verified: 2026-11-02 against the rulebook as of 2 Nov 2026 */}
+A semifinal can be, if both captains agree and ClubCircuit approves. ClubCircuit approves every playoff move, and the new date has to be before the final. The final's date is fixed. See [Playoffs](/rules/rally-21/playoffs#can-a-playoff-match-be-rescheduled).
+
+{/* src: src/lib/reschedule/policy.ts (playoff rules: approvalRoute LEAGUE, completionDeadline before the final, CHAMPIONSHIP refused); rr-rally-21 preset playoffReschedulesAllowed: true */}
+
+{/* src: Larry's rulebook "ClubCircuit Rulebook — Inaugural Winter Season", tab "Rescheduling a match" (Claude Docs 12b29ca1-72ad-4549-83c4-cc3dc1f3d58f); leagues-app src/lib/reschedule/policy.ts (approvalRoute: AUTO at rescheduleAutoApproveDaysBefore days or more, default 21; court-cost liability inside 21 days, probation flag inside 7); rr-rally-21 preset reschedulesPerTeamPerSeason: 1, reschedulesWithLeagueApproval: 1, rescheduleCompletionDeadline: REGULAR_SEASON_END */}
+
+{/* Last verified: 2 November 2026 against leagues-app 346f7a4 */}

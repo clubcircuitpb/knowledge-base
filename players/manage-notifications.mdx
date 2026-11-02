@@ -1,73 +1,129 @@
 ---
 title: "Choose which notifications you get"
 sidebarTitle: "Manage notifications"
-description: "Open your account menu and tap Notifications. Pick how you get each kind of notification, then tap Save preferences. Set quiet hours and turn on push for this device on the same page."
-keywords: ["notifications", "email", "emails", "push", "alerts", "quiet hours", "unsubscribe", "stop emails", "direct messages", "DMs"]
+description: "Open your account menu and tap Notifications. Pick how you get each kind of notification, then tap Save preferences. Set quiet hours and turn on push for this device on the same page. To stop one kind of email, use the unsubscribe link in its footer."
+keywords: ["notifications", "email", "emails", "push", "alerts", "quiet hours", "unsubscribe", "stop emails", "direct messages", "DMs", "iPhone push"]
 ---
 
-To choose which notifications you get, open your account menu and tap **Notifications**. For each kind of notification, pick how you get it, or switch it off, then tap **Save preferences**. Quiet hours and push notifications are on the same page.
+To choose which notifications you get, open your account menu and tap **Notifications**. For each kind of notification, pick how you get it, or switch it off, then tap **Save preferences**. To stop one kind of email straight from your inbox, tap the unsubscribe link at the bottom of that email.
 
-{/* src: leagues-app src/components/shell/account-control.tsx:127; src/app/me/notifications/page.tsx:96-126 */}
+{/* src: leagues-app src/components/shell/account-control.tsx:127; src/app/me/notifications/page.tsx:56-60,94-145; src/emails/layout.tsx:68-75 */}
 
 **Before you begin**
 
-- Some emails always come, whatever you choose: sign-in links, payment receipts, registration approvals, and news about a division being confirmed or cancelled.
+- Some messages are always sent, whatever you choose. They're listed under **What's always sent** below.
 - The list only shows notifications that apply to you. Captains and club admins see a few more.
 
-{/* src: page.tsx:160-165; src/lib/notifications/categories.ts (categoriesForRoles) */}
+{/* src: src/app/me/notifications/page.tsx:40-41,165-174; src/lib/notifications/categories.ts (categoriesForRoles) */}
 
 ## Choose your notifications
 
 <Steps>
   <Step title="Open Notifications">
     Open your account menu and tap **Notifications**. On a phone, tap your initials at the top of the screen first.
-    {/* src: account-control.tsx:127 */}
+    {/* src: src/components/shell/account-control.tsx:127; src/components/shell/play-chrome.tsx:392 */}
   </Step>
   <Step title="Pick how you get each one">
     For each kind, such as **My matches** or **League news**, choose **In-app and email**, **In-app only**, **Email only** or **Off**. Some are a single box: tick it to get the email.
-    {/* src: page.tsx:96-121; categories.ts */}
+    {/* src: src/app/me/notifications/page.tsx:99-139; src/lib/notifications/categories.ts:16,62 */}
   </Step>
   <Step title="Save">
     Tap **Save preferences**.
-    {/* src: page.tsx:126 */}
+    {/* src: src/app/me/notifications/page.tsx:144 */}
   </Step>
 </Steps>
 
-**Result:** You see **Saved.** at the top of the page. {/* src: page.tsx:60-66 */}
+**Result:** You see **Saved.** at the top of the page. Tap **Back to your account** when you're done. {/* src: src/app/me/notifications/page.tsx:62-68,176-179; actions.ts:64 */}
+
+## Unsubscribe from an email
+
+Every email you can switch off has a link in its footer: **Unsubscribe from “…” emails**, with the kind of notification in the quotes. For example, **Unsubscribe from “My matches” emails**. You don't need to sign in. {/* src: src/emails/layout.tsx:68-75; src/app/unsubscribe/[token]/page.tsx:14-19 */}
+
+<Steps>
+  <Step title="Tap the link in the email">
+    At the bottom of the email, tap **Unsubscribe from “…” emails**. Opening the link doesn't change anything yet.
+    {/* src: src/emails/layout.tsx:72; src/app/unsubscribe/[token]/page.tsx:15-16 */}
+  </Step>
+  <Step title="Confirm">
+    On **Stop “…” emails?**, tap **Unsubscribe**.
+    {/* src: src/app/unsubscribe/[token]/page.tsx:75-82 */}
+  </Step>
+</Steps>
+
+**Result:** You see **You’re unsubscribed**. That stops only the email for that one kind of notification. You still see those notifications in the app, and emails the league can't run without still arrive. To turn the emails back on, tap **Choose what we email you**. {/* src: src/app/unsubscribe/[token]/page.tsx:39-43,59-71,77-79 */}
 
 ## Set quiet hours
 
-Tick **Quiet hours**, set **From** and **Until**, then tap **Save quiet hours**. During those hours only what can't wait, like your lineup or a payment receipt, reaches your phone or inbox. Everything else waits in your ClubCircuit inbox. Times use your device's time zone. {/* src: src/app/me/notifications/quiet-hours-form.tsx:24-48 */}
+Under **Quiet hours**, tick **Quiet hours**, set **From** and **Until**, then tap **Save quiet hours**. During those hours only what can’t wait reaches your phone or email: your lineup, and everything under **Always sent**. Everything else waits in your ClubCircuit inbox. Times are in your device’s time zone. {/* src: src/app/me/notifications/quiet-hours-form.tsx:24-47; actions.ts:94 */}
 
-## Get push notifications on this phone
+## Get push notifications on this device
 
-Under **Push**, tap **Enable push on this device** and allow notifications when your phone asks. You get timely alerts, like a match change or a sub opening. Do this on each phone or computer you use. To stop, tap **Turn off on this device**. {/* src: src/components/pwa/push-toggle.tsx:89-120 */}
+Under **Push**, tap **Enable push on this device** and allow notifications when your phone or browser asks. You get timely alerts, like a match change, a sub opening or an availability ask. Do this on each phone or computer you use. To stop, tap **Turn off on this device**. {/* src: src/app/me/notifications/page.tsx:156-163; src/components/pwa/push-toggle.tsx:116-153 */}
+
+On iPhone and iPad, push works once ClubCircuit is on your Home Screen. In Safari, tap **Share**, then **Add to Home Screen**. Open ClubCircuit from the new icon and come back to **Notifications**. {/* src: src/lib/pwa/push-support.ts:63-64 */}
+
+When you sign out, push stops on that device. Turn it on again after you sign back in. {/* src: src/components/shell/sign-out-form.tsx:7-10; src/components/shell/auth-actions.ts:6 */}
 
 ## Direct messages
 
-At the top of the page, tap **Turn on DMs** to let people in your league message you. Your teammates and captain can always message you. Tap **Turn off DMs** to stop. {/* src: page.tsx:57-72 */}
+At the top of the page, tap **Turn on DMs** to let people in your market message you directly. Your teammates and captain can always message you. Tap **Turn off DMs** to stop. {/* src: src/app/me/notifications/page.tsx:76-92 */}
+
+## What's always sent
+
+Some messages are sent no matter what, and they arrive during quiet hours too:
+
+- Sign-in links
+- Payments, receipts, refunds and court fees
+- Your registration and team placement
+- The schedule, and any match being moved or cancelled
+- Scores, results and disputes
+- Sub offers and lineup deadlines
+- Messages between captains
+- League and club announcements
+
+They’re how the league runs, so they can’t be switched off. {/* src: src/app/me/notifications/page.tsx:165-174 */}
 
 ## Why isn't this working?
 
 ### "You’ve blocked notifications for this site."
 **Cause:** Your browser or phone has notifications turned off for ClubCircuit.
-**Fix:** Turn them back on in your browser or phone settings, then reload the page. {/* src: push-toggle.tsx:101-103 */}
+**Fix:** Turn them back on in your browser or phone settings, then reload the page. {/* src: src/lib/pwa/push-support.ts:68 */}
 
-### "This browser doesn’t support push."
-**Cause:** Some browsers can't get push notifications. On an iPhone, push only works once ClubCircuit is added to your Home Screen.
-**Fix:** Add ClubCircuit to your Home Screen and open it from there, or rely on email. {/* src: push-toggle.tsx:17,97 */}
+### "On iPhone and iPad, push works once ClubCircuit is on your Home Screen."
+**Cause:** Safari only sends push to apps on your Home Screen.
+**Fix:** In Safari, tap **Share**, then **Add to Home Screen**. Open ClubCircuit from the new icon, go to **Notifications** and tap **Enable push on this device**. {/* src: src/lib/pwa/push-support.ts:63-64 */}
+
+### "This browser can’t show push notifications."
+**Cause:** Some browsers can't get push notifications.
+**Fix:** Try Chrome, Edge, Firefox or Safari on a computer or Android phone. Email and the in-app inbox still reach you. {/* src: src/lib/pwa/push-support.ts:61-62 */}
+
+### "Push couldn’t start on this browser."
+**Cause:** The browser didn't finish setting up push, often in private browsing.
+**Fix:** Reload the page and try again. If it still won't start, leave private browsing or try another browser. {/* src: src/lib/pwa/push-support.ts:66-67 */}
+
+### "Pick a start and an end time that differ."
+**Cause:** **From** and **Until** were the same time.
+**Fix:** Change one of them and tap **Save quiet hours** again. {/* src: src/app/me/notifications/actions.ts:84-86 */}
+
+### "This link doesn’t work"
+**Cause:** The unsubscribe link was cut short when it was copied, or it's from an account that no longer exists.
+**Fix:** Sign in and choose what we email you on **Notifications** instead. {/* src: src/app/unsubscribe/[token]/page.tsx:45-56 */}
 
 ### I turned off emails but still get some
-**Cause:** Sign-in links, receipts, registration approvals and division news always come. They keep you and your money safe.
-**Fix:** Nothing to do. These can't be switched off. {/* src: page.tsx:160-165 */}
+**Cause:** The messages under **Always sent** can't be switched off. They're how the league runs.
+**Fix:** Nothing to do. Emails you can switch off always have an unsubscribe link in the footer. {/* src: src/app/me/notifications/page.tsx:165-174; src/emails/layout.tsx:8-10 */}
 
 ### I stopped getting notifications at night
 **Cause:** Quiet hours are on.
-**Fix:** Untick **Quiet hours** and tap **Save quiet hours**, or change the times. {/* src: quiet-hours-form.tsx */}
+**Fix:** Untick **Quiet hours** and tap **Save quiet hours**, or change the times. {/* src: src/app/me/notifications/quiet-hours-form.tsx; actions.ts:94 */}
+
+### Push stopped on my phone
+**Cause:** You signed out on that phone, or turned push off there.
+**Fix:** Sign in, open **Notifications** and tap **Enable push on this device**. {/* src: src/components/shell/sign-out-form.tsx:7-10 */}
 
 ## Related articles
 
 - [Message your team and other players](/players/message-your-team)
 - [Tell your captain whether you can play](/players/set-your-availability)
 
-{/* Last verified: 2026-11-02 against leagues-app bb4f3b5 */}
+{/* Last verified: 2026-11-02 against leagues-app 36d0f59 */}

@@ -1,0 +1,90 @@
+---
+title: "Opt a team in to DUPR"
+sidebarTitle: "Opt a team in to DUPR"
+description: "In Club HQ, open Teams and find the team under DUPR opt-in. Tap Opt in to DUPR, then Yes, opt in. It's binding for the rest of the season, and a match counts only when both teams have opted in."
+keywords: ["DUPR", "opt in", "DUPR opt-in", "count toward DUPR", "ratings", "submit to DUPR", "team", "Club HQ"]
+---
+
+To opt one of your teams in to DUPR, open **Club HQ** > **Teams** and find the team under **DUPR opt-in**. Tap **Opt in to DUPR**, then **Yes, opt in**. Once in, the team stays in for the rest of the season, and a match counts toward DUPR only when both teams have opted in.
+
+{/* src: leagues-app src/lib/nav/club-hq.ts:32-34; src/app/club/[slug]/admin/teams/page.tsx:182-269; src/components/dupr/dupr-opt-in-control.tsx:27-35; docs/adr/0078-dupr-opt-in.md */}
+
+**Before you begin**
+
+- You need to be a club admin or owner. The team's captain can make the same decision from **Manage team**, so check with them first.
+- Your league has to offer DUPR opt-in this season. If it doesn't, there's no **DUPR opt-in** section.
+- Opt-in is open only until a point in the season your league sets. The team's panel says when: **You can opt in until** a date.
+
+{/* src: src/lib/dupr/opt-in.ts:10-14 (requireTeamCaptainOrClubAdmin); teams/page.tsx:184,255-261 (section only where opt-in is offered); src/components/dupr/dupr-team-panel.tsx:35-39 */}
+
+## Opt a team in
+
+<Steps>
+  <Step title="Open Teams">
+    In **Club HQ**, tap **Teams**.
+    {/* src: src/lib/nav/club-hq.ts:32-34 */}
+  </Step>
+  <Step title="Find the team's DUPR panel">
+    Scroll down to **DUPR opt-in**. Each team has a **DUPR** panel that names the team and shows its status, like **Not opted in to DUPR yet**.
+    {/* src: teams/page.tsx:255-268; dupr-team-panel.tsx:17-37; src/lib/dupr/opt-in.ts:96-107 (statusLabel) */}
+  </Step>
+  <Step title="Opt in">
+    Tap **Opt in to DUPR**.
+    {/* src: dupr-opt-in-control.tsx:29 */}
+  </Step>
+  <Step title="Confirm">
+    You're told the team stays in for the rest of the season, playoffs included, with no opting out. Tap **Yes, opt in**.
+    {/* src: dupr-opt-in-control.tsx:32-34 */}
+  </Step>
+</Steps>
+
+**Result:** You see that the team is opted in to DUPR, and that its matches count from the next one, once the other team has opted in too. The panel then shows **Opted in to DUPR**. {/* src: src/lib/dupr/opt-in.ts:101,148 */}
+
+## Decide not to, for now
+
+If your team isn't ready, tap **Not this season for now**. This records your decision and clears the captain's reminder. It doesn't close the window: you can still opt in until the date on the panel. {/* src: dupr-opt-in-control.tsx:38-41; src/lib/dupr/opt-in.ts:151-175; docs/adr/0078-dupr-opt-in.md (decision 7) */}
+
+## How opting in works
+
+- **Both teams have to be in.** A match counts toward DUPR only when both teams opted in before it was due to start. Opting in takes effect from your team's next match.
+- **It's binding.** Once in, your team stays in for the rest of the season, playoffs included.
+- **Everyone can see it.** The match page says **Counts toward DUPR**, or **Doesn’t count toward DUPR** and which team hasn't opted in.
+- **Players need a DUPR ID.** A game goes to DUPR only once all four players in it have their DUPR ID on their profile. See [Add your DUPR ID](/players/connect-dupr).
+
+{/* src: src/lib/dupr/opt-in-rules.ts:102-119 (duprMatchCount); dupr-team-panel.tsx:24-27,35-38; docs/adr/0078-dupr-opt-in.md (decisions 3, 5, 6) */}
+
+When the window closes and which games are never submitted are in your league's rulebook. See [Scores and standings](/rules/rally-21/scores-and-standings).
+
+## Why isn't this working?
+
+### I don't see DUPR opt-in on Teams
+**Cause:** Your league isn't offering DUPR opt-in this season, or your club has no teams yet.
+**Fix:** Ask the league office at [support@clubcircuitpb.com](mailto:support@clubcircuitpb.com) if you think it should. {/* src: teams/page.tsx:184,255; src/lib/dupr/opt-in-rules.ts:74 */}
+
+### "This team has already opted in to DUPR."
+**Cause:** The team's captain, or another admin, already opted it in.
+**Fix:** Nothing to do. It stays in for the rest of the season, playoffs included. {/* src: src/lib/dupr/opt-in-rules.ts:72; src/lib/dupr/opt-in.ts:147 */}
+
+### "DUPR opt-in closed …"
+**Cause:** The window for this season has closed.
+**Fix:** Nothing can be changed now. This team's games this season won't be submitted to DUPR. {/* src: src/lib/dupr/opt-in-rules.ts:76; dupr-team-panel.tsx:28-31 */}
+
+### There's no Opt in to DUPR button on a team
+**Cause:** The team has withdrawn from the season, or opt-in has closed.
+**Fix:** A withdrawn team can't opt in. If you think that's wrong, email [support@clubcircuitpb.com](mailto:support@clubcircuitpb.com). {/* src: dupr-team-panel.tsx:40-44; src/lib/dupr/opt-in.ts:134 */}
+
+### "Only this team’s captain, or an admin of its club, can decide on DUPR for it."
+**Cause:** You're signed in with an account that isn't an admin of this club.
+**Fix:** Sign in with your club admin account, or ask your club's owner to add you under **Owners & admins**. {/* src: src/app/team/[teamId]/manage/dupr-actions.ts:24-31 */}
+
+### Can we opt back out?
+**Cause:** Opting in is binding for the season.
+**Fix:** There's no opting out. Decide with your captain before you confirm. {/* src: dupr-opt-in-control.tsx:32; src/lib/dupr/opt-in.ts:12-13 */}
+
+## Related articles
+
+- [Add your DUPR ID](/players/connect-dupr)
+- [Form your club's teams for a season](/clubs/form-teams-for-a-season)
+- [Scores and standings](/rules/rally-21/scores-and-standings)
+
+{/* Last verified: 2026-11-02 against leagues-app ba29829 */}

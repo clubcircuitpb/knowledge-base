@@ -1,0 +1,88 @@
+---
+title: "Choose whether your games count toward DUPR"
+sidebarTitle: "Opt in to DUPR"
+description: "Open Manage team, go to the DUPR section and tap Opt in to DUPR, then Yes, opt in. A match counts toward DUPR only when both teams have opted in, and once in, your team stays in for the season."
+keywords: ["DUPR", "opt in", "DUPR opt-in", "count toward DUPR", "DUPR rating", "submit to DUPR", "not this season"]
+---
+
+To have your team's games count toward DUPR, open **Manage team**, find the **DUPR** section and tap **Opt in to DUPR**, then **Yes, opt in**. A match counts only when both teams have opted in. Once in, your team stays in for the rest of the season, playoffs included.
+
+{/* src: leagues-app src/components/dupr/dupr-team-panel.tsx:17-46; src/components/dupr/dupr-opt-in-control.tsx:27-37; src/lib/dupr/opt-in-rules.ts:1-15 (ADR 0078) */}
+
+**Before you begin**
+
+- You need to be your team's captain. Your club's admins can make this choice for your team too.
+- Your league has to offer DUPR this season. If it doesn't, there's no **DUPR** section on **Manage team**.
+- You can opt in only until a set point in the season. The **DUPR** section shows the date. See [Scores and standings](/rules/rally-21/scores-and-standings) in the rulebook for when the window closes.
+- Talk to your team first. You can't opt out once you're in.
+
+{/* src: src/lib/dupr/opt-in.ts:7-12,143 (requireTeamCaptainOrClubAdmin); dupr-team-panel.tsx:13 (OFF renders nothing); src/lib/dupr/opt-in-rules.ts:36-44 (Ruleset.duprOptInClosesAfterWeek); dupr-team-panel.tsx:38 */}
+
+## Opt your team in
+
+<Steps>
+  <Step title="Open Manage team">
+    On **Home**, tap **Decide on DUPR**. Or open **Manage team** and scroll to **DUPR**, below your matches.
+    {/* src: src/lib/dupr/decision-todo.ts:55-57 (href /team/[teamId]/manage#dupr); src/app/team/[teamId]/manage/page.tsx:239-243 */}
+  </Step>
+  <Step title="Check where your team stands">
+    The badge next to **DUPR** shows **Not opted in to DUPR yet**, and the text says until when you can opt in.
+    {/* src: src/lib/dupr/opt-in.ts:95-106 (statusLabel); dupr-team-panel.tsx:21,34-39 */}
+  </Step>
+  <Step title="Tap Opt in to DUPR">
+    Tap **Opt in to DUPR**. A confirmation names your team and says it "stays in for the rest of the season, playoffs included. There’s no opting out."
+    {/* src: dupr-opt-in-control.tsx:28-34 */}
+  </Step>
+  <Step title="Confirm">
+    Tap **Yes, opt in**. To back out, tap **Cancel**.
+    {/* src: dupr-opt-in-control.tsx:35; src/components/ui/confirm-button.tsx (Cancel) */}
+  </Step>
+</Steps>
+
+**Result:** The badge changes to **Opted in to DUPR**, and the section says when you opted in. Your matches count from your next one, once the other team has opted in too. {/* src: src/lib/dupr/opt-in.ts:98,158; dupr-team-panel.tsx:23-27 */}
+
+## Say not this season for now
+
+If your team isn't ready to decide, tap **Not this season for now**. This clears the reminder on **Home**, and the badge shows **Not this season for now**. You can still tap **Opt in to DUPR** any time until the window closes. {/* src: dupr-opt-in-control.tsx:38-41; src/lib/dupr/opt-in.ts:103,161-179; src/lib/dupr/decision-todo.ts:36 */}
+
+Once the window closes without your team opting in, the badge shows **Not opted in to DUPR**, and your team's games that season won't go to DUPR. {/* src: src/lib/dupr/opt-in.ts:100; dupr-team-panel.tsx:28-31 */}
+
+## The reminder on Home
+
+Until your team decides, **Home** shows a to-do, **Decide whether … games count toward DUPR**, naming your team. It gives a date to decide by: your first match, or when opt-in closes, depending on your league. Tap **Decide on DUPR** to go to the **DUPR** section. If that date passes, the reminder stays and tells you there's still time, until the window closes. {/* src: src/lib/dupr/decision-todo.ts:9-18,36-57 (Ruleset.duprDecisionDue: first match or opt-in close); src/lib/play/needs-you.ts:204 */}
+
+## See whether a match counts
+
+Every match page says **Counts toward DUPR** or **Doesn’t count toward DUPR**, with the reason, for example that a team hasn't opted in. Anyone can see it before the match. A match counts only if both teams opted in before it started, so opting in never changes a match that's already under way. {/* src: src/app/match/[matchId]/page.tsx:124-134,444-446; src/lib/dupr/opt-in-rules.ts:98-111 */}
+
+Some games, like certain forfeits, are never sent to DUPR. The rulebook lists them. {/* src: src/lib/dupr/opt-in.ts:21-28 (Ruleset.duprForfeit*); prisma/schema.prisma:1355 */}
+
+## Why isn't this working?
+
+### There's no DUPR section on Manage team
+**Cause:** Your league isn't offering DUPR opt-in this season.
+**Fix:** Ask the league office if you think it should. {/* src: dupr-team-panel.tsx:13; src/lib/dupr/opt-in-rules.ts:72 */}
+
+### There's no Opt in to DUPR button
+**Cause:** Your team has already opted in, the window has closed, or your team has withdrawn from the season.
+**Fix:** Check the badge next to **DUPR**. If it says **Not opted in to DUPR**, the window has closed for this season. {/* src: dupr-team-panel.tsx:22-43; src/lib/dupr/opt-in.ts:145 */}
+
+### "DUPR opt-in closed …"
+**Cause:** The deadline to opt in has passed.
+**Fix:** Nothing to do this season. Your team's games this season won't be sent to DUPR. {/* src: src/lib/dupr/opt-in-rules.ts:74 */}
+
+### "Only this team’s captain, or an admin of its club, can decide on DUPR for it."
+**Cause:** You're not set as this team's captain.
+**Fix:** If you've just been made captain, sign out and back in. Otherwise ask your club's admins. {/* src: src/app/team/[teamId]/manage/dupr-actions.ts:30 */}
+
+### I opted in, but this week's match says it doesn't count
+**Cause:** The other team hasn't opted in, or you opted in after the match started.
+**Fix:** Nothing to do. Your next match against a team that has opted in will count. {/* src: src/lib/dupr/opt-in-rules.ts:102-111 */}
+
+## Related articles
+
+- [Scores and standings](/rules/rally-21/scores-and-standings), in the rulebook, for when opt-in closes and which games are sent
+- [Add your DUPR ID](/players/connect-dupr), what your players need
+- [See who can play and manage your team](/captains/manage-your-team)
+
+{/* Last verified: 2026-11-02 against leagues-app ba29829 */}

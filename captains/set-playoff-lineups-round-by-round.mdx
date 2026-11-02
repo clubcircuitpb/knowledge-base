@@ -1,0 +1,105 @@
+---
+title: "Set your playoff lineups round by round at the venue"
+sidebarTitle: "Set playoff lineups"
+description: "On finals day, open the match's lineup. When it says it's your turn, pick a pair for every court, tap Submit, then Yes, lock it in. The captains take turns, one round at a time."
+keywords: ["playoff lineup", "finals day", "round by round", "semifinal lineup", "final lineup", "deciding round", "playoff pairs", "respond"]
+---
+
+On finals day, playoff lineups are set one round at a time at the venue. Open the match's lineup. When it says **Your turn**, pick a pair for every court, tap **Submit round … pairs** or **Submit round … response**, then **Yes, lock it in**. The other captain sees your pairs and responds, or you respond to theirs.
+
+{/* src: leagues-app src/app/match/[matchId]/lineup/page.tsx:80-114 (turn-based playoff match, ADR 0081); src/app/match/[matchId]/lineup/playoff-rounds.tsx:146-153,289-304 */}
+
+**Before you begin**
+
+- You need to be your team's captain, at the venue with your phone.
+- Your playoff roster has to be in. Only players on it, and approved by the league office if they needed it, can be placed. See [Submit your playoff roster for finals day](/captains/submit-your-playoff-roster).
+- Each round has a leading team and a responding team, and each captain has a set time for their turn. A late turn can cost your team games. See [Playoffs](/rules/rally-21/playoffs) in the rulebook for the order and the times.
+
+{/* src: src/lib/playoffs/round-lineup.ts:214; src/lib/playoffs/turns.ts:193; playoff-rounds.tsx:281-284 (Ruleset.playoffTurnMinutes, playoffLateTurnPenaltyGames) */}
+
+## Set your pairs for a round
+
+<Steps>
+  <Step title="Open the lineup">
+    Open the playoff match and tap **Set lineup**. The screen is called **Round-by-round lineups**.
+    {/* src: src/app/match/[matchId]/page.tsx:272-283 (lineupCta, href /match/[matchId]/lineup); src/lib/lineup/cta.ts:46; src/app/match/[matchId]/lineup/page.tsx:94 (title "Round-by-round lineups") */}
+  </Step>
+  <Step title="Wait for your turn">
+    The bar at the top says whose turn it is. When it's yours, it starts with **Your turn**, and the clock says **You have … left.**
+    {/* src: playoff-rounds.tsx:146-153,173-176,320-330 */}
+  </Step>
+  <Step title="Pick a pair for each court">
+    Each court is labelled, for example **Round 1, Court 2 · Mixed**. Choose a player in each box. If you're responding, each court shows who you're playing **Against**.
+    {/* src: playoff-rounds.tsx:194-224 */}
+  </Step>
+  <Step title="Fix anything flagged">
+    If a pair breaks a rule, like teammates who already partnered in this match, a message under the courts says what to change.
+    {/* src: playoff-rounds.tsx:230-236; src/lib/playoffs/turns.ts:170-218 */}
+  </Step>
+  <Step title="Submit">
+    Tap **Submit round … pairs** if you're leading, or **Submit round … response** if you're responding.
+    {/* src: playoff-rounds.tsx:302-304 */}
+  </Step>
+  <Step title="Lock it in">
+    You're asked "Lock in round …? You can’t change it after." Tap **Yes, lock it in**, or **Keep editing** to go back.
+    {/* src: playoff-rounds.tsx:289-299 */}
+  </Step>
+</Steps>
+
+**Result:** You see **Round … pairs submitted and locked.** or **Round … response submitted and locked.** The other captain's screen updates by itself. When both lineups for a round are in, the round shows **On court**. {/* src: playoff-rounds.tsx:129,86-91,257 */}
+
+## Start the next round
+
+When a round's games are done, tap **Round … is finished**. The next round's clock starts, and the captain who leads it gets their turn. {/* src: playoff-rounds.tsx:135-142,154,178-183; src/lib/playoffs/round-lineup.ts:285-292 */}
+
+## If the match ends level: the deciding round
+
+If the match is level after the regular rounds, a **Deciding round** card appears. Each captain picks a pair for each deciding court. Pairs that already played together may play together again.
+
+1. Choose a player in each box.
+2. Tap **Submit deciding pairs**.
+3. Tap **Yes, lock them in**.
+
+Your picks stay hidden until the other team is in too, then both are revealed at once. {/* src: src/app/match/[matchId]/lineup/playoff-decider.tsx:42,67,74-88,140-155 */}
+
+## If the app isn't working
+
+Use the paper scoresheet, swap pairs on paper in the same order, and tell the league office. {/* src: playoff-rounds.tsx:281-284; rules/rally-21/playoffs ("If the app isn't working, captains write their pairs on paper and swap them in the same order.") */}
+
+## Why isn't this working?
+
+### "Your playoff roster isn’t in, so nobody can be placed."
+**Cause:** Your team didn't submit a playoff roster.
+**Fix:** Use paper and tell the league office. {/* src: playoff-rounds.tsx:168-172; src/lib/playoffs/round-lineup.ts:214 */}
+
+### "… leads round …. Wait for their pairs — you’ll respond to them."
+**Cause:** The other team leads this round, and hasn't submitted yet.
+**Fix:** Wait. Their pairs appear by themselves, and then it's your turn. {/* src: src/lib/playoffs/turns.ts:123; playoff-rounds.tsx:155 */}
+
+### "The clock starts when the round before is finished."
+**Cause:** Nobody has tapped **Round … is finished** for the round before.
+**Fix:** When the round's games are done, tap **Round … is finished**. {/* src: playoff-rounds.tsx:322 */}
+
+### The clock says "… late."
+**Cause:** Your turn's time has run out.
+**Fix:** Submit as soon as you can. A late turn is recorded, and can cost your team games. {/* src: playoff-rounds.tsx:329,130 */}
+
+### "… already partnered in round … — teammates partner once in a playoff match."
+**Cause:** That pair already played together in this match.
+**Fix:** Split them up on the court the message names. {/* src: src/lib/playoffs/turns.ts:214-215 */}
+
+### "… that player isn’t on today’s playoff roster, or is still waiting on the league office."
+**Cause:** The player isn't on your playoff roster, or needs the league office's approval first.
+**Fix:** Pick someone else, or ask the league office about the approval. {/* src: src/lib/playoffs/turns.ts:193 */}
+
+### "Round … is locked — both lineups are in."
+**Cause:** That round's lineups are already locked.
+**Fix:** Nothing to change. If something's wrong, tell the league office. {/* src: src/lib/playoffs/turns.ts:119 */}
+
+## Related articles
+
+- [Playoffs](/rules/rally-21/playoffs), in the rulebook
+- [Submit your playoff roster for finals day](/captains/submit-your-playoff-roster)
+- [Enter and confirm match scores](/captains/enter-and-confirm-scores)
+
+{/* Last verified: 2026-11-02 against leagues-app ba29829 */}

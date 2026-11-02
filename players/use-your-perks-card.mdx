@@ -7,33 +7,33 @@ keywords: ["perks card", "perks", "discount", "offers", "partner", "QR code", "m
 
 To use your perks card, open your account menu and tap **Perks card**. Show staff the QR code, or find an offer under **Offers**, tap **Use it**, then **Yes, use it**, in front of them. The card shows a live, ticking clock, so staff can tell it's not a saved picture.
 
-{/* src: leagues-app src/components/shell/account-control.tsx:126; src/app/me/card/page.tsx:55,92,123; src/components/perks/use-offer-button.tsx:16,37; src/components/perks/live-clock.tsx */}
+{/* src: leagues-app src/lib/nav/personal-rows.ts:25; src/app/me/card/page.tsx:114,150; src/components/perks/use-offer-button.tsx:16,37; src/components/perks/live-clock.tsx */}
 
 **Before you begin**
 
 - You get a perks card when you're playing in a season that has perks switched on. That's usually once your registration is approved, or once you've paid a sub activation. Each season decides who qualifies.
 - Your card works until shortly after the season's last day of play.
 
-{/* src: src/lib/perks/card.ts:33-79 (includeRegistered, includeActivatedSubs, graceDays); src/app/me/card/page.tsx:81-82 */}
+{/* src: src/lib/perks/card.ts (includeRegistered, includeActivatedSubs, graceDays); src/app/me/card/page.tsx:100-105 */}
 
 ## Show your card or use an offer
 
 <Steps>
   <Step title="Open your card">
     Open your account menu and tap **Perks card**. On a phone, tap your initials at the top of the screen first.
-    {/* src: account-control.tsx:126; src/components/shell/play-chrome.tsx:155,388 */}
+    {/* src: src/lib/nav/personal-rows.ts:25; src/components/shell/play-chrome.tsx:386 */}
   </Step>
   <Step title="Show the QR">
     Tap **Show QR full size** and let staff scan it. They see whether your card is active right now.
-    {/* src: src/app/me/card/page.tsx:92,109; src/app/card/[token]/page.tsx */}
+    {/* src: src/app/me/card/page.tsx:110-115,130-135; src/app/card/[token]/page.tsx:16-21 */}
   </Step>
   <Step title="Find an offer">
     Under **Offers**, find the offer for the place you're at. It says how many uses you have left this season.
-    {/* src: page.tsx:123,166-172 */}
+    {/* src: src/app/me/card/page.tsx:149-161,224-231 */}
   </Step>
   <Step title="Use it in front of staff">
-    Tap **Use it**, then **Yes, use it**. Each tap counts as one use, so only do this when you're at the desk.
-    {/* src: use-offer-button.tsx:16,22,37 */}
+    Tap **Use it**, then **Yes, use it**. That counts as one use, so only do this when you're at the desk. Tap **Not yet** if you're not ready.
+    {/* src: src/components/perks/use-offer-button.tsx:16,22,27,37 */}
   </Step>
   <Step title="Show the next screen">
     Show staff the screen that opens. It says **Staff: apply the offer.**, with the time ticking.
@@ -41,51 +41,69 @@ To use your perks card, open your account menu and tap **Perks card**. Show staf
   </Step>
 </Steps>
 
-**Result:** Staff apply the offer, and it counts as one of your uses this season. {/* src: src/lib/perks/offers.ts:76-121 */}
+**Result:** Staff apply the offer. It counts as one of your uses this season, and it's listed under **Your uses**. {/* src: src/lib/perks/offers.ts; src/app/me/card/page.tsx:164,172-198 */}
 
-Some offers say **Show staff your card’s QR — they record this one.** For those, show the QR instead, and the club's staff record the use. {/* src: page.tsx:180; src/app/card/[token]/page.tsx:95-106 */}
+Some offers say **Show staff your card’s QR — they record this one.** For those, show the QR instead, and the club's staff record the use. You get a notice in the app when they do. {/* src: src/app/me/card/page.tsx:239-240; src/app/card/[token]/page.tsx; src/lib/notifications/inbox.ts:99-106 (PERK_USE_RECORDED) */}
+
+## Offers that haven't started
+
+An offer that starts later says **Starts** and the date, then **— you can use it from then.** It has no **Use it** button until that day. {/* src: src/app/me/card/page.tsx:235-236; src/lib/perks/offers.ts:44 */}
+
+## See your uses
+
+Under **Your uses**, every use on your card is listed, newest first: the partner, the offer, when, and **Used by you** or **Recorded by staff**. A use the league office voided is struck through and doesn't count against your limit. {/* src: src/app/me/card/page.tsx:172-198 */}
+
+If a club's staff record a use you didn't make, the in-app notice says to contact the league office. Email [support@clubcircuitpb.com](mailto:support@clubcircuitpb.com). {/* src: src/lib/notifications/inbox.ts:104 */}
 
 ## What staff see
 
-When staff scan your QR, they see your first name and last initial, your photo if you've added one, the season, and whether the card is active right now. They never see your surname, email, phone number or date of birth. {/* src: src/app/card/[token]/page.tsx:15-19,64-80 */}
+When staff scan your QR, they see your first name and last initial, the season, and whether the card is active right now. They see your photo only if your profile settings let them see it. Otherwise they see your initials. They never see your surname, email, phone number or date of birth. {/* src: src/app/card/[token]/page.tsx:16-21,72-74; src/lib/perks/card.ts:187-197 */}
 
 ## Find perks before you go
 
-Your league's **Perks** page lists every participating club and local partner, and which divisions each offer is for. Find it in the menu at the top of the league's pages. {/* src: src/lib/nav/app-nav.ts:58; src/app/[market]/[season]/perks/page.tsx:19-91 */}
+On your card, tap **See where your card works**. Your league's **Perks** page lists every participating club and local partner, and which divisions each offer is for. You can also tap **Perks** in the menu. {/* src: src/app/me/card/page.tsx:80-86; src/lib/nav/play.ts:55-57; src/lib/nav/app-nav.ts:58; src/app/[market]/[season]/perks/page.tsx */}
 
 ## Save it to your phone's wallet
 
-If **Add to Apple Wallet** or **Save to Google Wallet** shows under your card, tap it. The pass opens the same live check as the app. If you don't see those buttons, wallet passes aren't available yet, so show the card in the app. {/* src: src/app/me/card/page.tsx:94-107; src/lib/perks/wallet.ts:8-13 */}
+If **Add to Apple Wallet** or **Save to Google Wallet** shows under your card, tap it. You only see the button for your device's wallet. The pass opens the same live check as the app. If you don't see a button, wallet passes aren't available yet, so show the card in the app. {/* src: src/app/me/card/page.tsx:51-53,116-129; src/lib/perks/wallet-device.ts */}
 
 ## Why isn't this working?
 
+### "Not live yet"
+**Cause:** The league hasn't switched on perks for this season yet.
+**Fix:** Nothing to do. Your card appears as soon as the league turns them on. {/* src: src/app/me/card/page.tsx:94-99,143-144 */}
+
 ### "No perks card yet"
 **Cause:** You're not in a season with perks switched on yet, your registration isn't approved yet, or your season doesn't include your group.
-**Fix:** Check back once your registration is approved. If you're a sub, your card arrives once you've paid a sub activation. {/* src: src/app/me/card/page.tsx:81-82; src/lib/perks/card.ts:50-79 */}
+**Fix:** Check back once your registration is approved. If you're a sub, your card arrives once you've paid a sub activation. {/* src: src/app/me/card/page.tsx:100-105; src/lib/perks/card.ts */}
 
 ### "This season’s card has ended."
 **Cause:** The season, and its grace period, is over.
-**Fix:** Nothing to do. Your next season's card arrives when you register again. {/* src: page.tsx:117; card.ts:33-40 */}
+**Fix:** Nothing to do. Your next season's card arrives when you register again. {/* src: src/app/me/card/page.tsx:139-140 */}
 
 ### "The league office has cancelled this card."
 **Cause:** The league office turned off your card.
-**Fix:** Email [support@clubcircuitpb.com](mailto:support@clubcircuitpb.com) if you think that's wrong. {/* src: page.tsx:117 */}
+**Fix:** Email [support@clubcircuitpb.com](mailto:support@clubcircuitpb.com) if you think that's wrong. {/* src: src/app/me/card/page.tsx:141-142 */}
+
+### "We couldn’t make your Apple Wallet pass just now."
+**Cause:** The wallet pass couldn't be made. You're taken back to your card with this message (or the same for Google Wallet).
+**Fix:** Try again in a minute. The card on the page works in the meantime. {/* src: src/app/me/card/wallet/respond.ts:7-25 */}
 
 ### "That offer is for visiting players — it’s your own club."
 **Cause:** Some clubs' offers are only for players visiting from other clubs.
-**Fix:** Nothing to do. Use your card at other clubs and partners. {/* src: src/lib/perks/offers.ts:127-137 */}
+**Fix:** Nothing to do. Use your card at other clubs and partners. {/* src: src/lib/perks/offers.ts (offer eligibility reasons) */}
 
 ### "You’ve used this offer … — that’s the limit this season."
 **Cause:** Each offer can be used a set number of times a season.
-**Fix:** Nothing to do. The offer resets next season. {/* src: src/lib/perks/offers.ts:127-137 */}
+**Fix:** Nothing to do. Check the offers on next season's card. {/* src: src/lib/perks/offers.ts:158 */}
 
 ### "No offers for your division yet."
 **Cause:** The league hasn't added offers for your division yet.
-**Fix:** Check back later. Offers appear on your card as they're added. {/* src: page.tsx:126 */}
+**Fix:** Check back later. Offers appear on your card as they're added. {/* src: src/app/me/card/page.tsx:154 */}
 
 ## Related articles
 
 - [Register for a season](/players/register-for-a-season)
 - [Sign up to sub for other teams](/players/sign-up-to-sub)
 
-{/* Last verified: 2026-11-02 against leagues-app bb4f3b5 */}
+{/* Last verified: 2026-11-02 against leagues-app 36d0f59 */}

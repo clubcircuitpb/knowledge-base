@@ -9,11 +9,15 @@ keywords: ["roster", "lineup", "lineup deadline", "late lineup", "clean swap", "
 
 ## How big is a team?
 
-Each team rosters 4 to 6 men and 4 to 6 women, plus a captain. Five of each is ideal: everyone gets solid court time and you have cover if someone drops out.
+Each team rosters at least 4 men and 4 women, plus a captain. The league sets the most of each a team can roster, for each division. Five of each is ideal: everyone gets solid court time and you have cover if someone drops out.
+
+{/* src: leagues-app prisma/schema.prisma Division.rosterMinPerGender, rosterMaxPerGender (set per division in League HQ; blank = no limit; the rr-rally-21 preset doesn't set them); src/lib/club/team-builder.ts and src/lib/club/roster.ts (a team can field a match only with the format's minPlayersPerGender: 4) */}
 
 ## How many players do we need on match day?
 
 At least 4 men and 4 women, and no more than 6 of each. Only players on your submitted lineup can play that day, including as substitutes.
+
+{/* src: src/lib/rules/rules/lineup.ts (LINEUP_SIZE_PER_GENDER); rr-rally-21 preset format minPlayersPerGender: 4, maxPlayersPerGender: 6 */}
 
 <Warning>
   **Costs the whole match:** with fewer than 4 men or 4 women, your team forfeits the match 32–0.
@@ -67,4 +71,4 @@ You may fix that error after the deadline. Change only the pairings needed to fi
 
 {/* src: Larry's rulebook "ClubCircuit Rulebook — Inaugural Winter Season", tab "Rosters and lineups" (Claude Docs 12b29ca1-72ad-4549-83c4-cc3dc1f3d58f) */}
 
-{/* Last verified: 2026-11-01 against the rulebook as of 1 Nov 2026 */}
+{/* Last verified: 2 November 2026 against leagues-app 346f7a4 */}

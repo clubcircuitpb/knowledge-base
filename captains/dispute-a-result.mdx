@@ -1,61 +1,100 @@
 ---
 title: "Dispute a match result"
 sidebarTitle: "Dispute a result"
-description: "If the other captain's scores are wrong, open the match's Scores tab, tap Something's wrong, say which court and what the score should be, and tap Raise it with the league. The league office rules."
-keywords: ["dispute", "wrong score", "score dispute", "something's wrong", "challenge result", "league ruling", "scorecard photo"]
+description: "If the other team's scores are wrong, open the match's Scores tab, tap Something's wrong, say which court and what the score should be, and tap Raise it with the league. If the result is already confirmed, tap Report a problem with this result instead."
+keywords: ["dispute", "wrong score", "score dispute", "something's wrong", "challenge result", "league ruling", "scorecard photo", "report a problem", "confirmed result"]
 ---
 
-To dispute a result, open the match's **Scores** tab, tap **Something’s wrong**, say which court is wrong and what the score should be, then tap **Raise it with the league**. The league office reviews it and rules, and both captains are told.
+To dispute a result, open the match's **Scores** tab, tap **Something’s wrong**, say which court is wrong and what the score should be, then tap **Raise it with the league**. If the result is already confirmed, tap **Report a problem with this result** instead. Either way, the league office reviews it and rules, and both captains are told.
 
-{/* src: leagues-app src/app/match/[matchId]/scores/scores-entry.tsx:456,463-476; src/lib/disputes/ruling.ts:325-453 */}
+{/* src: leagues-app src/app/match/[matchId]/scores/scores-entry.tsx:432,544,551,564; src/lib/disputes/report-result.ts; src/lib/disputes/ruling.ts */}
 
 **Before you begin**
 
-- Only the captain who didn't submit the scores can raise a dispute, and only while the match shows **Awaiting confirmation**.
+- While the match shows **Awaiting confirmation**, only a captain of the team that didn't submit the scores can raise a dispute. A co-captain of the team that submitted can't.
+- Once the result is confirmed, a captain of either team can report a problem with it. Your league may set a time limit for this.
 - Have the signed paper scoresheet ready. A photo of it usually settles a dispute.
+- This is for scores. To report someone's behaviour at the match, use **Report a conduct problem** on the match page instead (see [Report a conduct problem](/players/report-a-conduct-problem)). Only the league office sees those reports.
 
-{/* src: src/lib/scores/mutations.ts:388 ("You submitted this scorecard — the other captain raises a dispute if they disagree."); scores-entry.tsx (Something's wrong shown only while AWAITING_CONFIRMATION); src/components/print/scoresheet.tsx:186-187 */}
+{/* src: src/lib/scores/mutations.ts:472-480 (other TEAM only, A1); scores-entry.tsx:424,529-546; src/lib/disputes/report-result.ts:5-12,44-47 (Ruleset.resultReportWindowHours); src/components/print/scoresheet.tsx; src/app/match/[matchId]/conduct-section.tsx:40-48 (ADR 0080) */}
 
-## Raise a dispute
+## Raise a dispute before the result is confirmed
 
 <Steps>
   <Step title="Open the match's Scores tab">
-    From **Home**, tap **Review and confirm**, or open the match and tap **Scores**.
-    {/* src: src/lib/play/home.ts:403-405; src/app/match/[matchId]/page.tsx:516 */}
+    From **Home**, tap **Review and confirm**, or open the match and tap **Scores**. The **Confirm the scores** email's **Check and confirm** button opens it too.
+    {/* src: src/lib/play/home.ts:403; src/app/match/[matchId]/page.tsx:578; src/emails/registry.tsx:1369,1384 */}
   </Step>
   <Step title="Tap Something's wrong">
     Tap **Something’s wrong** instead of **Confirm result**.
-    {/* src: scores-entry.tsx:449,456 */}
+    {/* src: scores-entry.tsx:537,544 */}
   </Step>
   <Step title="Say what's wrong">
     In **What’s wrong with the result?**, say which court and what the score should be. The other captain sees this too.
-    {/* src: scores-entry.tsx:463-465 */}
+    {/* src: scores-entry.tsx:551-553 */}
   </Step>
   <Step title="Send it to the league">
     Tap **Raise it with the league**.
-    {/* src: scores-entry.tsx:476 */}
+    {/* src: scores-entry.tsx:564 */}
   </Step>
 </Steps>
 
-**Result:** The match shows **Disputed — with the league manager**, and the other captain is told. {/* src: src/app/match/[matchId]/page.tsx:860; scores-entry.tsx:149; registry SCORES_DISPUTED */}
+**Result:** The match shows **Disputed — with the league manager**, and the captain who submitted the scores is told. {/* src: src/app/match/[matchId]/page.tsx:938; scores-entry.tsx:189; src/lib/scores/mutations.ts:501-507 (SCORES_DISPUTED) */}
+
+## Report a problem with a confirmed result
+
+If the result has already been confirmed, by the other captain or automatically, you can still ask the league office to look at it.
+
+<Steps>
+  <Step title="Open the match's Scores tab">
+    Open the match and tap **Scores**. It shows **This result is confirmed.**
+    {/* src: src/app/match/[matchId]/page.tsx:61 (CONFIRMED keeps the Scores tab, A4); scores-entry.tsx:421 */}
+  </Step>
+  <Step title="Tap Report a problem with this result">
+    Tap **Report a problem with this result**.
+    {/* src: scores-entry.tsx:432 */}
+  </Step>
+  <Step title="Say what's wrong">
+    Under **What’s wrong with the result?**, name the round and court, and what the score should be.
+    {/* src: scores-entry.tsx:437-438 */}
+  </Step>
+  <Step title="Send it">
+    Tap **Send to the league office**.
+    {/* src: scores-entry.tsx:450 */}
+  </Step>
+</Steps>
+
+**Result:** You see **Sent to the league office. The result stands until they rule; both captains will hear by email.** The result stays in the standings until the league office rules. {/* src: scores-entry.tsx:178; src/lib/disputes/report-result.ts:5-12 */}
 
 ## Add your side and a photo
 
-While a dispute is open, either captain can add more on the match page. Write your side under **Add your side** and tap **Add to the dispute**. To add the scoresheet, use **Add a photo**, say what it shows, and tap **Add photo**. Only the two teams and the league office can see photos. {/* src: src/app/match/[matchId]/dispute-panel.tsx:135-165; src/lib/disputes/evidence.ts:79-91 */}
+While a dispute is open, either captain can add more on the match page. Write your side under **Add your side** and tap **Add to the dispute**. To add the scoresheet, use **Add a photo**, say what it shows, and tap **Add photo**. Only the two teams and the league office can see photos. {/* src: src/app/match/[matchId]/dispute-panel.tsx:135-165; src/lib/disputes/evidence.ts */}
 
 ## What happens next
 
-The league office may ask both captains for more information, and you'll get an email if it does. When it rules, the match page shows either **The league ruled: the score was changed** or **The league ruled: the scorecard stood**, with the reasons. Both captains get the ruling by email, and the result and standings update. {/* src: dispute-panel.tsx:90-94,128; registry DISPUTE_MORE_INFO, DISPUTE_RESOLVED; src/lib/disputes/ruling.ts:325-453 */}
+The league office may ask both captains for more information, and you'll get an email if it does. When it rules, the match page shows either **The league ruled: the score was changed** or **The league ruled: the scorecard stood**, with the reasons. Both captains get the ruling by email, and the result and standings update. {/* src: dispute-panel.tsx:88-94; registry DISPUTE_MORE_INFO, DISPUTE_RESOLVED; src/lib/disputes/ruling.ts */}
 
 ## Why isn't this working?
 
 ### I don't see Something's wrong
-**Cause:** You submitted these scores yourself, the result is already confirmed, or the match isn't waiting on confirmation.
-**Fix:** If you submitted them, ask the other captain to raise it. If the result is already confirmed, email [support@clubcircuitpb.com](mailto:support@clubcircuitpb.com) with the match and what's wrong. {/* src: src/lib/scores/mutations.ts:388; registry SCORES_AUTO_CONFIRMED ("If that looks wrong, contact the league manager.") */}
+**Cause:** Your team submitted these scores, the result is already confirmed, or the match isn't waiting on confirmation.
+**Fix:** If your team submitted them, ask the other team's captain to raise it. If the result is already confirmed, tap **Report a problem with this result** instead. {/* src: src/lib/scores/mutations.ts:472-480; scores-entry.tsx:424,529 */}
+
+### "Your team submitted these scores. If one is wrong, ask the other team’s captain to dispute it, or tell the league office."
+**Cause:** Your co-captain submitted the scores, so only the other team can dispute them.
+**Fix:** Ask the other team's captain to tap **Something’s wrong**. {/* src: src/lib/scores/mutations.ts:479 */}
+
+### "You’ve already reported this result."
+**Cause:** You've already sent a report on this match, and the league office hasn't ruled yet.
+**Fix:** Add anything new under **Add your side** on the match page. The league office replies by email. {/* src: src/lib/disputes/report-result.ts:53 */}
+
+### "The time to report a problem with this result has passed."
+**Cause:** Your league's time limit for reporting a confirmed result is over.
+**Fix:** If it's serious, email the league office at [support@clubcircuitpb.com](mailto:support@clubcircuitpb.com). {/* src: src/lib/disputes/report-result.ts:46 */}
 
 ### "That photo is still too large after shrinking. Try a different one."
 **Cause:** The photo file is too big.
-**Fix:** Take a new photo, or crop the one you have, and try again. {/* src: src/app/match/[matchId]/actions.ts:239 */}
+**Fix:** Take a new photo, or crop the one you have, and try again. {/* src: src/app/match/[matchId]/actions.ts:62 */}
 
 ### "Say what the photo shows …"
 **Cause:** You left the photo's description blank.
@@ -68,6 +107,7 @@ The league office may ask both captains for more information, and you'll get an 
 ## Related articles
 
 - [Enter and confirm match scores](/captains/enter-and-confirm-scores)
+- [Scores and standings](/rules/rally-21/scores-and-standings), in the rulebook
 - [Find and contact other captains](/captains/contact-other-captains)
 
-{/* Last verified: 2026-11-01 against leagues-app bb4f3b5 */}
+{/* Last verified: 2026-11-02 against leagues-app ba29829 */}

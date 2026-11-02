@@ -13,7 +13,7 @@ The top four teams in each division's standings at the end of the regular season
 
 ## When are the playoffs?
 
-On one day in week 8, at a neutral club ClubCircuit chooses before the regular season ends. The semifinals are played first and the final follows the same day. ClubCircuit publishes the date with the season schedule; plan your availability from the start, because it can't be moved.
+On one day in week 8, at a neutral club ClubCircuit chooses before the regular season ends. The semifinals are played first and the final follows the same day. ClubCircuit publishes the date with the season schedule; plan your availability from the start, because the final can't be moved.
 
 ## Who plays whom?
 
@@ -52,11 +52,15 @@ Round by round, at the venue, in the ClubCircuit app. The teams take turns going
 
 The higher seed leads rounds 1 and 3 and responds in rounds 2 and 4, so it has the final response of the match. The lower seed leads rounds 2 and 4.
 
-Each captain has 5 minutes: the leader from the end of the previous round (or the scheduled start, for round 1), and the responder from when the leader submits. If the app isn't working, captains write their pairs on paper and swap them in the same order.
+Each captain has 5 minutes: the leader from when either captain taps **Round 1 is finished** (or 2, or 3) in the app, or from the scheduled start for round 1, and the responder from when the leader submits. Until the round before is marked finished, the next leader's clock hasn't started. If the app isn't working, captains write their pairs on paper and swap them in the same order.
+
+{/* src: leagues-app src/lib/playoffs/turns.ts (leaderClockStart, turnState); src/lib/playoffs/round-lineup.ts (endRound); src/app/match/[matchId]/lineup/playoff-rounds.tsx ("Round {n} is finished"); rr-rally-21 preset playoffTurnMinutes: 5 */}
 
 <Warning>
-  **Costs a game:** a lineup or response more than 5 minutes late costs that team 1 game.
+  **Costs a game:** a lineup or response that takes more than its 5 minutes costs that team 1 game.
 </Warning>
+
+{/* src: src/lib/playoffs/turns.ts (isLateTurn: late once the turn's minutes are up); rr-rally-21 preset playoffLateTurnGraceMinutes: 0, playoffLateTurnPenaltyGames: 1 */}
 
 ## Who is the champion?
 
@@ -71,7 +75,9 @@ It's settled by a deciding round of three games, played at the same time on thre
 3. **Games are rally scoring to 15,** win by 2, with ends switched at 8.
 4. **The team that wins two of the three games** wins the match.
 
-If the deciding round can't be played, for example because court time runs out, the team with the better point differential across the 16 games wins. If that's level too, the higher seed wins. A team that deliberately delays or avoids the deciding round forfeits the match.
+If the deciding round can't be played, for example because court time runs out, the team with the better point differential across the 16 games wins. If that's level too, the higher seed wins. A team that deliberately delays or avoids the deciding round forfeits the match; the league office decides this.
+
+{/* src: rr-rally-21 preset playoffDeciderFallback [POINT_DIFF, HIGHER_SEED]; src/lib/playoffs/decider.ts; docs/adr/0081-finals-day.md (the league office records a decider that can't be played; forfeiting a team that avoids it is by hand) */}
 
 ## What if a penalty causes the tie?
 
@@ -82,8 +88,10 @@ If the deciding round can't be played, for example because court time runs out, 
 
 A player can play in the playoffs without a penalty if they've played at least 14 regular-season games in that division. Playoff games don't count toward the 14.
 
-- **Games that count:** games forfeited for a genuine reason, such as an injury, still count for the players scheduled in them.
-- **Games that don't count:** games from a match that was forfeited entirely, or games forfeited on purpose to build up the count.
+- **Games that count:** games forfeited because of an injury or an emergency still count for the players scheduled in them.
+- **Games that don't count:** games from a match that was forfeited entirely, and any game forfeited for another reason.
+
+{/* src: src/lib/playoffs/eligibility.ts (gameCounts); rr-rally-21 preset playoffEligibilityMinGames: 14, playoffGamesCountTowardMinimum: false, playoffEligibilityForfeitReasons: [INJURY, EMERGENCY] */}
 
 ## Can we use substitutes in the playoffs?
 
@@ -91,14 +99,16 @@ A player can play in the playoffs without a penalty if they've played at least 1
 | --- | --- | --- |
 | Has 14+ regular-season games for your team | Yes | None |
 | A regular on your club's lower-division team with 14+ games there | Yes | None |
-| A regular on your club's higher-division team | No | Every game they play is forfeited |
-| Anyone else: a teammate short of 14 games, a sub-pool player or someone new | Only with ClubCircuit's approval | Half a game per game they play, rounded up |
+| A regular on your club's higher-division team | No | Every game they play is forfeited, once the league office rules on it |
+| Anyone else: a teammate short of 14 games, a sub-pool player or someone new | Only with ClubCircuit's approval | Half a game per game they play, added up for your team in each match, then rounded up |
 
 <Note>
-  **Example:** a sub-pool player plays 3 games for you in a semifinal. That's 1.5 games, rounded up to a 2-game penalty.
+  **Example:** in a semifinal, one sub-pool player plays 3 games for you and another plays 2. That's 5 games, or 2.5, rounded up to a 3-game penalty. Your team's total for the match is rounded up, not each player's share.
 </Note>
 
 A player who is a regular on two of your club's teams counts as a regular in both divisions, as long as they have 14 games in the one they're playing.
+
+{/* src: src/lib/playoffs/eligibility.ts (playoffStanding, subPenaltyGames: totalled per team per match, then rounded); src/lib/playoffs/round-lineup.ts (PLAYOFF_SUB penalty total per match and team; a higher-division regular is a warning, not an automatic forfeit); docs/adr/0081-finals-day.md "Not built" (the league office uses "rule a substitute ineligible"); rr-rally-21 preset playoffSubPenaltyGamesPerGame: 0.5, playoffSubPenaltyRoundUp: true */}
 
 ## What do we submit before finals day?
 
@@ -110,10 +120,16 @@ Your playoff roster: up to 6 men and 6 women who will be there. Submit it in Clu
 
 ## Can a playoff match be rescheduled?
 
-Only if both teams agree and ClubCircuit approves. Moving a match earlier is preferred; moving it later needs a good reason, since it can hold up the final.
+A semifinal can be, if both captains agree and ClubCircuit approves. ClubCircuit approves every playoff move, however far ahead it's agreed. The new date has to be before the final. Moving a match earlier is preferred; moving it later needs a good reason, since it can hold up the final.
 
-The final's date is fixed. If a finalist can't play, it forfeits, and ClubCircuit may offer its place to the team it beat in the semifinal.
+Your captain proposes the new dates in ClubCircuit, the same way as any reschedule. See [Ask to reschedule a match](/captains/request-a-reschedule).
+
+{/* src: src/lib/reschedule/policy.ts (checkProposal, approvalRoute: LEAGUE for every playoff match; completionDeadline: before the final); rr-rally-21 preset playoffReschedulesAllowed: true; docs/adr/0081-finals-day.md "Playoff reschedules" */}
+
+The final's date is fixed and it can't be rescheduled. If a finalist can't play, it forfeits, and ClubCircuit may offer its place to the team it beat in the semifinal. The league office handles this itself.
+
+{/* src: src/lib/reschedule/policy.ts ("The final’s date is fixed, so it can’t be rescheduled."); docs/adr/0081-finals-day.md "Not built" (a finalist who can't play, and offering the place to the beaten semifinalist: the league office, by hand) */}
 
 {/* src: Larry's rulebook "ClubCircuit Rulebook — Inaugural Winter Season", tab "Playoffs" (Claude Docs 12b29ca1-72ad-4549-83c4-cc3dc1f3d58f) */}
 
-{/* Last verified: 2026-11-01 against the rulebook as of 1 Nov 2026 */}
+{/* Last verified: 2 November 2026 against leagues-app 346f7a4 */}

@@ -1,51 +1,51 @@
 ---
 title: "Enter and confirm match scores"
 sidebarTitle: "Enter and confirm scores"
-description: "On match day, open the match and tap Scores. Enter each court as it finishes, then tap Submit scores. The other captain taps Confirm result, and the standings update."
-keywords: ["scores", "enter scores", "submit scores", "confirm result", "score entry", "scoresheet", "results", "match result"]
+description: "On match day, open the match and tap Scores. Enter each court as it finishes, then tap Submit scores. A captain of the other team taps Confirm result, and the standings update."
+keywords: ["scores", "enter scores", "submit scores", "confirm result", "score entry", "scoresheet", "results", "match result", "report a problem", "wrong result"]
 ---
 
-To enter scores, open the match on match day and tap the **Scores** tab. Enter each court's score as it finishes; each one saves as you go. When every court is in, tap **Submit scores**. The other captain then taps **Confirm result**, and the standings update.
+To enter scores, open the match on match day and tap the **Scores** tab. Enter each court's score as it finishes; each one saves as you go. When every court is in, tap **Submit scores**. A captain of the other team then taps **Confirm result**, and the standings update.
 
-{/* src: leagues-app src/app/match/[matchId]/page.tsx:516 (Scores tab from match day); src/app/match/[matchId]/scores/scores-entry.tsx:224,343,449; src/lib/scores/mutations.ts:243 (recompute on confirm) */}
+{/* src: leagues-app src/app/match/[matchId]/page.tsx:312-313,578 (Scores tab from match day); src/app/match/[matchId]/scores/scores-entry.tsx:386,522,537; src/lib/scores/mutations.ts (recompute on confirm) */}
 
 **Before you begin**
 
-- Either team's captain can enter the scores. The other team's captain confirms them.
+- Either team's captain can enter the scores. Only a captain of the other team can confirm them. If your team has two captains, your co-captain can't confirm scores your team submitted.
 - Both lineups need players on every court before a score can go in.
 - The **Scores** tab appears from midnight on match day.
 
-{/* src: requireMatchCaptain (src/app/match/[matchId]/scores/actions.ts); src/lib/scores/seats.ts:23,43-45; src/lib/scores/match-day.ts:9 */}
+{/* src: requireMatchCaptain (src/app/match/[matchId]/scores/actions.ts); src/lib/scores/mutations.ts:293-300 (other TEAM confirms, A1); src/app/match/[matchId]/page.tsx:314-318; src/lib/scores/seats.ts; src/lib/scores/match-day.ts:7-10 */}
 
 ## Enter the scores
 
 <Steps>
   <Step title="Open the match">
     On **Home**, tap **Enter scores**. Or scan the QR code on the printed scoresheet.
-    {/* src: src/lib/play/home.ts:416,424; src/app/m/[code]/route.ts:14; src/components/print/scoresheet.tsx ("Scan to enter scores.") */}
+    {/* src: src/lib/play/home.ts:413,421; src/app/m/[code]/route.ts; src/components/print/scoresheet.tsx ("Scan to enter scores.") */}
   </Step>
   <Step title="Tap Scores">
-    Open the **Scores** tab. You see one court at a time, starting with Round 1, Court 1.
-    {/* src: src/app/match/[matchId]/page.tsx:516; scores-entry.tsx:244 */}
+    Open the **Scores** tab. On a phone you see one court at a time, starting with Round 1, Court 1.
+    {/* src: src/app/match/[matchId]/page.tsx:578; scores-entry.tsx:284 */}
   </Step>
   <Step title="Enter the court's score">
     Tap **You** or the other team's side, then type the points.
-    {/* src: scores-entry.tsx:287,306-309 */}
+    {/* src: scores-entry.tsx:329,343-355 (keypad) */}
   </Step>
   <Step title="Move to the next court">
     Tap **Save and next court**. Repeat for every court in every round.
-    {/* src: scores-entry.tsx:334 */}
+    {/* src: scores-entry.tsx:377 */}
   </Step>
   <Step title="Submit">
     On the last court, tap **Submit scores**.
-    {/* src: scores-entry.tsx:343 */}
+    {/* src: scores-entry.tsx:386 */}
   </Step>
 </Steps>
 
-**Result:** You see **Sent to the other captain to confirm.** The match shows **Awaiting confirmation** until they do. {/* src: scores-entry.tsx:125; src/app/match/[matchId]/page.tsx:858 */}
+**Result:** You see **Sent to the other captain to confirm.** The match shows **Awaiting confirmation** until they do. The other team's captains get an email titled **Confirm the scores**, with both teams' names and a **Check and confirm** button. {/* src: scores-entry.tsx:150; src/app/match/[matchId]/page.tsx:936; src/lib/scores/mutations.ts:552-600 (notifyScoresSubmitted: the other team's captains only); src/emails/registry.tsx:1357-1384 (SCORES_SUBMITTED, "Confirm the scores — {{ homeTeamName }} vs {{ awayTeamName }}", "Check and confirm") */}
 
 <Warning>
-  Once you've submitted, don't change any scores. If something's wrong, ask the other captain to raise it instead. See [Dispute a match result](/captains/dispute-a-result). {/* src: scores-entry.tsx:401 (list-view inputs stay enabled while awaiting confirmation); src/lib/scores/mutations.ts (confirm doesn't recompute games won) */}
+  Once you've submitted, the scores are locked and nobody can edit them. A captain of the other team either confirms them or taps **Something’s wrong**. If you spot a mistake yourself, tell them so they can raise it. See [Dispute a match result](/captains/dispute-a-result). {/* src: src/lib/scores/mutations.ts:118-120 ("Submitted means locked (A2)"); scores-entry.tsx:480,490 (inputs disabled while awaiting) */}
 </Warning>
 
 ## Record a forfeited game
@@ -58,27 +58,46 @@ If a game couldn't be played or finished, for example nobody could fill it, a pl
 4. If the game had started, enter the **Score when play stopped**. Leave it blank if it never started.
 5. Tap **Record the forfeit**.
 
-If the team that forfeited was behind, the game stands at that score. Otherwise it's recorded as 1–0 to the other team. A whole-match forfeit, or games played by an ineligible sub, are recorded by the league office. {/* src: src/app/match/[matchId]/scores/forfeit-panel.tsx:58-101; src/lib/scores/forfeit-rules.ts:13-21 (reason labels); src/lib/scores/forfeits.ts:111,156 (whole match and ineligible sub: requireMarketAdminForDivision) */}
+If the team that forfeited was behind, the game stands at that score. Otherwise it's recorded as 1–0 to the other team. A whole-match forfeit, or games played by an ineligible sub, are recorded by the league office. {/* src: src/app/match/[matchId]/scores/forfeit-panel.tsx:58-101; src/lib/scores/forfeit-rules.ts (reason labels); src/lib/scores/forfeits.ts (whole match and ineligible sub: requireMarketAdminForDivision) */}
 
-## Confirm the other captain's scores
+## Confirm the other team's scores
 
-When the other captain submits, your **Home** shows **Review and confirm**. Check every court on the **Scores** tab, then tap **Confirm result**. If a score is wrong, tap **Something’s wrong** instead. {/* src: src/lib/play/home.ts:403-405; scores-entry.tsx:449,456 */}
+When the other team submits, you get the **Confirm the scores** email and your **Home** shows **Review and confirm**. Check every court on the **Scores** tab, then tap **Confirm result**. If a score is wrong, tap **Something’s wrong** instead. {/* src: src/emails/registry.tsx:1369,1384; src/lib/play/home.ts:403; scores-entry.tsx:537,544 */}
 
-**Result:** You see **Result confirmed. Standings updated.** Both teams get the result. {/* src: scores-entry.tsx:135; src/lib/scores/mutations.ts:275 (chat line), registry SCORES_CONFIRMED */}
+**Result:** You see **Result confirmed. Standings updated.** Both teams get the result. {/* src: scores-entry.tsx:160; src/lib/scores/mutations.ts:367-410 (SCORES_CONFIRMED to both rosters) */}
 
-If nobody confirms in time, the result may be confirmed automatically. Your league sets whether and when. {/* src: src/lib/scores/auto-confirm.ts:105-119 (Ruleset.autoConfirmAfterWindow, confirmationWindowHours) */}
+If nobody confirms in time, the result may be confirmed automatically. Your league sets whether and when, and the email tells you. {/* src: src/lib/scores/auto-confirm.ts (Ruleset.autoConfirmAfterWindow, confirmationWindowHours); mutations.ts:592-594 (windowLine) */}
 
-If both teams win the same number of games, your league's rules decide the match, for example on point differential. The league office can also apply a game penalty, such as for a late lineup, even after the result is confirmed. If it does, the result and standings update and both teams are told. {/* src: src/lib/scores/decide.ts (Ruleset.matchTieResolution); src/lib/scores/penalties.ts; src/lib/scores/penalty-text.ts:27-37 */}
+If both teams win the same number of games, your league's rules decide the match, for example on point differential. The league office can also apply a game penalty, such as for a late lineup, even after the result is confirmed. If it does, the result and standings update and both teams are told. {/* src: src/lib/scores/decide.ts (Ruleset.matchTieResolution); src/lib/scores/penalties.ts; src/lib/scores/penalty-text.ts */}
+
+## Report a problem with a confirmed result
+
+If a result is already confirmed, by the other captain or automatically, and it's wrong, a captain of either team can report it.
+
+1. Open the match and tap the **Scores** tab.
+2. Tap **Report a problem with this result**.
+3. Under **What’s wrong with the result?**, name the round and court.
+4. Tap **Send to the league office**.
+
+The result stands, and stays in the standings, until the league office rules. Your league may set a time limit for these reports. See [Dispute a match result](/captains/dispute-a-result) for what happens next. {/* src: scores-entry.tsx:424-462 (shown when CONFIRMED), :178; src/lib/disputes/report-result.ts:5-12,44-47 (either team's captain; Ruleset.resultReportWindowHours, null = any time in the season) */}
 
 ## Print a scoresheet
 
-On the match's **Rounds** tab, open **More for this match** and tap **Print scoresheet**. Each team keeps score on paper during the match. Photograph the signed sheet when you're done: if scores are disputed, the signed sheet decides. {/* src: src/app/match/[matchId]/page.tsx:576,581; src/components/print/scoresheet.tsx:186-187 */}
+On the match's **Rounds** tab, open **More for this match** and tap **Print scoresheet**. Each team keeps score on paper during the match. Photograph the signed sheet when you're done: if scores are disputed, the signed sheet decides. {/* src: src/app/match/[matchId]/page.tsx:644,649; src/components/print/scoresheet.tsx */}
 
 ## Why isn't this working?
 
 ### I don't see the Scores tab
 **Cause:** It isn't match day yet, or you're not a captain of either team in this match.
-**Fix:** Check back from midnight on match day. If you should be captain, ask your club's admins. {/* src: src/app/match/[matchId]/page.tsx:276-277; src/lib/scores/match-day.ts:9 */}
+**Fix:** Check back from midnight on match day. If you should be captain, ask your club's admins. {/* src: src/app/match/[matchId]/page.tsx:312-313; src/lib/scores/match-day.ts:7-10 */}
+
+### "These scores are submitted and waiting for the other captain. If a score is wrong, ask them to dispute it."
+**Cause:** You tried to change a score after your team submitted. Submitted scores are locked.
+**Fix:** Ask the other team's captain to tap **Something’s wrong** and say what the score should be. {/* src: src/lib/scores/mutations.ts:120 */}
+
+### I don't see Confirm result
+**Cause:** Your team submitted these scores, perhaps your co-captain did. Only the other team can confirm them. You see **Waiting for the other captain to confirm.** instead.
+**Fix:** Nothing to do. Wait for the other team's captain. {/* src: scores-entry.tsx:526-527; src/app/match/[matchId]/page.tsx:314-318; src/lib/scores/mutations.ts:299 ("Your team submitted these scores, so the other team’s captain confirms them.") */}
 
 ### "A game can’t end level — someone has to win it."
 **Cause:** You entered the same score for both sides.
@@ -94,19 +113,24 @@ On the match's **Rounds** tab, open **More for this match** and tap **Print scor
 
 ### "Enter a score for every game first — … still to go."
 **Cause:** Some courts don't have a score yet.
-**Fix:** Go back through the rounds and fill in the courts that are missing. {/* src: src/lib/scores/resolve.ts:35 */}
+**Fix:** Go back through the rounds and fill in the courts that are missing. {/* src: src/lib/scores/resolve.ts */}
 
 ### "… hasn’t put players on Round …, Court … yet."
 **Cause:** A lineup is missing players for that court, so there's nothing to score.
-**Fix:** Ask the captain whose lineup is short to fill it, or fill your own with **Set your lineup**. {/* src: scores-entry.tsx:255-267 */}
+**Fix:** Ask the captain whose lineup is short to fill it, or fill your own with **Set your lineup**. {/* src: scores-entry.tsx:293-300 */}
+
+### "The time to report a problem with this result has passed."
+**Cause:** Your league's time limit for reporting a confirmed result is over.
+**Fix:** If it's serious, email the league office at [support@clubcircuitpb.com](mailto:support@clubcircuitpb.com). {/* src: src/lib/disputes/report-result.ts:46 */}
 
 ### "That didn’t save — check your signal and try again."
 **Cause:** Your phone lost its connection.
-**Fix:** Move somewhere with better signal and enter that court again. Courts you already saved are kept. {/* src: scores-entry.tsx:102 */}
+**Fix:** Move somewhere with better signal and enter that court again. Courts you already saved are kept. {/* src: scores-entry.tsx:127 */}
 
 ## Related articles
 
 - [Dispute a match result](/captains/dispute-a-result)
+- [Scores and standings](/rules/rally-21/scores-and-standings), in the rulebook
 - [Follow the standings, player standings and playoffs](/players/follow-standings-and-stats)
 
-{/* Last verified: 2026-11-01 against leagues-app bb4f3b5 */}
+{/* Last verified: 2026-11-02 against leagues-app ba29829 */}

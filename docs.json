@@ -29,7 +29,8 @@
               "players/set-your-availability",
               "players/see-your-matches-and-rounds",
               "players/message-your-team",
-              "players/follow-standings-and-stats"
+              "players/follow-standings-and-stats",
+              "players/report-a-conduct-problem"
             ]
           },
           {
@@ -69,7 +70,8 @@
               "captains/manage-your-team",
               "captains/build-and-post-a-lineup",
               "captains/find-a-substitute",
-              "captains/request-a-reschedule"
+              "captains/request-a-reschedule",
+              "captains/opt-in-to-dupr"
             ]
           },
           {
@@ -78,6 +80,13 @@
               "captains/enter-and-confirm-scores",
               "captains/dispute-a-result",
               "captains/contact-other-captains"
+            ]
+          },
+          {
+            "group": "Finals day",
+            "pages": [
+              "captains/submit-your-playoff-roster",
+              "captains/set-playoff-lineups-round-by-round"
             ]
           }
         ]
@@ -107,6 +116,7 @@
               "clubs/invite-players-to-register",
               "clubs/form-teams-for-a-season",
               "clubs/assign-team-captains",
+              "clubs/opt-a-team-in-to-dupr",
               "clubs/message-your-members"
             ]
           },
