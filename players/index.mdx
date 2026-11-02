@@ -11,7 +11,7 @@ This section is for anyone playing in a ClubCircuit season. You play for your ho
 
 If you also captain a team or help run your club, those jobs have their own sections.
 
-To get back here from the app, open your account menu and tap **Help**. {/* src: leagues-app src/components/shell/account-menu.tsx (Help row → /help) */}
+To get back here from the app on a computer, open your account menu and tap **Help**. {/* src: leagues-app src/components/shell/account-menu.tsx:138-142 (Help row → /help; not in the phone account sheet, src/components/shell/play-chrome.tsx:384-394) */}
 
 ## Start here
 
@@ -34,6 +34,9 @@ To get back here from the app, open your account menu and tap **Help**. {/* src:
   <Card title="Standings and playoffs" icon="trophy" href="/players/follow-standings-and-stats">
     Where your team stands, player standings and the bracket.
   </Card>
+  <Card title="Report a conduct problem" icon="flag" href="/players/report-a-conduct-problem">
+    Tell the league office privately about behaviour at a match.
+  </Card>
 </Columns>
 
 ## Subbing
@@ -54,19 +57,19 @@ To get back here from the app, open your account menu and tap **Help**. {/* src:
     Photo, a line about you, and who can see it.
   </Card>
   <Card title="Add your DUPR ID" icon="hash" href="/players/connect-dupr">
-    Your DUPR ID and doubles rating.
+    Your DUPR ID, and where your rating comes from.
   </Card>
   <Card title="Matches in your calendar" icon="calendar-plus" href="/players/add-matches-to-your-calendar">
     Subscribe once and every match updates itself.
   </Card>
   <Card title="Notifications" icon="bell" href="/players/manage-notifications">
-    Email, in-app, push and quiet hours.
+    Email, in-app, push, quiet hours and unsubscribing.
   </Card>
   <Card title="Perks card" icon="credit-card" href="/players/use-your-perks-card">
     Show your card and use offers at clubs and partners.
   </Card>
   <Card title="Court fees" icon="receipt" href="/players/pay-court-fees-and-see-payments">
-    Save a card, pay a fee and see what you've paid.
+    Save a card, pay a fee and see your receipts.
   </Card>
   <Card title="Your data" icon="download" href="/players/export-or-delete-your-data">
     Download your data or delete your account.
@@ -86,4 +89,4 @@ To get back here from the app, open your account menu and tap **Help**. {/* src:
 
 Can't find what you need? Email [support@clubcircuitpb.com](mailto:support@clubcircuitpb.com).
 
-{/* Last verified: 2026-11-01 against leagues-app 5b16e55 */}
+{/* Last verified: 2026-11-02 against leagues-app 36d0f59 */}

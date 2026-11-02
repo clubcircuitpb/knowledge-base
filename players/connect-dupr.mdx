@@ -1,69 +1,79 @@
 ---
 title: "Add your DUPR ID"
 sidebarTitle: "Add your DUPR ID"
-description: "Open your account menu, tap Profile, and fill in DUPR ID and DUPR doubles rating under About you. Then tap Save profile."
-keywords: ["DUPR", "DUPR ID", "rating", "doubles rating", "connect DUPR", "link DUPR", "skill level"]
+description: "Open your account menu, tap Profile, type your DUPR ID under About you and tap Save profile. Your rating comes from the league office's DUPR checks."
+keywords: ["DUPR", "DUPR ID", "rating", "doubles rating", "connect DUPR", "link DUPR", "skill level", "change DUPR ID"]
 ---
 
-To add your DUPR ID, open your account menu and tap **Profile**. Under **About you**, fill in **DUPR ID** and, if you have one, **DUPR doubles rating**. Then tap **Save profile**.
+To add or change your DUPR ID, open your account menu and tap **Profile**. Under **About you**, type it into **DUPR ID** and tap **Save profile**. You don't type your rating: it comes from DUPR, through the league office's checks.
 
-{/* src: leagues-app src/components/shell/account-control.tsx:124; src/app/me/profile/page.tsx:191-198,227 */}
+{/* src: leagues-app src/lib/nav/personal-rows.ts:21; src/app/me/profile/page.tsx:186-194,219; src/app/me/actions.ts:63-65 */}
 
 **Before you begin**
 
 - You need a player profile. You get one when you register for a season.
-- Find your DUPR ID in the DUPR app, under your profile.
+- Find your DUPR ID in the DUPR app, under your profile. It's the letters and numbers under your name.
 
-{/* src: src/app/me/profile/page.tsx:60,192 */}
+{/* src: src/app/me/profile/page.tsx:63-64,187; src/app/me/actions.ts:50 */}
 
-## Add your DUPR ID and rating
+## Add or change your DUPR ID
 
 <Steps>
   <Step title="Open your profile">
-    Open your account menu and tap **Profile**. On a phone, tap your initials at the top of the screen first.
-    {/* src: account-control.tsx:124 */}
+    Open your account menu and tap **Profile**. On a phone, tap your initials at the top of the screen, tap **Profile**, then tap **Edit your profile**.
+    {/* src: src/lib/nav/personal-rows.ts:21; src/components/shell/play-chrome.tsx:386; src/app/player/[playerId]/page.tsx:205-207 */}
   </Step>
-  <Step title="Find the DUPR fields">
-    Scroll to **About you**. If your profile isn't finished yet, you can also tap **Add your DUPR ID** in the **Finish your profile** box to jump there.
-    {/* src: page.tsx:33,178,191 */}
+  <Step title="Find DUPR ID">
+    Scroll to **About you**. If your profile isn't finished yet, you can tap **Add your DUPR ID** in the **Finish your profile** box to jump there.
+    {/* src: src/app/me/profile/page.tsx:29,136,175,186 */}
   </Step>
-  <Step title="Enter your DUPR ID">
-    Type your ID into **DUPR ID**. Copy it from the DUPR app exactly.
-    {/* src: page.tsx:192 */}
-  </Step>
-  <Step title="Enter your doubles rating">
-    Type your doubles rating into **DUPR doubles rating**. Leave it blank if you don't have one yet.
-    {/* src: page.tsx:195 */}
+  <Step title="Type your DUPR ID">
+    Type your ID into **DUPR ID**, exactly as it appears in the DUPR app.
+    {/* src: src/app/me/profile/page.tsx:187 */}
   </Step>
   <Step title="Save">
     Tap **Save profile**.
-    {/* src: page.tsx:227 */}
+    {/* src: src/app/me/profile/page.tsx:219 */}
   </Step>
 </Steps>
 
-**Result:** You see **Saved.**, and the card at the top of your profile shows your DUPR rating. {/* src: page.tsx:105-107,123 */}
+**Result:** You see **Saved.** Your DUPR ID is on your profile. Next to it, **DUPR doubles rating** shows your checked rating, or **Not checked yet** until the league office checks it. {/* src: src/app/me/profile/page.tsx:97-101,191-193 */}
 
-## Why it matters
+## Where your rating comes from
 
-Your DUPR tells captains where you sit, and some seasons use ratings to decide which division you can play in. Each season sets its own rating rules, so check your season's rules in the app before you register. {/* src: page.tsx:33; docs/02-rules-and-eligibility.md */}
+You can’t edit your rating in ClubCircuit. The league office checks it against DUPR, either by hand or with a DUPR lookup, and your profile shows what they found. {/* src: src/app/me/profile/page.tsx:193; src/app/me/actions.ts:63-65; src/lib/dupr/lookup.ts:8-15 */}
+
+If you change your DUPR ID, it counts as unconfirmed until the next check, and the change is recorded. {/* src: src/app/me/actions.ts:65-76 (duprVerifiedAt cleared, audited) */}
+
+## Why your DUPR ID matters
+
+- **Your rating:** it tells captains where you sit. Some seasons also use your rating to decide which division you can play in. Each season sets its own rating rules, so check your season's rules in the app before you register. {/* src: src/app/me/profile/page.tsx:29; src/app/join/[season]/[division]/page.tsx:69-75 */}
+- **Your games on DUPR:** your games count toward DUPR only if both teams in the match opted in. See [Do our games count toward DUPR?](/rules/rally-21/scores-and-standings). When they do, a game can only be uploaded to DUPR once all four players in it have a DUPR ID on ClubCircuit. {/* src: src/lib/dupr/submission-rules.ts:1-12; src/lib/dupr/results.ts:47-48,178 */}
+
+People signed in to ClubCircuit can see your DUPR ID on your player page, so they can find you on DUPR. {/* src: src/app/player/[playerId]/page.tsx:239-240 */}
 
 ## Why isn't this working?
 
-### "A DUPR rating is between 2.00 and 8.00. Leave it blank if you don’t have one."
-**Cause:** The rating you typed isn't a DUPR rating, or has a typo.
-**Fix:** Copy your doubles rating from the DUPR app, or leave the box blank. {/* src: src/app/me/actions.ts:56 */}
+### "That doesn’t look like a DUPR ID. It’s the letters and numbers under your name in the DUPR app."
+**Cause:** What you typed isn't a DUPR ID. It might be your rating, your name or have a typo.
+**Fix:** Open the DUPR app, copy the ID under your name, and paste it into **DUPR ID**. {/* src: src/app/me/actions.ts:46-52 */}
+
+### I want to type in my rating
+**Cause:** Players set only their DUPR ID. Your rating comes from DUPR.
+**Fix:** Make sure your **DUPR ID** is right. If your rating is still wrong or says **Not checked yet** for a long time, email [support@clubcircuitpb.com](mailto:support@clubcircuitpb.com). {/* src: src/app/me/profile/page.tsx:192-193 */}
 
 ### I can't find a Connect DUPR button
 **Cause:** ClubCircuit doesn't sign in to DUPR for you. You add your ID by typing it in.
-**Fix:** Follow the steps above. {/* src: src/app/me/profile/page.tsx:191-198 (plain fields, no connect flow) */}
+**Fix:** Follow the steps above. {/* src: src/app/me/profile/page.tsx:186-194 (plain field, no connect flow) */}
 
-### My rating on ClubCircuit is different from DUPR
-**Cause:** Your rating on DUPR changes as you play. ClubCircuit shows what's saved on your profile.
-**Fix:** Update **DUPR doubles rating** and tap **Save profile**. {/* src: src/app/me/profile/page.tsx:123,195 */}
+### My games didn't show up on DUPR
+**Cause:** Either one of the teams didn't opt in to DUPR, or a player in the game has no DUPR ID on ClubCircuit.
+**Fix:** Ask your captain whether both teams opted in. Check your own **DUPR ID** is saved. {/* src: src/lib/dupr/results.ts:47-48,178 */}
 
 ## Related articles
 
 - [Edit your profile and choose who can see it](/players/edit-your-profile-and-privacy)
 - [Register for a season](/players/register-for-a-season)
+- [Scores and standings (league rules)](/rules/rally-21/scores-and-standings)
 
-{/* Last verified: 2026-11-02 against leagues-app bb4f3b5 */}
+{/* Last verified: 2026-11-02 against leagues-app 36d0f59 */}

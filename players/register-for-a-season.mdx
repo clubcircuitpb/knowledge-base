@@ -34,8 +34,8 @@ To register for a season, go to [app.clubcircuitpb.com/register](https://app.clu
     {/* src: registration-form.tsx:148-152 (invitation: "Invited by {club}", "Not playing for {club}?"), :158,175 */}
   </Step>
   <Step title="Fill in your details">
-    Enter your name, **Date of birth**, gender and **Jersey size**, plus your **DUPR ID** and rating if asked. Your phone number is optional, and only the league office sees it.
-    {/* src: registration-form.tsx:197-291 */}
+    Enter your name, **Date of birth**, gender and **Jersey size**, plus your **DUPR ID** and **DUPR doubles rating** if asked. Your phone number is optional, and only the league office sees it. If the league office has already checked your rating, that checked rating is the one used, whatever you type.
+    {/* src: registration-form.tsx:197-291; src/lib/registration/finalize.ts:166-177 (stored rating wins; S7) */}
   </Step>
   <Step title="Accept the agreements">
     Tick the three boxes for the **Participation Waiver**, **Privacy Policy** and **Terms of Use & Participation**.
@@ -114,8 +114,16 @@ If you pick a different division or club, or **I don’t have a club — find me
 **Fix:** You can still sign up to sub for teams that need players. Look for **Sign up to sub** on the registration page. {/* src: src/lib/registration/finalize.ts:142; src/app/register/page.tsx:243 */}
 
 ### A division says "Not eligible"
-**Cause:** Something about your rating, age, gender or past results doesn't fit that division's rules for this season. The reason is shown under the division.
-**Fix:** Read the reason and pick a division that fits. If the reason is wrong, for example your rating is out of date, fix it and try again, or email support. {/* src: src/app/register/page.tsx:183,265; src/lib/rules/rules/registration.ts (eligibility refusals) */}
+**Cause:** Something about your rating, age, gender, past results or unpaid court fees doesn't fit that division's rules for this season. The reason is shown under the division.
+**Fix:** Read the reason and pick a division that fits. If the reason is wrong, for example your rating is out of date, email [support@clubcircuitpb.com](mailto:support@clubcircuitpb.com). {/* src: src/app/register/page.tsx:262-276; src/lib/rules/rules/registration.ts (eligibility refusals) */}
+
+### "You have … in unpaid court fees from earlier matches."
+**Cause:** You owe court fees from earlier matches. They have to be paid before you can register.
+**Fix:** Tap **Go to Payments** under the message, pay the fees, then come back. You can register straight away. See [Pay a court fee](/players/pay-court-fees-and-see-payments). {/* src: src/lib/rules/rules/registration.ts:37-48 (COURT_FEE_UNPAID, link Payments); src/app/register/page.tsx:271-276 */}
+
+### "… needs an active DUPR rating, and we haven’t confirmed yours yet."
+**Cause:** That division needs an active DUPR rating, and the league office hasn't checked yours yet.
+**Fix:** Add your DUPR ID to your profile so the league office can check it, or register for a division that doesn't require one. See [Add your DUPR ID](/players/connect-dupr). {/* src: src/lib/rules/rules/registration.ts:135-140 (RATING_ACTIVE_REQUIRED) */}
 
 ### "ClubCircuit is for players … and over, so you can’t register yet."
 **Cause:** The date of birth you entered is under the minimum age for this league.
@@ -125,9 +133,9 @@ If you pick a different division or club, or **I don’t have a club — find me
 **Cause:** The DUPR rating you entered is outside the division's range.
 **Fix:** Pick a division that fits your rating, or check the number you typed. If you don't have a rating yet, leave it blank. {/* src: registration-form.tsx:419,422 */}
 
-### "A DUPR rating is between 2.00 and 8.00. Leave it blank if you don’t have one."
-**Cause:** The rating you typed isn't a real DUPR rating.
-**Fix:** Copy your doubles rating from the DUPR app, or leave the field blank. {/* src: src/lib/registration/finalize.ts:166 */}
+### "A DUPR rating is between 1.000 and 8.000. Check the one you entered, or leave it blank if you don’t have one."
+**Cause:** The rating you typed isn't on DUPR's scale.
+**Fix:** Copy your doubles rating from the DUPR app, or leave the field blank. {/* src: src/lib/dupr/scale.ts:6-13 (DUPR's own scale, not a league rule); src/lib/registration/finalize.ts:170 */}
 
 ### "Tick the box to accept the Participation Waiver — you need to accept it to play."
 **Cause:** One of the agreement boxes isn't ticked.
@@ -151,4 +159,4 @@ If you pick a different division or club, or **I don’t have a club — find me
 - [See your next match and which rounds you’re playing](/players/see-your-matches-and-rounds)
 - [Invite your players and captains to register](/clubs/invite-players-to-register) (for club admins)
 
-{/* Last verified: 2026-11-01 against leagues-app 1ad2ec6 (branch claude/nifty-keller-5d7kep, main merged) */}
+{/* Last verified: 2026-11-02 against leagues-app 36d0f59 */}
