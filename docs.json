@@ -50,7 +50,8 @@
             "pages": [
               "captains/index",
               "captains/report-matches-to-dupr",
-              "captains/send-your-playoff-roster"
+              "captains/send-your-playoff-roster",
+              "captains/set-playoff-round-lineups"
             ]
           }
         ]

@@ -1,0 +1,82 @@
+---
+title: "Set your pairs for each playoff round"
+sidebarTitle: "Set playoff round pairs"
+description: "In a playoff match, open the match and tap Playoff rounds. When it's your turn, pick a pair for each court and tap Submit round. Captains take turns leading, and each has a clock."
+keywords: ["playoff rounds", "playoff lineup", "pairs", "courts", "finals day", "round finished", "lead", "clock", "late"]
+---
+
+In a playoff match, open the match and tap **Playoff rounds**. When it’s your turn, pick a pair for each court and tap **Submit round**. Captains take turns to lead, and each has a clock.
+
+{/* src: leagues-app src/app/match/[matchId]/page.tsx (Playoff rounds); src/app/match/[matchId]/rounds/live-rounds.tsx; docs/adr/0078-live-playoff-lineups.md */}
+
+**Before you begin**
+
+- You need to be the captain of one of the two teams.
+- Send your [playoff roster](/captains/send-your-playoff-roster) first. Only players on it appear in the pickers.
+- Your league sets how long each captain’s clock runs and what a late round costs. See your league’s rules in the app.
+
+{/* src: src/lib/playoffs/live.ts submitRoundLineup (requireMatchCaptain; roster check); Ruleset playoffRoundLineupMinutes, playoffLateRoundLineupPenalty */}
+
+## Set a round
+
+<Steps>
+  <Step title="Open Playoff rounds">
+    Open the match and tap **Playoff rounds**.
+    {/* src: src/app/match/[matchId]/page.tsx */}
+  </Step>
+  <Step title="Wait for your turn">
+    One captain leads each round: the higher seed in rounds 1 and 3, the lower seed in rounds 2 and 4. When it’s your turn, the round says **Your turn** with your time left.
+    {/* src: src/lib/playoffs/live-rules.ts leaderOf; live-rounds.tsx ("Your turn.", countdown) */}
+  </Step>
+  <Step title="Pick a pair for each court">
+    For each court, pick two players. The pickers only offer who the court needs: a man and a woman for mixed, two men or two women otherwise.
+    {/* src: live-rounds.tsx (pickers filtered by the court's pairing type); live-rules.ts PLAYOFF_FORMAT */}
+  </Step>
+  <Step title="Submit">
+    Tap **Submit round**. Once submitted, a round can’t be changed.
+    {/* src: live-rounds.tsx ("Submit round N"); live-rules.ts canSubmitRound ("A submitted round can’t be changed.") */}
+  </Step>
+</Steps>
+
+**Result:** if you led, the other captain now sees your pairs and places theirs. If you answered, the courts are set and show for everyone.
+
+{/* src: live.ts submitRoundLineup messages; live-rules.ts visiblePairs */}
+
+## When a round ends
+
+A round ends when its last score is entered, or when a captain or the finals-day lead taps **Round finished**, whichever comes first. The next round’s clock starts then.
+
+{/* src: live-rules.ts roundEndedAt; live-rounds.tsx ("Round finished"); live.ts finishRound */}
+
+## Why isn’t this working?
+
+### It says the other captain leads this round
+
+**Cause:** the other team leads this round, so you answer once they’ve submitted.
+
+**Fix:** wait. The page refreshes on its own, and your form appears when it’s your turn.
+
+{/* src: live-rules.ts canSubmitRound ("The other captain leads this round…") */}
+
+### It says two players have already partnered in this match
+
+**Cause:** partners play together once a match.
+
+**Fix:** pick a different partner for one of them.
+
+{/* src: live-rules.ts roundLineupProblems ("… have already partnered in this match. Partners play together once.") */}
+
+### My round was marked late
+
+**Cause:** you submitted after your clock ran out. A late round costs your team games, applied straight away.
+
+**Fix:** if something stopped you, tell the league office. They can waive it before the result is final.
+
+{/* src: live.ts submitRoundLineup (late → PLAYOFF_LATE_ROUND_LINEUP penalty); docs/adr/0078 decision 4 */}
+
+## Related articles
+
+- [Send your playoff roster](/captains/send-your-playoff-roster)
+- [Help for team captains](/captains)
+
+{/* Last verified: 2026-11-02 against leagues-app b84aca6 */}
