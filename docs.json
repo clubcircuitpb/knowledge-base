@@ -27,7 +27,28 @@
             "group": "Your matches",
             "pages": [
               "players/set-your-availability",
-              "players/see-your-matches-and-rounds"
+              "players/see-your-matches-and-rounds",
+              "players/message-your-team",
+              "players/follow-standings-and-stats"
+            ]
+          },
+          {
+            "group": "Subbing",
+            "pages": [
+              "players/sign-up-to-sub",
+              "players/answer-a-sub-request"
+            ]
+          },
+          {
+            "group": "Your account",
+            "pages": [
+              "players/edit-your-profile-and-privacy",
+              "players/connect-dupr",
+              "players/add-matches-to-your-calendar",
+              "players/manage-notifications",
+              "players/use-your-perks-card",
+              "players/pay-court-fees-and-see-payments",
+              "players/export-or-delete-your-data"
             ]
           }
         ]

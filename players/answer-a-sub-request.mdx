@@ -1,0 +1,95 @@
+---
+title: "Accept or decline a request to sub"
+sidebarTitle: "Answer a sub request"
+description: "To answer a request to sub, tap Accept the spot or Can’t this time in the email, sign in, then confirm on the page. In the app, open Subbing and tap I can play or Not this one. First to accept gets the spot."
+keywords: ["sub", "substitute", "sub request", "fill in", "accept the spot", "decline", "can't this time", "subbing"]
+---
+
+To answer a request to sub, tap **Accept the spot** or **Can’t this time** in the email, then tap the same button on the page that opens. You only need to sign in to accept. You can also answer in the app: open **Subbing** and tap **I can play** or **Not this one**. The first eligible player to accept gets the spot.
+
+{/* src: leagues-app src/emails/registry.tsx:547,550; src/app/s/[token]/offer-responder.tsx:61,69,75,78; src/app/s/[token]/page.tsx:83 */}
+
+**Before you begin**
+
+- You need to be signed up to sub. See [Sign up to sub for other teams](/players/sign-up-to-sub).
+- To accept, sign in with the **same email address the request was sent to**. A request is for one player only.
+- Answer quickly. Requests close when the match starts, or as soon as someone else accepts.
+
+{/* src: src/app/s/[token]/page.tsx:85-91 (must be signed in as the offered player); src/lib/subs/offer.ts:124,183-218; src/app/s/[token]/page.tsx:47-48 */}
+
+## Accept from the email
+
+<Steps>
+  <Step title="Open the email">
+    Open the email with **Can you sub?** in the subject. It says which team is short, when and where the match is, and your opponent.
+    {/* src: src/emails/registry.tsx:522-524 */}
+  </Step>
+  <Step title="Tap Accept the spot">
+    Tap **Accept the spot**. A page titled **Can you sub in?** opens.
+    {/* src: src/emails/registry.tsx:547; src/app/s/[token]/page.tsx:78 */}
+  </Step>
+  <Step title="Sign in if asked">
+    If you're not signed in, tap **Sign in to accept**. After you sign in, you come back to the offer.
+    {/* src: src/app/s/[token]/page.tsx ("To accept, sign in as the player this offer was sent to." · "Sign in to accept" → /login?next=/s/<token>) */}
+  </Step>
+  <Step title="Confirm on the page">
+    Tap **Accept the spot** on the page.
+    {/* src: src/app/s/[token]/offer-responder.tsx:75 */}
+  </Step>
+</Steps>
+
+**Result:** The page says you've been added to the team for this match and your captain has been told. You're marked as available for that match, and your captain puts you into rounds when they build the lineup. {/* src: src/app/s/[token]/offer-responder.tsx:25; src/lib/subs/offer.ts:221-248,283-301 */}
+
+## Accept or decline in the app
+
+Open the account menu and select **Subbing**, or tap **See the offer** on your **Home** page. Under **Open requests you fit**, tap **I can play** or **Not this one**. {/* src: src/components/shell/account-control.tsx (Subbing row); src/lib/play/needs-you.ts:169-171; src/app/subs/page.tsx:101; offer-responder.tsx:61,69 */}
+
+## Decline from the email
+
+Tap **Can’t this time** in the email, then tap **Can’t this time** on the page. You don't need to sign in. The page says **Thanks for letting us know. No problem.** Declining doesn't affect future requests. {/* src: src/emails/registry.tsx:550; src/app/s/[token]/offer-responder.tsx (declineOnly for anyone with the link), :45 */}
+
+## If the division charges a sub activation
+
+Joining as a sub is free, but some divisions charge a one-time activation before your first match there. If one applies, you'll see the amount when you accept:
+
+1. Tap **Pay now** and pay on Stripe's secure page.
+2. Open the offer again and tap **Accept the spot** again.
+
+The spot isn't held while you pay. If someone else accepts first, your activation still covers your next match in that division. {/* src: src/app/subs/page.tsx:57,60; src/app/s/[token]/page.tsx:83; offer-responder.tsx:100; src/lib/subs/offer.ts:153-174 (Ruleset.subActivationFeeCents / Season.subFeeCents); docs/adr/0058-substitute-activation-per-division.md */}
+
+## Why isn't this working?
+
+### "Someone else has already taken this spot."
+**Cause:** Another sub accepted first. The first player to accept gets the spot.
+**Fix:** Nothing to do. We'll let you know next time a team needs you. {/* src: src/lib/subs/offer.ts:195; src/emails/registry.tsx:595-597 */}
+
+### "This request has closed"
+**Cause:** The match has already started.
+**Fix:** Nothing to do. Watch for the next request. {/* src: src/app/s/[token]/page.tsx:47-48 */}
+
+### "That offer was sent to a different player."
+**Cause:** You're signed in with a different account from the one the request was sent to.
+**Fix:** Sign out, then sign in with the email address the request came to. {/* src: src/lib/subs/offer.ts:124; src/app/s/[token]/page.tsx:89 */}
+
+### I only see Can’t this time on the page
+**Cause:** You're not signed in as the player the request was sent to. Anyone with the link can decline, but only that player can accept.
+**Fix:** Tap **Sign in to accept** and sign in with the email the request was sent to. You come back to the offer. {/* src: src/app/s/[token]/page.tsx (declineOnly + Sign in to accept with next) */}
+
+### "You’ve already got … sub appearances in …"
+**Cause:** You've reached the most times a sub can play in that division this season. Your league sets this limit.
+**Fix:** To keep playing in that division, register for a team's roster. Open **Subbing** and look for **Join a roster**. {/* src: src/lib/subs/offer.ts:146 (Ruleset.maxSubAppearancesPerTeam / subAppearanceScope) */}
+
+### "…payments aren’t set up yet — contact the league office."
+**Cause:** The division charges a sub activation, but online payment isn't switched on yet.
+**Fix:** Email [support@clubcircuitpb.com](mailto:support@clubcircuitpb.com) and say which match the request was for. {/* src: src/lib/subs/offer.ts:162,174 */}
+
+### "Offer not found"
+**Cause:** The link was cut off or mistyped, or the captain withdrew the request.
+**Fix:** Open **Subbing** in the app to see the requests that are still open for you. {/* src: src/app/s/[token]/page.tsx:36-37 */}
+
+## Related articles
+
+- [Sign up to sub for other teams](/players/sign-up-to-sub)
+- [See your next match and which rounds you’re playing](/players/see-your-matches-and-rounds)
+
+{/* Last verified: 2026-11-01 against leagues-app 5873526 */}
