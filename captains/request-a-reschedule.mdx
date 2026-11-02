@@ -81,9 +81,9 @@ Your league decides whether playoff matches can be moved. When it allows it, you
 - **The new date has to be before the final.** The form shows the latest date you can offer.
 - **The final can't be moved.** Its date is fixed, so the form shows "The final’s date is fixed, so it can’t be rescheduled." instead of the date fields.
 
-A playoff move counts as one of your team's reschedules for the season, like any other. For the full rule, see [Playoffs](/rules/rally-21/playoffs) in the rulebook.
+A playoff move doesn't use up your team's reschedules for the season. The form says so in place of the count. For the full rule, see [Playoffs](/rules/rally-21/playoffs) in the rulebook.
 
-{/* src: src/lib/reschedule/policy.ts:79-83 (playoffReschedulesAllowed; CHAMPIONSHIP refused), :60-61 (completionDeadline: before the final), :113-115 (playoff note), :86-88 (allowance applies), :144 (approvalRoute LEAGUE for playoffs); src/lib/reschedule/flow.ts:83-91 (finalAt), :126-150 (blockers, deadlineLabel), :285-286; captains-directory.tsx:306-317; docs/adr/0081-finals-day.md "Playoff reschedules" */}
+{/* src: src/lib/reschedule/policy.ts:79-83 (playoffReschedulesAllowed; CHAMPIONSHIP refused), :60-61 (completionDeadline: before the final), :113-115 (playoff note), :81-86 (playoff moves outside the allowance); flow.ts usedThisSeason (isPlayoff: false), :144 (approvalRoute LEAGUE for playoffs); src/lib/reschedule/flow.ts:83-91 (finalAt), :126-150 (blockers, deadlineLabel), :285-286; captains-directory.tsx:306-317; docs/adr/0081-finals-day.md "Playoff reschedules" */}
 
 ## Why isn't this working?
 
@@ -116,7 +116,7 @@ A playoff move counts as one of your team's reschedules for the season, like any
 **Fix:** If an agreed date no longer works, email the league office at [support@clubcircuitpb.com](mailto:support@clubcircuitpb.com). {/* src: src/lib/reschedule/flow.ts:357 */}
 
 ### "Your team has used its … reschedules this season."
-**Cause:** Your team has used all the reschedules your league allows this season.
+**Cause:** Your team has used all the reschedules your league allows this season. This applies to regular-season matches only.
 **Fix:** Find a sub if you can. If you still can't play, email [support@clubcircuitpb.com](mailto:support@clubcircuitpb.com). {/* src: src/lib/reschedule/policy.ts:86-88 */}
 
 ### "… is too late — rescheduled matches must be played …"
@@ -154,4 +154,4 @@ A playoff move counts as one of your team's reschedules for the season, like any
 - [Find and contact other captains](/captains/contact-other-captains)
 - [Find a sub when you're short](/captains/find-a-substitute)
 
-{/* Last verified: 2 November 2026 against leagues-app cf1ea20 */}
+{/* Last verified: 2 November 2026 against leagues-app 346f7a4 */}
