@@ -1,0 +1,97 @@
+---
+title: "Earn badges and see your Court Cred"
+sidebarTitle: "Badges and Court Cred"
+description: "Open your account menu and tap Court Cred to see your badges, the ones you're closest to and where you stand this season. Tap See all for every badge and how to earn it."
+keywords: ["badges", "Court Cred", "achievements", "awards", "trophies", "stamps", "pin badge", "rating milestone", "badge guide", "player card"]
+---
+
+To see your badges, open your account menu and tap **Court Cred**. It shows your newest badges, the two you're closest to and where you stand this season. Tap **See all** for every badge and how to earn it. Badges (also called achievements) are awarded on their own after each confirmed match and each weekly DUPR refresh.
+
+{/* src: leagues-app src/components/shell/account-control.tsx (Court Cred row); src/app/me/court-cred/page.tsx; src/app/me/court-cred/badges/page.tsx ("How badges work") */}
+
+**Before you begin**
+
+- You need to be signed in as a player.
+- Badges count *games*. A game is one pairing on one court in one round. A *match* is the whole evening against the other club.
+
+{/* src: src/app/me/court-cred/guard.ts (requirePlayer); src/lib/badges/registry.ts (badges count games; ADR 0075 §1) */}
+
+## See your badges
+
+<Steps>
+  <Step title="Open Court Cred">
+    Open your account menu and tap **Court Cred**. On a phone, tap your initials at the top of the screen first. It's also on your **Profile**.
+    {/* src: account-control.tsx (personal rows); src/app/me/profile/page.tsx (Court Cred link) */}
+  </Step>
+  <Step title="Check what's new">
+    A new badge shows at the top as **New badge unlocked**. Under **Badges**, you'll see the ones you've earned and the two you're closest to, with how far along you are.
+    {/* src: src/app/me/court-cred/page.tsx (banner, Badges panel, closest two with progress) */}
+  </Step>
+  <Step title="See every badge">
+    Tap **See all** to open the badge guide. Tap **Earned**, **In progress** or **Locked** to filter it.
+    {/* src: page.tsx ("{earned} of {total} · See all"); badges/page.tsx (FILTERS: All, Earned, In progress, Locked) */}
+  </Step>
+  <Step title="Open a badge">
+    Tap any badge to see what it's for. An earned badge shows when you earned it and the match it came from. One you haven't earned yet shows **Not earned yet** and how far along you are.
+    {/* src: src/app/me/court-cred/badges/[badgeKey]/page.tsx */}
+  </Step>
+</Steps>
+
+**Result:** You can see every badge you hold and what it takes to earn the next one. {/* src: badges/page.tsx */}
+
+## Choose the badges on your card
+
+Your card shows up to three badges. Until you choose, it shows your latest best ones.
+
+<Steps>
+  <Step title="Open an earned badge">
+    In **Court Cred**, tap a badge you've earned.
+    {/* src: src/components/badges/badge-tile.tsx */}
+  </Step>
+  <Step title="Pin it">
+    Tap **Pin to my card**. To take it off, open it again and tap **Unpin from my card**.
+    {/* src: [badgeKey]/page.tsx; src/lib/badges/pins.ts (MAX_PINS) */}
+  </Step>
+</Steps>
+
+**Result:** The badge shows under **On your card** in **Court Cred**. {/* src: src/app/me/court-cred/page.tsx ("On your card") */}
+
+## How badges work
+
+- Badges update after every confirmed match.
+- Rating badges update with the weekly DUPR refresh.
+- Badges follow your stats: if a match result is corrected, your badges are recalculated.
+- Rating milestones stay earned even if your rating later dips.
+- Season honors (your finish in the player standings, your team's placement and an unbeaten season) are awarded when the season closes. To earn a league finish, you need to have played in enough of your team's matches to be ranked in the player standings.
+
+{/* src: badges/page.tsx ("How badges work", verbatim); src/lib/badges/evaluate.ts seasonHonors; src/lib/stats/player-standings.ts */}
+
+## Why isn't this working?
+
+### I played but didn't get a badge
+**Cause:** Only confirmed matches count, and rating badges wait for the weekly DUPR refresh. Rating badges also need a DUPR rating on file.
+**Fix:** Ask your captain to check the score was entered and confirmed. For rating badges, check your DUPR ID is on your profile. {/* src: src/lib/badges/load.ts (CONFIRMED only); src/lib/dupr/checks.ts (rating badges after readings) */}
+
+### A badge disappeared
+**Cause:** A match result was corrected, and the badge's rule isn't met any more. **Court Cred** says "A match result was corrected, so your badges were updated." If the badge was on your card, it comes off. Rating milestones never disappear.
+**Fix:** Nothing to do. If the correction is put right, the badge comes back. {/* src: src/app/me/court-cred/page.tsx (correction note); src/lib/badges/run.ts (revoke and unpin); src/lib/badges/diff.ts (rating badges permanent) */}
+
+### "Your card shows 3 badges. Unpin one first, then pin this one."
+**Cause:** Your card already has three badges pinned.
+**Fix:** Open one of them, tap **Unpin from my card**, then pin the new one. {/* src: src/lib/badges/pins.ts */}
+
+### A badge just says "???"
+**Cause:** It's a hidden badge. You see a hint until you earn it.
+**Fix:** Follow the hint. {/* src: badges/page.tsx oneTimeBlock (hidden) */}
+
+### I don't get told when I earn a badge
+**Cause:** Badge notifications are switched off.
+**Fix:** Open **Notifications** and switch **Badges** on. To get them on your phone too, switch on **Push notifications on this device** under **Push**. {/* src: src/lib/notifications/categories.ts (BADGES); src/app/me/notifications/page.tsx:157 ("Push"); src/components/pwa/push-toggle.tsx:89 */}
+
+## Related articles
+
+- [Follow the standings, player standings and playoffs](/players/follow-standings-and-stats)
+- [Add your DUPR ID](/players/connect-dupr)
+- [Choose which notifications you get](/players/manage-notifications)
+
+{/* Last verified: 2026-11-02 against leagues-app claude/blissful-johnson-xphh09 */}

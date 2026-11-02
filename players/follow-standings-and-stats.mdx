@@ -45,9 +45,9 @@ To see how your team is doing, tap **Standings**. Your team is marked **YOU**. T
 
 ## See the player standings
 
-On **Standings**, tap **Players**, or open **Leaderboard** from the menu. On a phone, it's in your account menu. **Player standings** ranks every player in the division. Tap **Overall**, **Win %**, **Points per game**, **Clutch**, **Most improved** or **Iron player** to sort by that stat. Your row is marked **You**. {/* src: standings/page.tsx:127-132; src/lib/nav/play.ts seasonBrowseItems (Leaderboard · Playoffs · Clubs in the menu and phone account sheet); src/app/[market]/[season]/leaderboard/page.tsx:107; src/lib/league/leaderboard.ts:117-124 */}
+On **Standings**, tap **Players**, or open **Leaderboard** from the menu. On a phone, it's in your account menu. **Player standings** ranks the players in the division who have played in enough of their team's matches. Your league sets how many, and the note under the list says it. Players are ranked by win %, then games won, then point difference. Players who are level on all three share a place. Tap **Overall**, **Win %**, **Points per game**, **Clutch**, **Most improved** or **Iron player** to sort by that stat. Your row is marked **You**. {/* src: standings/page.tsx:127-132; src/lib/nav/play.ts seasonBrowseItems (Leaderboard · Playoffs · Clubs in the menu and phone account sheet); src/app/[market]/[season]/leaderboard/page.tsx:107; src/lib/league/leaderboard.ts:117-124; src/lib/stats/player-standings.ts (qualify at Ruleset.playerRankMinTeamMatchPct of the team's confirmed matches; win %, games won, point difference; shared places); leaderboard/page.tsx (note under the list: "Ranked by win %, then games won, then point difference. Players who are level share a place.") */}
 
-In the **Stats** view, players need to have played a minimum number of games, set by your league, to be ranked. Players below it are listed without a rank. Switch between **Season** and **Career** to see this season or every season. {/* src: leaderboard/page.tsx:157,303 (Ruleset.playerRankMinGames) */}
+The **Stats** view lists every player who has played, with the same ranks. Players who haven't yet played in enough of their team's matches are listed without a rank. Switch between **Season** and **Career** to see this season or every season. {/* src: leaderboard/page.tsx PlayerStats (places from loadPlayerStandings; "—" for unranked); src/lib/stats/player-standings-load.ts */}
 
 ## Follow the playoffs
 
@@ -71,9 +71,13 @@ Tap a team's name in the standings to open its page, with its **Overview**, **Ro
 **Cause:** No results have been confirmed yet, so there's nothing to rank.
 **Fix:** Check back after the first matches are played and confirmed. {/* src: leaderboard/page.tsx:149 */}
 
-### I'm not ranked in player standings
-**Cause:** In the **Stats** view, you need to have played your league's minimum number of games.
-**Fix:** Switch to the **Table** view, which lists everyone, or keep playing. You're ranked once you reach the minimum. {/* src: leaderboard/page.tsx:157; src/lib/league/leaderboard.ts */}
+### I'm not in the player standings
+**Cause:** You haven't yet played in enough of your team's matches. Your league sets how many, and the note under the list says it. Only confirmed matches count.
+**Fix:** Tap **Stats**, which lists everyone who has played. You're ranked as soon as you've played in enough of your team's matches. {/* src: src/lib/stats/player-standings.ts (qualified = appearances ≥ Ruleset.playerRankMinTeamMatchPct of the team's confirmed matches); src/lib/league/leaderboard.ts (ranked players only); leaderboard/page.tsx (note under the list) */}
+
+### Two players have the same place
+**Cause:** They're level on win %, games won and point difference, so they share the place. The next place is skipped: two players in 2nd are followed by 4th.
+**Fix:** Nothing to fix. That's how ties work in the player standings. {/* src: src/lib/stats/player-standings.ts compareStanding; src/lib/league/leaderboard.ts (shared places) */}
 
 ### Two teams have the same record but different places
 **Cause:** Your league's tiebreaks separated them.
@@ -92,4 +96,4 @@ Tap a team's name in the standings to open its page, with its **Overview**, **Ro
 - [See your next match and which rounds you’re playing](/players/see-your-matches-and-rounds)
 - [Message your team and other players](/players/message-your-team)
 
-{/* Last verified: 2026-11-01 against leagues-app 5873526 */}
+{/* Last verified: 2026-11-02 against leagues-app claude/blissful-johnson-xphh09 */}
