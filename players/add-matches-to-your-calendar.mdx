@@ -1,0 +1,75 @@
+---
+title: "Add your matches to your calendar"
+sidebarTitle: "Add matches to your calendar"
+description: "Subscribe once and every match shows up in your phone's calendar and updates itself. Open your team's Schedule, tap Subscribe (.ics), then tap Subscribe to my matches."
+keywords: ["calendar", "subscribe", "iCal", "ics", "Google Calendar", "Apple Calendar", "Outlook", "add to calendar", "sync"]
+---
+
+To add every match to your calendar, open your team's **Schedule** and tap **Subscribe (.ics)**. Tap **Subscribe to my matches**, then pick your calendar app. Your matches show up with the date, time, venue and directions, and update themselves if a match moves or is cancelled.
+
+{/* src: leagues-app src/app/[market]/[season]/schedule/page.tsx:85-87; src/components/calendar/subscribe-panel.tsx:60-88 */}
+
+**Before you begin**
+
+- You need to be on a team's roster. Your club puts you on a team after you register.
+
+{/* src: src/app/[market]/[season]/schedule/page.tsx:84 (button shows only with myTeam) */}
+
+## Subscribe to all your matches
+
+<Steps>
+  <Step title="Open your team's schedule">
+    Open **Schedule** and choose **Your team**.
+    {/* src: src/lib/nav/play.ts:43; schedule/page.tsx */}
+  </Step>
+  <Step title="Tap Subscribe (.ics)">
+    Tap **Subscribe (.ics)** at the top. This opens **Your matches in your calendar**.
+    {/* src: schedule/page.tsx:85-87; subscribe-panel.tsx:60 */}
+  </Step>
+  <Step title="Turn on your calendar link">
+    Tap **Subscribe to my matches**. You only do this once.
+    {/* src: subscribe-panel.tsx:88 */}
+  </Step>
+  <Step title="Pick your calendar">
+    Tap **Apple Calendar (iPhone, Mac)** or **Google Calendar**. For Outlook or another app, tap **Copy link (Outlook & others)** and paste the link into your calendar's "add calendar from URL" option.
+    {/* src: subscribe-panel.tsx:62-70 */}
+  </Step>
+  <Step title="Confirm in your calendar app">
+    Your calendar app asks you to confirm the subscription. Say yes.
+  </Step>
+</Steps>
+
+**Result:** Every match you're scheduled for shows up in your calendar, and changes on its own when a match moves or is cancelled. {/* src: subscribe-panel.tsx:63-65; src/lib/calendar/feed.ts */}
+
+## Add just one match
+
+On a match's page, tap **Add to calendar** to save that one match, or **Google Calendar** to add it there. This saves a copy, so it won't update if the match moves. {/* src: src/components/calendar/add-to-calendar.tsx; src/app/match/[matchId]/page.tsx:202-204,530 */}
+
+## Keep your link private
+
+Your calendar link is private to you. Don't share it. If it gets out, tap **reset it** under the buttons. Any calendar using the old link stops updating, so subscribe again with the new one. {/* src: subscribe-panel.tsx:28,38,73-83 */}
+
+## Why isn't this working?
+
+### I don't see Subscribe (.ics)
+**Cause:** The button only shows on your own team's schedule.
+**Fix:** Choose **Your team** on the **Schedule** page. If you're not on a team yet, it appears once your club adds you. {/* src: schedule/page.tsx:84 */}
+
+### My calendar didn't change when a match moved
+**Cause:** Calendar apps check for updates on their own timetable, and some take hours. A single match saved with **Add to calendar** never updates.
+**Fix:** Wait, or refresh the calendar in your app. If you saved one match, delete it and subscribe instead. {/* src: add-to-calendar.tsx (one-off .ics download) */}
+
+### My matches stopped showing up
+**Cause:** Your calendar link was reset, so the old one stopped working.
+**Fix:** Remove the old ClubCircuit calendar from your app, then subscribe again. {/* src: subscribe-panel.tsx:28 */}
+
+### I don't see Add to calendar on a match
+**Cause:** It doesn't show for draft, bye or cancelled matches.
+**Fix:** Nothing to do. It appears once the match is scheduled. {/* src: src/app/match/[matchId]/page.tsx:202-204 */}
+
+## Related articles
+
+- [See your next match and which rounds you’re playing](/players/see-your-matches-and-rounds)
+- [Tell your captain whether you can play](/players/set-your-availability)
+
+{/* Last verified: 2026-11-02 against leagues-app bb4f3b5 */}
