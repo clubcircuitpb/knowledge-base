@@ -1,0 +1,85 @@
+---
+title: "Edit your profile and choose who can see it"
+sidebarTitle: "Edit your profile"
+description: "Open your account menu and tap Profile. Add a photo, a display name and a line about you, pick who can see your profile, then tap Save profile."
+keywords: ["profile", "photo", "picture", "bio", "display name", "privacy", "visibility", "who can see", "private", "public"]
+---
+
+To edit your profile, open your account menu and tap **Profile**. Change your photo, display name or the line about you, choose who can see your profile under **Who can see your profile**, then tap **Save profile**. Your photo saves on its own as soon as you pick it.
+
+{/* src: leagues-app src/components/shell/account-control.tsx:124; src/app/me/profile/page.tsx:186,207,227 */}
+
+**Before you begin**
+
+- You need a player profile. You get one when you register for a season.
+- Your profile is what teammates and opponents see. Your legal name, date of birth, phone and emergency contact are kept on **Your account** and are never shown on your profile.
+
+{/* src: src/app/me/profile/page.tsx:60 (no player → /me), 97; src/app/me/page.tsx:197 */}
+
+## Update your profile
+
+<Steps>
+  <Step title="Open your profile">
+    Open your account menu and tap **Profile**. On a phone, tap your initials at the top of the screen first.
+    {/* src: account-control.tsx:124; src/components/shell/play-chrome.tsx */}
+  </Step>
+  <Step title="Add or change your photo">
+    Tap **Add a photo** (or **Change photo**) and pick a picture. It saves as soon as you pick it. A square crop works best.
+    {/* src: src/app/me/profile/photo-editor.tsx:73,81 */}
+  </Step>
+  <Step title="Set how your name appears">
+    Under **About you**, fill in **Display name** if you want standings and lineups to show something other than your full name. Leave it blank to use your full name.
+    {/* src: page.tsx:178,184 */}
+  </Step>
+  <Step title="Write a line about you">
+    In **A line about you**, say how long you've played or what you like about the game.
+    {/* src: page.tsx:187 */}
+  </Step>
+  <Step title="Choose who can see it">
+    Under **Who can see your profile**, pick **Private**, **League** or **Public**. See below for what each means.
+    {/* src: page.tsx:20-24,207 */}
+  </Step>
+  <Step title="Save">
+    Tap **Save profile**.
+    {/* src: page.tsx:227; src/app/me/actions.ts:63 */}
+  </Step>
+</Steps>
+
+**Result:** You see **Saved.** at the top of the page, and the card at the top shows your changes. If you're on a team, tap **See it as others do** to check. {/* src: page.tsx:105-107,133 */}
+
+## Who can see your profile
+
+- **Private:** Teammates, your club's owners and league managers. Opponents see your name and club only.
+- **League:** Anyone signed in to ClubCircuit. This is the default.
+- **Public:** Anyone, including people not signed in. Your page can be shared by link.
+
+Teammates, your club and league managers can always see your profile, whichever you choose. Your phone number and date of birth are never on your profile. {/* src: page.tsx:19-24,208; CLAUDE.md "Personal data" */}
+
+## Finish your profile
+
+Until your profile is complete, a **Finish your profile** box lists what's left: a photo, a line about you, your DUPR ID, and whether you'd sub. Tap the button next to each one to jump to it. {/* src: page.tsx:146-170; src/lib/player/profile-steps.ts */}
+
+## Why isn't this working?
+
+### My changes didn't save
+**Cause:** Only your photo saves on its own. Everything under **About you** saves with the button.
+**Fix:** Make your changes again and tap **Save profile** at the bottom. {/* src: page.tsx:180 */}
+
+### "Could not save that photo."
+**Cause:** The picture didn't upload.
+**Fix:** Try a smaller photo, or try again on a stronger connection. {/* src: photo-editor.tsx:34 */}
+
+### I don't see See it as others do
+**Cause:** That button only shows once you're on a team's roster.
+**Fix:** Check back after your club puts you on a team. {/* src: page.tsx:73,128 */}
+
+### I want to change my legal name, phone or emergency contact
+**Cause:** Those are private details, so they're on a different page.
+**Fix:** Open your account menu, tap **Account**, change them, then tap **Save details**. {/* src: src/components/shell/account-menu.tsx:145; src/app/me/page.tsx:254 */}
+
+## Related articles
+
+- [Add your DUPR ID](/players/connect-dupr)
+- [Sign up to sub for other teams](/players/sign-up-to-sub)
+
+{/* Last verified: 2026-11-02 against leagues-app bb4f3b5 */}

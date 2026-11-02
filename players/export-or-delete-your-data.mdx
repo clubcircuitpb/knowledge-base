@@ -1,0 +1,86 @@
+---
+title: "Download your data or delete your account"
+sidebarTitle: "Download or delete your data"
+description: "Open your account menu and tap Account. Tap Your data to download everything we hold about you. To delete your account, open Delete your account, type DELETE and tap Delete my account."
+keywords: ["delete account", "close account", "remove account", "download my data", "export", "privacy", "personal data", "GDPR", "erase"]
+---
+
+To download your data, open your account menu, tap **Account**, then tap **Your data**. A file downloads with everything ClubCircuit holds about you. To delete your account, open **Delete your account** on the same page, type `DELETE` and tap **Delete my account**. Deleting can't be undone.
+
+{/* src: leagues-app src/components/shell/account-menu.tsx:143-146; src/app/me/page.tsx:299,308,321-326 */}
+
+## Download your data
+
+<Steps>
+  <Step title="Open Your account">
+    Open your account menu and tap **Account**. On a phone, tap your initials at the top of the screen first.
+    {/* src: account-menu.tsx:143-146 */}
+  </Step>
+  <Step title="Tap Your data">
+    Tap **Your data**.
+    {/* src: src/app/me/page.tsx:299 */}
+  </Step>
+  <Step title="Save the file">
+    A file named like `clubcircuit-data-2026-11-02.json` downloads. Save it somewhere safe.
+    {/* src: src/app/api/me/export/route.ts:34-39 */}
+  </Step>
+</Steps>
+
+**Result:** The file holds your account details, the seasons you registered for, what you paid, your teams, your availability answers and your stats. It doesn't include other players' details. {/* src: src/lib/account/export.ts:1-10 */}
+
+## Delete your account
+
+<Warning>Deleting your account happens straight away and can't be undone.</Warning>
+
+<Steps>
+  <Step title="Remove your saved card first">
+    If you saved a card for court fees, open **Payments** and tap **Remove card**. Pay or settle anything you owe first.
+    {/* src: src/app/me/payments/page.tsx:110-114 */}
+  </Step>
+  <Step title="Open Your account">
+    Open your account menu and tap **Account**.
+    {/* src: account-menu.tsx:143-146 */}
+  </Step>
+  <Step title="Open Delete your account">
+    Scroll to the bottom and tap **Delete your account**. Read what happens.
+    {/* src: src/app/me/page.tsx:300-317 */}
+  </Step>
+  <Step title="Type DELETE">
+    In **Type DELETE to confirm**, type `DELETE` in capitals.
+    {/* src: page.tsx:321 */}
+  </Step>
+  <Step title="Delete">
+    Tap **Delete my account**.
+    {/* src: page.tsx:325 */}
+  </Step>
+</Steps>
+
+**Result:** You're signed out, and the account can't be signed in to again. Your name, email, phone number, emergency contact, photo, bio and DUPR ID are removed, and your name shows as **Former player**. Any captain or club admin role you had is removed too. {/* src: src/lib/account/delete.ts:1-25; src/lib/account/anonymize.ts:36-51 (FORMER_PLAYER_NAME) */}
+
+## What stays after you delete
+
+The results of matches you played stay in the league's records, so standings and other players' history still add up. Your name is removed from them. {/* src: src/app/me/page.tsx:315-317; src/lib/account/delete.ts:22-25 */}
+
+## Why isn't this working?
+
+### "Type DELETE to confirm you want your account deleted."
+**Cause:** The box was empty or didn't say `DELETE` exactly.
+**Fix:** Type `DELETE` in capital letters and tap **Delete my account** again. {/* src: src/app/me/actions.ts:185-187 */}
+
+### Nothing happened when I tapped Your data
+**Cause:** Your browser saved the file without showing you.
+**Fix:** Check your Downloads folder, or your phone's Files app. {/* src: route.ts:39 (content-disposition: attachment) */}
+
+### I want to delete only some of my details
+**Fix:** You don't need to delete your account. Change or clear them on **Your account** or your **Profile** instead. To hide your profile, choose **Private** under **Who can see your profile**. {/* src: src/app/me/page.tsx:254; src/app/me/profile/page.tsx:20-24 */}
+
+### I changed my mind after deleting
+**Cause:** Deleting can't be undone.
+**Fix:** To play again, sign in with your email and register for a season. You start as a new player. Your old history stays without your name.
+
+## Related articles
+
+- [Edit your profile and choose who can see it](/players/edit-your-profile-and-privacy)
+- [Pay a court fee and see what you’ve paid](/players/pay-court-fees-and-see-payments)
+
+{/* Last verified: 2026-11-02 against leagues-app bb4f3b5 */}
