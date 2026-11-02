@@ -45,14 +45,14 @@ If you have a fee to pay, **Payments** shows **A court fee to pay** with a **Pay
 
 ## Pay on time
 
-Each season sets how long you have to pay. If a fee goes overdue, your captain can't place you in a lineup until it's paid, and you can't register for a new season. Pay it and you're available again straight away. Check your season's rules in the app for the grace period. {/* src: src/lib/rules/rules/lineup.ts:251-260 (COURT_FEE_OVERDUE); src/lib/rules/rules/registration.ts:39 (COURT_FEE_UNPAID); Ruleset.courtFeeGraceDays; pay/court-fee/[token]/page.tsx:78 */}
+Each season sets how long you have to pay. An overdue fee has to be paid before you can register for a new season. Some seasons also stop captains placing you in a lineup until it's paid. Check your season's rules in the app for the grace period and whether lineups are affected. {/* src: src/lib/rules/rules/registration.ts:39 (COURT_FEE_UNPAID); src/lib/lineup/workspace.ts:147 (Ruleset.courtFeeUnpaidBlocksLineup); src/lib/rules/rules/lineup.ts:251-260; Ruleset.courtFeeGraceDays */}
 
 ## What each status means
 
 - **Charging:** Your saved card is being charged.
 - **Paid:** Done. Your receipt is in your email.
 - **To pay:** You owe this fee. Pay it before the grace period ends.
-- **Overdue:** Past the grace period. Pay it to get back into lineups.
+- **Overdue:** Past the grace period. Pay it as soon as you can.
 - **Waived:** You don't owe this fee.
 - **Refunded:** Your money was returned.
 
