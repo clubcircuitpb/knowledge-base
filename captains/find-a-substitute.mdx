@@ -48,7 +48,7 @@ You can also tap **Need a sub?** on a match, choose **Gender needed (optional)**
 
 ## Cancel a sub request
 
-If you no longer need a sub, find the line that starts **Sub request:** on the match, then tap **Cancel request**. Any offers still waiting are withdrawn, and each sub you offered it to is told your team doesn't need a sub after all. You see "Request cancelled." with how many people were told. {/* src: sub-request-control.tsx:49-81; src/lib/subs/request.ts:204-240 (offers WITHDRAWN, SUB_REQUEST_CANCELLED); src/emails/registry.tsx:627 */}
+If you no longer need a sub, open the **Subs** tab and pick the match. On the line that starts **Sub request:**, tap **Cancel request**. Any offers still waiting are withdrawn, and each sub you offered it to is told your team doesn't need a sub after all. You see "Request cancelled." with how many people were told. {/* src: sub-request-control.tsx:49-81 (Cancel needs the request id, which only the Subs tab passes: manage/page.tsx:73-77,485);  src/lib/subs/request.ts:204-240 (offers WITHDRAWN, SUB_REQUEST_CANCELLED); src/emails/registry.tsx:627 */}
 
 You can't cancel a request once it's filled. {/* src: sub-request-control.tsx:63 (canCancel only when not FILLED) */}
 
