@@ -62,6 +62,23 @@
             "pages": [
               "captains/index"
             ]
+          },
+          {
+            "group": "Before each match",
+            "pages": [
+              "captains/manage-your-team",
+              "captains/build-and-post-a-lineup",
+              "captains/find-a-substitute",
+              "captains/request-a-reschedule"
+            ]
+          },
+          {
+            "group": "On match day and after",
+            "pages": [
+              "captains/enter-and-confirm-scores",
+              "captains/dispute-a-result",
+              "captains/contact-other-captains"
+            ]
           }
         ]
       },

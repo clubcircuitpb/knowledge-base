@@ -1,0 +1,87 @@
+---
+title: "Find and contact other captains"
+sidebarTitle: "Contact other captains"
+description: "Open the Captains directory from Manage team, find the other captain, and tap the request you need: a lineup change notice, late-lineup consent, reschedule dates or a score discrepancy."
+keywords: ["captains directory", "contact captain", "other captain", "late lineup consent", "lineup change", "score discrepancy", "phone number"]
+---
+
+To contact another captain, open **Manage team** and tap **Captains directory**. Find their name, then tap what you need: **Notify of a lineup change**, **Request late-lineup consent**, **Propose reschedule dates** or **Flag a score discrepancy**. Each one is recorded on the match, and the other captain is notified.
+
+{/* src: leagues-app src/app/team/[teamId]/manage/page.tsx:155; src/app/captains/captains-directory.tsx:20-23,388; src/app/captains/page.tsx:45 */}
+
+**Before you begin**
+
+- You need to be a captain (or a club admin) to see the directory.
+- You can send a request only to a captain whose team plays yours in a match that isn't finished yet.
+
+{/* src: src/lib/captains/directory.ts (captain, club admin, market or super admin; a plain player gets a 404); :146 (actions only for a shared match not CONFIRMED or CANCELLED) */}
+
+## Send a request to another captain
+
+<Steps>
+  <Step title="Open the Captains directory">
+    Go to **Manage team** and tap **Captains directory**.
+    {/* src: src/app/team/[teamId]/manage/page.tsx:155 */}
+  </Step>
+  <Step title="Find the captain">
+    Type their name in **Search captains by first or last name**, or look under their club.
+    {/* src: src/app/captains/page.tsx:48; src/lib/captains/directory.ts (grouped by club) */}
+  </Step>
+  <Step title="Pick what you need">
+    Tap **Notify of a lineup change**, **Request late-lineup consent**, **Propose reschedule dates** or **Flag a score discrepancy**.
+    {/* src: src/app/captains/captains-directory.tsx:20-23 */}
+  </Step>
+  <Step title="Add the details">
+    If you play them more than once, choose **Which match**. Then say what's changing, why you need consent, or what doesn't match.
+    {/* src: captains-directory.tsx:421-424 */}
+  </Step>
+  <Step title="Send it">
+    Tap **Send**, or **Request consent** for a late-lineup request.
+    {/* src: captains-directory.tsx:438 */}
+  </Step>
+</Steps>
+
+**Result:** You see **Sent, and recorded on the match. The other captain has been notified.** {/* src: captains-directory.tsx:388 */}
+
+To move a match, see [Ask to reschedule a match](/captains/request-a-reschedule). Proposing dates works differently from the other requests.
+
+## Answer a request
+
+Requests other captains send you appear at the top of the directory under **Waiting on you**. For a late-lineup request, tap **Grant consent** or **Decline**. For a lineup change or a score discrepancy, tap **Acknowledge**. {/* src: captains-directory.tsx:452,554 */}
+
+<Tip>
+  If your lineup went in late and the other captain taps **Grant consent**, the late-lineup penalty is removed automatically. If it's still showing, open the match page and tap **Appeal the penalty**. How late lineups are penalized is in your league's rulebook. {/* src: src/lib/captains/messages.ts (granting LATE_LINEUP_CONSENT removes the AUTO late-lineup penalty); src/app/match/[matchId]/late-lineup-appeal.tsx:43 */}
+</Tip>
+
+## Share your phone number with other captains
+
+Other captains can't see your email address. They see your phone number only if you choose to share it. To share it, open your account, turn on **Share my phone number with other captains** under **Your details**, and select **Save details**. {/* src: src/lib/captains/directory.ts:183-184 (phone only if opted in; captains never see each other's emails); src/app/me/page.tsx:236-240 */}
+
+## Why isn't this working?
+
+### There are no buttons on a captain's card
+**Cause:** Your teams don't have a match together that's still to be played or confirmed. Requests are always about a specific match.
+**Fix:** Nothing to do. If you need them for something else, ask the league office. {/* src: src/lib/captains/directory.ts:146; captains-directory.tsx ("No shared match with this captain yet.") */}
+
+### I can't open the Captains directory
+**Cause:** The directory is only for captains and club admins.
+**Fix:** If you've just been made captain, sign out and back in. If it still doesn't open, ask your club's admins to check that you're set as captain. {/* src: src/lib/captains/directory.ts (404 for a plain player) */}
+
+### "That request has already been answered."
+**Cause:** You, or another captain on your team, already answered it.
+**Fix:** Nothing to do. The answer is recorded on the match. {/* src: src/lib/captains/messages.ts */}
+
+### "No late-lineup consent was recorded from the opposing captain, so the penalty stands."
+**Cause:** You appealed a late-lineup penalty, but the other captain hasn't granted consent.
+**Fix:** Ask them to tap **Grant consent** in the Captains directory, then appeal again. {/* src: src/lib/captains/messages.ts */}
+
+### "No captain matches …"
+**Cause:** No captain in your league has that name.
+**Fix:** Check the spelling, or clear the search and look under their club. {/* src: captains-directory.tsx:45 */}
+
+## Related articles
+
+- [Ask to reschedule a match](/captains/request-a-reschedule)
+- [See who can play and manage your team](/captains/manage-your-team)
+
+{/* Last verified: 2026-11-01 against leagues-app bb4f3b5 */}
