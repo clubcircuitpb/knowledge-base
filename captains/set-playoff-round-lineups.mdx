@@ -48,6 +48,20 @@ A round ends when its last score is entered, or when a captain or the finals-day
 
 {/* src: live-rules.ts roundEndedAt; live-rounds.tsx ("Round finished"); live.ts finishRound */}
 
+## If the match is level at 8–8
+
+If the match finishes level and neither team has a penalty, there’s a **Deciding round**: a men’s, a women’s and a mixed game, best two of three. Each captain picks three pairs and taps **Submit deciding pairs**. Nobody sees the other team’s pairs until both are in. Players who partnered earlier can partner again.
+
+If a penalty caused the tie, there’s no deciding round: the team without the penalty wins. See your league’s rules in the app for every case.
+
+{/* src: live-rounds.tsx (Deciding round card, "Submit deciding pairs"); src/lib/playoffs/decide-rules.ts decidePlayoffMatch; live.ts submitDecidingPairs; docs/adr/0079 */}
+
+## Swap an injured player
+
+Before a court’s game is scored, you can swap a player out. In the round, open **Swap a player (injury or emergency)**, pick who’s coming off and who’s going on, say why, and tap **Swap**. The new player must be the same gender and on your playoff roster.
+
+{/* src: live-rounds.tsx SwapForm; live.ts swapRoundPlayer */}
+
 ## Why isn’t this working?
 
 ### It says the other captain leads this round
@@ -74,9 +88,17 @@ A round ends when its last score is entered, or when a captain or the finals-day
 
 {/* src: live.ts submitRoundLineup (late → PLAYOFF_LATE_ROUND_LINEUP penalty); docs/adr/0078 decision 4 */}
 
+### We played a round on paper
+
+**Cause:** the round wasn’t set in the app on the day.
+
+**Fix:** ask the league office to enter it from your paper sheet. A round entered that way carries no clock or late penalty.
+
+{/* src: live-rounds.tsx ("Enter … from paper", league office only); live.ts submitRoundLineup afterTheFact */}
+
 ## Related articles
 
 - [Send your playoff roster](/captains/send-your-playoff-roster)
 - [Help for team captains](/captains)
 
-{/* Last verified: 2026-11-02 against leagues-app b84aca6 */}
+{/* Last verified: 2026-11-02 against leagues-app 04bf255 */}
