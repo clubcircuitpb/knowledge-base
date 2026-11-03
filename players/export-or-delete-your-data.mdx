@@ -26,7 +26,7 @@ To download your data, open your account menu, tap **Account**, then tap **Your 
   </Step>
 </Steps>
 
-**Result:** The file holds your account details, the seasons you registered for, what you paid, your teams, your availability answers and your stats. It doesn't include other players' details. {/* src: src/lib/account/export.ts:1-10 */}
+**Result:** The file holds your account details, the seasons you registered for, what you paid, your teams, your availability answers, your stats, your badges and a list of your card photos. To see or save the photos themselves, open **Court Cred** > **Manage photos**. It doesn't include other players' details. {/* src: src/lib/account/export.ts (badges, cardPhotos); src/app/me/court-cred/photos/page.tsx */}
 
 ## Delete your account
 
@@ -55,7 +55,7 @@ To download your data, open your account menu, tap **Account**, then tap **Your 
   </Step>
 </Steps>
 
-**Result:** You're signed out, and the account can't be signed in to again. Your name, email, phone number, emergency contact, photo, bio and DUPR ID are removed, and your name shows as **Former player**. Any captain or club admin role you had is removed too. {/* src: src/lib/account/delete.ts:1-25; src/lib/account/anonymize.ts:36-51 (FORMER_PLAYER_NAME) */}
+**Result:** You're signed out, and the account can't be signed in to again. Your name, email, phone number, emergency contact, photo, bio, DUPR ID and card photos are removed, and your name shows as **Former player**. Any captain or club admin role you had is removed too. {/* src: src/lib/account/delete.ts:1-25 (card photos deleted); src/lib/account/anonymize.ts:36-51 (FORMER_PLAYER_NAME) */}
 
 ## What stays after you delete
 
@@ -83,4 +83,4 @@ The results of matches you played stay in the league's records, so standings and
 - [Edit your profile and choose who can see it](/players/edit-your-profile-and-privacy)
 - [Pay a court fee and see what you’ve paid](/players/pay-court-fees-and-see-payments)
 
-{/* Last verified: 2026-11-02 against leagues-app bb4f3b5 */}
+{/* Last verified: 2026-11-03 against leagues-app claude/blissful-johnson-xphh09 */}

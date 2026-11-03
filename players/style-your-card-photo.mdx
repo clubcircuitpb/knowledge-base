@@ -1,0 +1,117 @@
+---
+title: "Style your card photo"
+sidebarTitle: "Style your card photo"
+description: "In Court Cred, tap Restyle photo, upload a photo of yourself, tick the box to agree, then pick a stance, your hand and your paddle and tap Style my photo. Tap Use this to put it on your card."
+keywords: ["card photo", "AI photo", "restyle", "styled photo", "Gemini", "upload photo", "player card photo", "manage photos", "report photo"]
+---
+
+To style your card photo, open **Court Cred** and tap **Restyle photo**. Upload a photo of yourself, pick a stance, your hand and your paddle, then tap **Style my photo**. You'll see it on your card: tap **Use this** to keep it. The photo is restyled by AI (Google's Gemini service), so you appear in pickleball kit on a court under the lights. Your name, rating and stats are always added by ClubCircuit, never by AI.
+
+{/* src: leagues-app src/app/me/court-cred/page.tsx (PhotoStylesPanel: "Restyle photo"); src/app/me/court-cred/photo/styling-flow.tsx; src/lib/card-photos/prompt.ts (card-v1); docs/adr/0078 */}
+
+**Before you begin**
+
+- You need to be 18 or older and on a team in a season that's under way.
+- You get a set number of photo styles in each half of the season. **Photo styles this half** in Court Cred shows how many you have left. A style that doesn't work doesn't count.
+- Have a photo of just you, from the knees up, in good light. If you want your own paddle in the picture, have a photo of it too.
+
+{/* src: src/lib/card-photos/context.ts (UNDER_18, NO_SEASON); src/lib/card-photos/quota.ts (per half, failures free); styling-flow.tsx ("Just you, from the knees up, in good light.") */}
+
+## Style your photo
+
+<Steps>
+  <Step title="Open Restyle photo">
+    Open your account menu and tap **Court Cred**, then tap **Restyle photo** under **Photo styles this half**.
+    {/* src: account-control.tsx (Court Cred row); src/app/me/court-cred/page.tsx PhotoStylesPanel */}
+  </Step>
+  <Step title="Upload your photo">
+    Tick the box to agree to how your photo is used, then tap **Choose a photo** and pick one. The box confirms you're 18 or older, that the photo shows only you, and that ClubCircuit may send it to Google's Gemini service to make your card.
+    {/* src: styling-flow.tsx (consent label, "Choose a photo"); src/app/api/card-photo/upload/route.ts (consent required) */}
+  </Step>
+  <Step title="Pick a stance">
+    Tap **Ready**, **Smash**, **Dink** or **Celebrate**, then tap **Next**.
+    {/* src: styling-flow.tsx STANCES */}
+  </Step>
+  <Step title="Choose your hand">
+    Tap **Right** or **Left**, then tap **Next**. We save it to your card settings.
+    {/* src: styling-flow.tsx (hand step; saved by src/lib/card-photos/pipeline.ts) */}
+  </Step>
+  <Step title="Choose your paddle">
+    Tap **Upload a photo of my paddle** (the most accurate), **Pick brand + model**, or **Skip** for a plain ClubCircuit paddle. Then tap **Next**.
+    {/* src: styling-flow.tsx PADDLE_MODES */}
+  </Step>
+  <Step title="Style it">
+    Check how many styles this uses, then tap **Style my photo**. It can take up to a minute.
+    {/* src: styling-flow.tsx (confirm and working steps) */}
+  </Step>
+  <Step title="Keep it or not">
+    Tap **Use this** to put it on your card, or **Keep my current card**. Either way, the style stays in **Manage photos**.
+    {/* src: styling-flow.tsx (result step) */}
+  </Step>
+</Steps>
+
+**Result:** Your card shows your new photo, on Court Cred, on your profile and when you share it. {/* src: src/lib/player-card/card-load.ts activePhoto; src/app/api/card/[playerId]/[side]/route.ts */}
+
+## Change or delete your photos
+
+In **Court Cred**, tap **Manage photos**. Under **Styled photos**, tap **Use this** to put a different style on your card, or **Delete** to remove one. Under **Photos you uploaded**, tap **Delete** to remove a photo. If you delete the style on your card, your card shows your club's logo instead. {/* src: src/app/me/court-cred/photos/page.tsx; src/lib/card-photos/manage.ts */}
+
+<Note>
+  Only you and the league office can see your uploaded photos and any style that isn't on your card. Uploading a new photo of yourself deletes the old one. Uploaded photos are deleted 30 days after the season ends, and styles you didn't use are deleted when it ends. {/* src: src/lib/card-photos/access.ts; src/app/api/card-photo/upload/route.ts (REPLACED); src/lib/card-photos/retention.ts */}
+</Note>
+
+## Report a card's photo
+
+If another player's card photo isn't them, or isn't appropriate, open their profile, tap **Report this card's photo**, choose what's wrong and tap **Send report**. The league office reviews it. If they remove the photo, that player's card goes back to their club's logo. {/* src: src/app/player/[playerId]/page.tsx (report form); src/lib/card-photos/moderation.ts */}
+
+## How photo styles work
+
+- Each half of the season has its own styles. The second half's unlock at mid-season, once you upload a new photo. Styles you don't use don't carry over.
+- If we can't style a photo, it doesn't use a style.
+- Court Cred shows the date the second half's styles unlock.
+
+{/* src: src/lib/card-photos/quota.ts; src/app/me/court-cred/page.tsx PhotoStylesPanel */}
+
+## Why isn't this working?
+
+### "We couldn’t style that photo. Try a different one. This didn’t use a style."
+**Cause:** The photo couldn't be styled. It might show more than one person, be too dark, or not be accepted by the styling service.
+**Fix:** Try a clearer photo of just you. Nothing was used. {/* src: src/lib/card-photos/pipeline.ts SORRY */}
+
+### Restyle photo is greyed out
+**Cause:** You've used this half's photo styles, or styling is paused. The message above the button says which.
+**Fix:** In the first half, more styles unlock at mid-season when you upload a new photo. {/* src: page.tsx PhotoStylesPanel; src/lib/card-photos/context.ts refusalMessage */}
+
+### "Upload a new photo to unlock this half’s styles."
+**Cause:** It's the second half of the season, and its styles need a new photo.
+**Fix:** Tap **Restyle photo** and upload a new photo of yourself. {/* src: pipeline.ts; quota.ts needsNewUpload */}
+
+### "This browser can’t open that photo. Save it as a JPG (or take a new photo) and try again."
+**Cause:** Some browsers can't open every photo format, such as HEIC from an iPhone.
+**Fix:** Save the photo as a JPG, or take a new one with your phone's camera, and choose it again. {/* src: styling-flow.tsx upload() */}
+
+### "Card photos are for players 18 and over."
+**Cause:** Card photos use a service that's only for adults.
+**Fix:** Your card still shows your club's logo, name, rating and stats. {/* src: context.ts UNDER_18 */}
+
+### "Photo styling is busy today. Try again tomorrow. Nothing was used."
+**Cause:** ClubCircuit has a daily limit on styling across all players.
+**Fix:** Try again tomorrow. {/* src: context.ts DAILY_CAP */}
+
+### "Your last style is still being made. Give it a minute, then refresh."
+**Cause:** A style you started hasn't finished yet.
+**Fix:** Wait a minute, then refresh the page. {/* src: context.ts IN_FLIGHT */}
+
+### I don't see Restyle photo at all
+**Cause:** Card photos aren't switched on yet for your league.
+**Fix:** Check back later. Your card works without one. {/* src: FEATURE_AI_CARD_PHOTOS (src/lib/features.ts) */}
+
+Questions about your photos, or want one removed? Email `support@clubcircuitpb.com`.
+
+## Related articles
+
+- [See your player card and earn badges](/players/court-cred-and-badges)
+- [Edit your profile and choose who can see it](/players/edit-your-profile-and-privacy)
+- [Download your data or delete your account](/players/export-or-delete-your-data)
+
+{/* Last verified: 2026-11-03 against leagues-app claude/blissful-johnson-xphh09 */}
