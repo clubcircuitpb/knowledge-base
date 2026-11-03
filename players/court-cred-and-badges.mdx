@@ -1,13 +1,13 @@
 ---
-title: "Earn badges and see your Court Cred"
-sidebarTitle: "Badges and Court Cred"
-description: "Open your account menu and tap Court Cred to see your badges, the ones you're closest to and where you stand this season. Tap See all for every badge and how to earn it."
-keywords: ["badges", "Court Cred", "achievements", "awards", "trophies", "stamps", "pin badge", "rating milestone", "badge guide", "player card"]
+title: "See your player card and earn badges"
+sidebarTitle: "Player card and badges"
+description: "Open your account menu and tap Court Cred to see your player card, your badges and where you stand this season. Tap the card to flip it, and tap Share card to send it."
+keywords: ["player card", "trading card", "share card", "badges", "Court Cred", "achievements", "awards", "trophies", "stamps", "pin badge", "rating milestone", "badge guide", "player card"]
 ---
 
-To see your badges, open your account menu and tap **Court Cred**. It shows your newest badges, the two you're closest to and where you stand this season. Tap **See all** for every badge and how to earn it. Badges (also called achievements) are awarded on their own after each confirmed match and each weekly DUPR refresh.
+To see your player card and badges, open your account menu and tap **Court Cred**. Tap the card to flip it, and tap **Share card** to send it. Your badges, the two you're closest to and where you stand this season are underneath. Your card's name, rating, club and stats are filled in by ClubCircuit and update on their own after every confirmed match. Badges (also called achievements) are awarded on their own after each confirmed match and each weekly DUPR refresh.
 
-{/* src: leagues-app src/components/shell/account-control.tsx (Court Cred row); src/app/me/court-cred/page.tsx; src/app/me/court-cred/badges/page.tsx ("How badges work") */}
+{/* src: leagues-app src/components/shell/account-control.tsx (Court Cred row); src/app/me/court-cred/page.tsx (card, "Tap card to flip · stats update after every match", Share card); src/lib/player-card/card-load.ts (read live); src/app/me/court-cred/badges/page.tsx ("How badges work") */}
 
 **Before you begin**
 
@@ -16,15 +16,53 @@ To see your badges, open your account menu and tap **Court Cred**. It shows your
 
 {/* src: src/app/me/court-cred/guard.ts (requirePlayer); src/lib/badges/registry.ts (badges count games; ADR 0075 §1) */}
 
-## See your badges
+## See and share your card
 
 <Steps>
   <Step title="Open Court Cred">
     Open your account menu and tap **Court Cred**. On a phone, tap your initials at the top of the screen first. It's also on your **Profile**.
     {/* src: account-control.tsx (personal rows); src/app/me/profile/page.tsx (Court Cred link) */}
   </Step>
+  <Step title="Flip it">
+    Tap the card to see the back: your season stats, your rating milestones and the badges on your card. Tap it again to turn it back.
+    {/* src: src/components/player-card/player-card.tsx (flip button); src/components/player-card/card-face.tsx (back) */}
+  </Step>
+  <Step title="Share it">
+    Tap **Share card** and pick where to send it. If your phone or browser can't share images, the card downloads instead.
+    {/* src: player-card.tsx ShareCardButton (navigator.share with the PNG, download fallback) */}
+  </Step>
+</Steps>
+
+**Result:** You send a picture of the front of your card. {/* src: src/app/api/card/[playerId]/[side]/route.ts (front) */}
+
+<Note>
+  Other players see your card on your profile page, if your profile settings let them see your full profile. If your profile is private, only your teammates, your club's admins and the league office see it. {/* src: src/lib/player-card/access.ts (follows profile visibility); src/app/player/[playerId]/page.tsx */}
+</Note>
+
+## Change your card settings
+
+<Steps>
+  <Step title="Open Card settings">
+    In **Court Cred**, tap **Card settings**.
+    {/* src: src/app/me/court-cred/page.tsx (Card settings link) */}
+  </Step>
+  <Step title="Change what you need">
+    Choose your **Dominant hand**, your **Paddle brand** (pick **Other** if yours isn't listed) and your **Paddle model**. Tick **ClubCircuit may feature my card** if you're happy for it to appear in the app or on ClubCircuit's social pages. It's off unless you tick it.
+    {/* src: src/app/me/court-cred/settings/page.tsx */}
+  </Step>
+  <Step title="Save">
+    Tap **Save**.
+    {/* src: settings/page.tsx */}
+  </Step>
+</Steps>
+
+**Result:** You see **Saved.** {/* src: settings/page.tsx (role=status "Saved.") */}
+
+## See your badges
+
+<Steps>
   <Step title="Check what's new">
-    A new badge shows at the top as **New badge unlocked**. Under **Badges**, you'll see the ones you've earned and the two you're closest to, with how far along you are.
+    A new badge shows at the top as **New badge unlocked**. In **Court Cred**, under **Badges**, you'll see the ones you've earned and the two you're closest to, with how far along you are.
     {/* src: src/app/me/court-cred/page.tsx (banner, Badges panel, closest two with progress) */}
   </Step>
   <Step title="See every badge">
@@ -76,6 +114,22 @@ Your card shows up to three badges. Until you choose, it shows your latest best 
 **Cause:** A match result was corrected, and the badge's rule isn't met any more. **Court Cred** says "A match result was corrected, so your badges were updated." If the badge was on your card, it comes off. Rating milestones never disappear.
 **Fix:** Nothing to do. If the correction is put right, the badge comes back. {/* src: src/app/me/court-cred/page.tsx (correction note); src/lib/badges/run.ts (revoke and unpin); src/lib/badges/diff.ts (rating badges permanent) */}
 
+### My card shows my club's initials instead of a photo
+**Cause:** Card photos aren't available yet, so your card shows your home club's logo, or its initials if there's no logo the card can use.
+**Fix:** Nothing to fix. Your name, rating and stats are all still current. {/* src: card-face.tsx PhotoArea (club logo, else initials); src/lib/player-card/png.tsx (logos the image can't draw fall back to initials) */}
+
+### My rating on the card is a little lower than on DUPR
+**Cause:** Your card shows your rating to two decimal places, rounded down, so 3.749 shows as 3.74.
+**Fix:** Nothing to fix. It shows the next milestone only once you've actually reached it. {/* src: src/lib/player-card/card-data.ts cardRating */}
+
+### "Type just the paddle’s model name, like “Perseus 16mm”."
+**Cause:** The paddle model had words a model name doesn't need.
+**Fix:** Type only the model, then tap **Save**. {/* src: src/lib/player-card/profile.ts */}
+
+### "Your card didn’t load. Check your connection and tap Share card again, or download it."
+**Cause:** The picture of your card couldn't be fetched.
+**Fix:** Check your connection and tap **Share card** again, or tap **download it**. {/* src: player-card.tsx ShareCardButton */}
+
 ### "Your card shows 3 badges. Unpin one first, then pin this one."
 **Cause:** Your card already has three badges pinned.
 **Fix:** Open one of them, tap **Unpin from my card**, then pin the new one. {/* src: src/lib/badges/pins.ts */}
@@ -92,6 +146,7 @@ Your card shows up to three badges. Until you choose, it shows your latest best 
 
 - [Follow the standings, player standings and playoffs](/players/follow-standings-and-stats)
 - [Add your DUPR ID](/players/connect-dupr)
+- [Edit your profile and choose who can see it](/players/edit-your-profile-and-privacy)
 - [Choose which notifications you get](/players/manage-notifications)
 
 {/* Last verified: 2026-11-02 against leagues-app claude/blissful-johnson-xphh09 */}
